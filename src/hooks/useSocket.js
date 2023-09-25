@@ -6,7 +6,7 @@ useSocket = (serverPath) => {
 
  const socket =  useMemo(()=>io.connect(serverPath,{
      transports:['websocket'],
-     path:'/reportabilidad'    
+     path:'/epp'    
  }),[serverPath]) 
 
 
