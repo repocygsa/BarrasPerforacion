@@ -17,7 +17,7 @@ export const Solicitudes = () => {
         <SnackComponent snackMensaje={snackMensaje} setSnackMensaje={setSnackMensaje}/>
 
         <Grid container spacing={2} rowSpacing={1} mt={1}>
-          <Grid item md={12} xs={12} align="right">
+          <Grid item md={12} xs={12}>
             <FormSolicitudEpp />
           </Grid>
         </Grid>
