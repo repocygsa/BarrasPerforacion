@@ -101,19 +101,6 @@ const NotificationSection = ({permiso}) => {
 
     return (
         <>
-
-            <Box
-                sx={{
-                    ml: 2,
-                    mr: 3,
-                    [theme.breakpoints.down('md')]: {
-                        mr: 2
-                    }
-                }}
-            >
-nada
-    
-            </Box>
             <Popper
                 placement={matchesXs ? 'bottom' : 'bottom-end'}
                 open={open}
