@@ -1,78 +1,140 @@
-import { useState, useEffect } from 'react';
-import { useQuery, useQueryClient } from 'react-query';
-import { Button, CircularProgress, Grid, Typography, FormControl } from '@mui/material';
-import { Form, Formik, FieldArray, getIn } from 'formik';
+import { useState, useRef } from 'react';
+import { Button, Grid, Typography, FormControl, FormHelperText } from '@mui/material';
+
+import { Form, Formik, FieldArray } from 'formik';
 import * as yup from "yup";
 import { CustomInput } from 'components/forms/CustomInput';
+import InputsSolicitudEpp from './inputsSolicitud';
+import { DialogEnviarSolicitud } from './dialogEnviarSolicitud';
 
-import { getEquiposEpp, getSexoByEppId, getTallaByEppId } from './helperSolicitudes';
 
-import { SnackComponent } from 'components/theme/SnackComponent';
+export const FormSolicitudEpp = ({ permiso, usuario, setSnackMensaje }) => {
 
-const validaFormSolicitud = yup.object().shape({
-  solicitud: yup.array().of(
-    yup.object().shape({
-      detEpp: yup
-        .string()
-        .required('Campo Requerido')
-      ,
-      sexEpp: yup
-        .string()
-        .required("Campo requerido")
-      ,
-      talEpp: yup
-        .string()
-        .required("Campo requerido")
-      ,
-      canEpp: yup
-        .number()
-        .positive()
-        .min(1, 'Debe ser mayor o igual a uno')
-        .max(9, 'No puede ser mayor a 9')
-        .required("Campo requerido")
-      ,
+  const [helperText, setHelperText] = useState('');
+  const [abrirDialog, setAbrirDialog] = useState(false);
+  const [dataSolicitud, setDataSolicitud] = useState('');
+  const [submiteado, setSubmiteado] = useState(false);
+  
+  const formikRef = useRef();
+
+  const valoresIniciales = {
+    solicitud: [
+      {
+        id: Math.random(),
+        detEpp: '',
+        sexEpp: '',
+        talEpp: '',
+        canEpp: '',
+      }
+    ],
+    obsEpp: '',
+    fonEpp: '',
+    corEpp: '',
+    rutUsu: usuario,
+    perUsu: permiso
+  }
+
+  const validaFormSolicitud = yup.object().shape({
+    solicitud: yup.array().of(
+      yup.object().shape({
+        detEpp: yup
+          .string()
+          .required('Campo Requerido')
+        ,
+        sexEpp: yup
+          .string()
+          .required("Campo requerido")
+        ,
+        talEpp: yup
+          .string()
+          .required("Campo requerido")
+        ,
+        canEpp: yup
+          .number()
+          .positive()
+          /*
+          .min(1, 'Debe ser mayor o igual a uno')
+          .max(inventario, `No hay inventario suficiente, máx. ${inventario}`)
+          */
+          .required("Campo requerido")
+      })
+    ).test('no-duplicate-elements', 'No se permiten elementos duplicados', (value) => {
+      setHelperText('');
+      if (Array.isArray(value)) {
+        const seenElements = new Set();
+  
+        return !value.some((element) => {
+          const key = `${element.detEpp}-${element.sexEpp}-${element.talEpp}`;
+          if (seenElements.has(key)) {
+            setHelperText('No se permiten elementos duplicados');
+            return true; // Elemento duplicado encontrado
+          }
+          seenElements.add(key);
+          return false;
+        });
+      }
+      setHelperText('');
+      return true; // No se encontraron elementos duplicados
+    }),
+    obsEpp: yup
+      .string()
+    ,
+    corEpp: yup
+      .string()
+      .email('Debe ingresar un correo')
+      .required('Campo Requerido')
+      /*
+      .when('obsEpp', {
+        is: (obsEpp) => obsEpp && obsEpp.length > 0,
+        then: yup.string().required('El correo es obligatorio cuando hay una observación'),
+        otherwise: yup.string(),
+      
     })
-  )
-})
+    */
+    ,
+    fonEpp: yup
+      .string()
+      .matches(/^\d{8}$/, 'El número de teléfono debe tener 8 dígitos')
+      .nullable()
+    ,
+  })
 
-const valoresIniciales = {
-  solicitud: [
-    {
-      id: Math.random(),
-      detEpp: '',
-      sexEpp: '',
-      talEpp: '',
-      canEpp: '',
-    }
-  ],
-}
-
-export const FormSolicitudEpp = () => {
-
-  const [idEpp, setIdEpp] = useState('');
-  const [snackMensaje, setSnackMensaje] = useState('');
-
-  const {data:epps, isLoading:isLoadingEpps} = useQuery('queryEpps',()=>getEquiposEpp());
-  const {data:sexoEpp, isLoading:isLoadingSexoEpp} = useQuery(['querySexoByEppId',idEpp],()=>getSexoByEppId(idEpp));
-  const {data:TallaEpp, isLoading:isLoadingTallaEpp} = useQuery(['queryTallaByEppId',idEpp],()=>getTallaByEppId(idEpp));
 
   return (
+    <>
+    <DialogEnviarSolicitud 
+      abrirDialog={abrirDialog} 
+      setAbrirDialog={setAbrirDialog}
+      setSnackMensaje={setSnackMensaje}
+      formikRef={formikRef} 
+      dataSolicitud={dataSolicitud}
+      submiteado={submiteado}
+      setSubmiteado={setSubmiteado}
+    />
     <Formik
+      innerRef={formikRef}
       initialValues={valoresIniciales}
       validationSchema={validaFormSolicitud}
-      enableReinitialize
-      onSubmit={(values) => {
-        console.log(values)
-      }}
+      // enableReinitialize
+      onSubmit={(values, { resetForm }) => {
+
+        setDataSolicitud(values);
+        setAbrirDialog(true);
+
+        // console.log(values);
+        // resetForm();
+        // mutateSolicitud(values)
+  
+    }}
     >
-    {({ values, touched, errors, handleChange, handleBlur, setFieldValue, isSubmitting }) => (
+    {({ values }) => (
       <Form>
         <Typography               
           sx={{ fontSize: 15, mb: 4 }}
           color="text.secondary"
           gutterBottom
         >
-          Seleccione el equipo que necesita y su detalle, si requiere agregar más equipos haga clic en el botón azul, de lo contrario si desea quitar equipos haga clic en el botón rojo.
+          Seleccione el EPP que necesita y su detalle, si requiere agregar más EPPs haga clic en el botón azul, de lo contrario si desea quitar equipos haga clic en el botón rojo.
         </Typography>
         <FieldArray name="solicitud">
         {({ push, remove }) => (
@@ -81,94 +143,36 @@ export const FormSolicitudEpp = () => {
             values.solicitud.map((p, index) => {
 
               const detEpp = `solicitud[${index}].detEpp`;
-              const touchedEpp = getIn(touched, detEpp);
-              const errorEpp = getIn(errors, detEpp);
-
               const sexEpp = `solicitud[${index}].sexEpp`;
-              const touchedSexo = getIn(touched, sexEpp);
-              const errorSexo = getIn(errors, sexEpp);
-
               const talEpp = `solicitud[${index}].talEpp`;
-              const touchedTalla = getIn(touched, talEpp);
-              const errorTalla = getIn(errors, talEpp);
-
               const canEpp = `solicitud[${index}].canEpp`;
-              const touchedCant = getIn(touched, canEpp);
-              const errorCant = getIn(errors, canEpp);
 
               return (
-                <Grid container spacing={2} rowSpacing={4} key={p.id} mb={1}>
-                  <Grid item md={4} xs={12}>
-                  {
-                  isLoadingEpps ? 
-                  <CircularProgress/>
-                  : 
-                  <CustomInput
-                    cleanSelect={[]}
-                    setSelect={setIdEpp}
-                    type={1}
-                    name={detEpp}
-                    label="Equipos de protección personal"
-                    array={epps.data}
-                    nomSelectDependiente={[sexEpp, talEpp]}
-                  />
-                  }
-                  </Grid>
-                  <Grid item md={2} xs={12}>
-                    {
-                    isLoadingSexoEpp ? 
-                    <CircularProgress/>
-                    :
-                    <CustomInput
-                      type={2}
-                      name={sexEpp}
-                      label="Sexo"
-                      array={sexoEpp.data}
-                    />
-                    }
-                  </Grid>                    
-                  <Grid item md={2} xs={12}>
-                    {
-                    isLoadingTallaEpp ? 
-                    <CircularProgress/>
-                    :
-                    <CustomInput
-                      type={2}
-                      name={talEpp}
-                      label="Talla"
-                      array={TallaEpp.data}
-                    />
-                    }
-                  </Grid>
-                  <Grid item md={1} xs={12}>
-                    <CustomInput
-                      type={3}
-                      cantRows={1}
-                      name={canEpp}
-                      label="Cantidad"
-                    />
-                  </Grid>
-                  {
-                  values.solicitud && values.solicitud.length > 1 &&
-                  <Grid item md={1} xs={12}>
-                    <FormControl fullWidth>
-                      <Button 
-                        type="button"
-                        color="error"
-                        variant="contained"
-                        onClick={() => remove(index)}
-                      >
-                      Quitar
-                      </Button>
-                    </FormControl>
-                  </Grid> 
-                  }
-                </Grid>
+                <InputsSolicitudEpp 
+                  detEpp={detEpp} 
+                  sexEpp={sexEpp} 
+                  talEpp={talEpp} 
+                  canEpp={canEpp} 
+                  values={values} 
+                  remove={remove} 
+                  index={index}
+                  submiteado={submiteado}
+                  key={p.id}
+                />
               ); // Fin return
+
             }) // Fin mapeo
           }
 
-          <Grid container spacing={1} rowSpacing={4}>
+          <Grid container spacing={1} rowSpacing={4} mb={2}>
+            <Grid item md={12} xs={12} textAlign='center'>
+              <FormHelperText name="no-duplicate-elements" error>
+                {helperText}
+              </FormHelperText>
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={1} rowSpacing={4} mb={2}>
             <Grid item md={2} xs={12}>
               <FormControl fullWidth>
                 <Button
@@ -178,7 +182,7 @@ export const FormSolicitudEpp = () => {
                     push({ id: Math.random(), detEpp: '', sexEpp: '', talEpp: '', canEpp: ''})
                   }
                 >
-                  Agregar equipo
+                  Agregar EPP
                 </Button>
               </FormControl>
             </Grid>
@@ -186,6 +190,37 @@ export const FormSolicitudEpp = () => {
           </>
         )}
         </FieldArray>
+
+        <Grid container spacing={1} rowSpacing={4} mb={1}>
+          <Grid item md={12} xs={12}>
+            <CustomInput
+              type={3}
+              cantRows={2}
+              name='obsEpp'
+              label="Observaciones"
+            />
+          </Grid>
+        </Grid>
+
+        <Grid container spacing={1} rowSpacing={4} mb={3}>
+          <Grid item md={6} xs={12}>
+            <CustomInput
+              type={3}
+              cantRows={1}
+              name='corEpp'
+              label="Correo"
+            />
+          </Grid>
+          <Grid item md={6} xs={12}>
+            <CustomInput
+              type={4}
+              cantRows={1}
+              name='fonEpp'
+              label="Teléfono"
+              adorment='+56 9'
+            />
+          </Grid>
+        </Grid>
 
         <Grid container spacing={1} rowSpacing={4}>
             <Grid item md={12} xs={12} textAlign='center'>
@@ -204,6 +239,7 @@ export const FormSolicitudEpp = () => {
       </Form>
     )}
     </Formik>
+    </>
   );
 
 }

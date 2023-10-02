@@ -10,7 +10,12 @@ export const getSexoByEppId = async(idEpp)=>{
     return getSexoByEppId  
 }
 
-export const getTallaByEppId = async(idEpp)=>{   
-    const getTallaByEppId = await llamadaApi.post('/epp/getTallaByEppId', {idEpp})  
+export const getTallaByEppId = async(idEpp, idSex)=>{   
+    const getTallaByEppId = await llamadaApi.post('/epp/getTallaByEppId', {idEpp, idSex})  
     return getTallaByEppId  
+}
+
+export const guardarSolicitudEpp = async(values)=>{   
+    const guardarSolicitudEpp = await llamadaApi.post('/epp/guardarSolicitudEpp',{values})  
+   return guardarSolicitudEpp
 }

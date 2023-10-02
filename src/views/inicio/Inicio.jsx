@@ -8,7 +8,7 @@ export const Inicio = ({permiso}) =>{
    const navigate  = useNavigate()
    
    useEffect(() => {
-      if(permiso===0){
+      if(permiso===3){
          navigate(`${config.basename}/solicitud`)
       }else if(permiso===1){
          navigate(`${config.basename}/entrega`)

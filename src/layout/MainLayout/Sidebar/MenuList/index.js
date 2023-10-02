@@ -14,7 +14,7 @@ const MenuList = ({permiso}) => {
         switch (item.type) {
           
             case 'SOLICITANTE':
-                return permiso.permiso===0 ? <NavGroup key={item.id} item={item}/>:null;
+                return permiso.permiso===3 ? <NavGroup key={item.id} item={item}/>:null;
             case 'ENTREGADOR':
                 return permiso.permiso===2 ?<NavGroup key={item.id} item={item}/>:null;
             case 'ADMINISTRADOR':

@@ -1,7 +1,7 @@
-import { FormControl, FormHelperText, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { FormControl, FormHelperText, InputLabel, MenuItem, Select, TextField, InputAdornment  } from '@mui/material';
 import { Field } from 'formik';
 
-export const CustomInput=({type,name,label,nomSelectDependiente,setSelect,cleanSelect,array,cantRows})=>{
+export const CustomInput=({type,name,label,nomSelectDependiente,setSelect,cleanSelect,array,cantRows, adorment, minimo, maximo})=>{
 
     switch (type) {
         case 1: // select dependiente
@@ -72,6 +72,7 @@ export const CustomInput=({type,name,label,nomSelectDependiente,setSelect,cleanS
                   {...field}                           
                   onChange={(e) => {
                     form.setFieldValue(`${name}`, e.target.value); 
+                    setSelect(e.target.value) 
                   }}
                   >                            
                     { 
@@ -104,6 +105,51 @@ export const CustomInput=({type,name,label,nomSelectDependiente,setSelect,cleanS
             label={label}
             error={meta.touched && Boolean(meta.error)}
             helperText={meta.touched && meta.error}                  
+              />         
+            </FormControl>        
+           
+         )}
+    </Field>
+      )
+      case 4 : // Texto multilínea con input adorment
+      return(
+        <Field name={name}>
+        {({ field,meta}) => (   
+            <FormControl fullWidth>
+             <TextField 
+            {...field}  
+            size='small'                        
+            autoComplete="off"  
+            label={label}
+            error={meta.touched && Boolean(meta.error)}
+            helperText={meta.touched && meta.error}
+            InputProps={{
+              startAdornment: <InputAdornment position="start">{adorment}</InputAdornment>,
+            }}              
+              />         
+            </FormControl>        
+           
+         )}
+    </Field>
+      )
+      case 5 : // Input numérico con minimos y maximos
+      return(
+        <Field name={name}>
+        {({ field,meta}) => (   
+          <FormControl fullWidth>
+             <TextField 
+            {...field}  
+            size='small'                        
+            autoComplete="off"  
+            label={label}
+            error={meta.touched && Boolean(meta.error)}
+            helperText={meta.touched && meta.error}
+            type="number"
+            InputProps={{
+              inputProps: { 
+                max: maximo, min: minimo
+              }
+            }}            
               />         
             </FormControl>        
            

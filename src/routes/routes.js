@@ -13,13 +13,13 @@ import { Entregas } from 'views/pages/entregas/Entregas';
 
 const Routes =({data})=>{
 
-    const { perUsu } = data.user;
+    const { rutUsu, perUsu, cttUsu } = data.user;
 
     if(perUsu !== null){
         return (
             [{
                 path: '/',
-                element:  perUsu !== null ? <MainLayout permiso={perUsu}/>:<MensajeSinPermiso/>,
+                element:  cttUsu === '4600021050' ? <MainLayout permiso={perUsu}/>:<MensajeSinPermiso/>,
                 children: [
                     {
                         path: '/inicio',
@@ -27,22 +27,22 @@ const Routes =({data})=>{
                     },
                     {
                         path: '/solicitud',
-                        element: perUsu===0 ? <Solicitudes />:<Navigate to='/web/epp'/>
+                        element: perUsu===3 ? <Solicitudes permiso={perUsu} usuario={rutUsu} />:<Navigate to='/web/epp' />
                     
                     },
                     {
                         path: '/entrega',
-                        element: perUsu===2 ? <Entregas />:<Navigate to='/web/epp'/>
+                        element: perUsu===2 ? <Entregas permiso={perUsu} usuario={rutUsu} />:<Navigate to='/web/epp' />
                     
                     },
                     {
                         path: '/entrega',
-                        element: perUsu===1 ? <Entregas />:<Navigate to='/web/epp'/>
+                        element: perUsu===1 ? <Entregas permiso={perUsu} usuario={rutUsu} />:<Navigate to='/web/epp' />
                     
                     },
                     {
                         path: '*',
-                        element: <Navigate to='/epp'/>
+                        element: <Navigate to='/epp' />
                     },               
                     
                 ]
