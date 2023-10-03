@@ -9,6 +9,7 @@ import { Inicio } from 'views/inicio/Inicio';
 import MensajeSinPermiso from 'components/theme/MensajeSinPermiso';
 import { Solicitudes } from 'views/pages/solicitudes/Solicitudes';
 import { Entregas } from 'views/pages/entregas/Entregas';
+import { ListSolicitudes } from 'views/pages/revSolicitudes/listSolicitudes';
 
 
 const Routes =({data})=>{
@@ -31,8 +32,8 @@ const Routes =({data})=>{
                     
                     },
                     {
-                        path: '/entrega',
-                        element: perUsu===2 ? <Entregas permiso={perUsu} usuario={rutUsu} />:<Navigate to='/web/epp' />
+                        path: '/list_solicitudes',
+                        element: perUsu===2 ? <ListSolicitudes permiso={perUsu} usuario={rutUsu} />:<Navigate to='/web/epp' />
                     
                     },
                     {

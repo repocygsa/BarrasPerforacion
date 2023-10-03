@@ -1,12 +1,12 @@
 import menuAdmin from './menuAdmin';
-import menuEntrega from './menuEntrega';
 import menuUser from './menuUser';
+import menuGestion from './menuGestion';
 
 
 // ==============================|| MENU ITEMS ||============================== //
 
 const menuItems = {
-     items: [menuUser,menuEntrega,menuAdmin]
+     items: [menuUser,menuAdmin,menuGestion]
 };
 
 export default menuItems;

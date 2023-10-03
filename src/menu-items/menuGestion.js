@@ -3,10 +3,10 @@
 
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
 
-const menuEntrega = {
-    id: 'menuEntrega',
-    title: 'Menú personal',
-    type: 'ENTREGADOR',
+const menuGestion = {
+    id: 'menuGestion',
+    title: 'Menú gestión',
+    type: 'GESTION',
     children: [
         {
             id: 'epp',
@@ -17,9 +17,9 @@ const menuEntrega = {
             children: [
                 {
                     id: 'entrega',
-                    title: 'Entregar EPP',
+                    title: 'Gestionar solicitudes EPP',
                     type: 'item',
-                    url: '/entrega',
+                    url: '/list_solicitudes',
                     breadcrumbs: false,
                     icon: GppGood,
                 },          
@@ -29,4 +29,4 @@ const menuEntrega = {
 
 };
 
-export default menuEntrega;
+export default menuGestion;

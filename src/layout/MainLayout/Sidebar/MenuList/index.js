@@ -15,7 +15,7 @@ const MenuList = ({permiso}) => {
           
             case 'SOLICITANTE':
                 return permiso.permiso===3 ? <NavGroup key={item.id} item={item}/>:null;
-            case 'ENTREGADOR':
+            case 'GESTION':
                 return permiso.permiso===2 ?<NavGroup key={item.id} item={item}/>:null;
             case 'ADMINISTRADOR':
                 return permiso.permiso===1 ?<NavGroup key={item.id} item={item}/>:null;
