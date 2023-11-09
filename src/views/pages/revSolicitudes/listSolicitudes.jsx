@@ -24,7 +24,11 @@ export const ListSolicitudes = () => {
         }
     );
 
+
+
     const {data:dataListaSolicitudes,isLoading:isLoadingDataListaSolicitudes} = useQuery(['QueryListaSolicitudes',filtroFecha],()=>getListaSolicitudes(filtroFecha))
+    
+
     
     return (
         <MainCard title="Solicitudes de EPP enviadas por trabajadores">

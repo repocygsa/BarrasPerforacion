@@ -2,6 +2,8 @@ import { Grid, Typography } from '@mui/material';
 import { DataGrid, esES } from '@mui/x-data-grid';
 import moment from 'moment';
 
+import { BtnMostrarDetalleSol } from './btnMostrarDetalleSol';
+
 export const TablaSolicitudes = ({ DataListaSolicitudes, setSnackMensaje}) => {
 
     const columnasTablaSolicitudes=[
@@ -22,7 +24,7 @@ export const TablaSolicitudes = ({ DataListaSolicitudes, setSnackMensaje}) => {
         {
             field:'fechasolicitud',
             type:'date',
-            headerName:'Fecha Hora Solicitud',
+            headerName:'Fecha hora Solicitud',
             flex:1,
             align:'center',
             minWidth:160,
@@ -32,16 +34,50 @@ export const TablaSolicitudes = ({ DataListaSolicitudes, setSnackMensaje}) => {
             field:'correo',
             headerName:'Correo contacto',
             align:'left',
-            minWidth: 200,
+            minWidth: 250,
             valueGetter:(params)=>params.row.cor_solicitante
         },
         {
             field:'obs',
             headerName:'Observaciones',
             align:'left',
-            minWidth: 300,
+            minWidth: 250,
             valueGetter:(params)=>params.row.obs
         },
+        {
+            field: 'status',
+            headerName: 'Status',
+            align: 'left',
+            minWidth: 100,
+            renderCell: (params) => {
+              let statusText;
+              
+              if (params.row.status_solicitud === 1) {
+                statusText = 'Pendiente';
+              } else if (params.row.status_solicitud === 2) {
+                statusText = 'Para entregar';
+              } else if (params.row.status_solicitud === 3) {
+                statusText = 'Entregado';
+              } else {
+                statusText = 'Rechazada';
+              }
+              
+              return <Typography variant="body1" style={{ fontWeight: 'bold' }}>{statusText}</Typography>;
+            },
+          },
+        {
+            field:'accion',
+            headerName:'Acciones',
+            headerAlign: 'center',
+            minWidth: 100,
+            renderCell:(params)=> 
+            <>{params.row.status_solicitud === 4?'': <BtnMostrarDetalleSol row={params.row} setSnackMensaje={setSnackMensaje}/>}
+                
+               
+                
+            </>,
+        },
+
     ];
 
     return (

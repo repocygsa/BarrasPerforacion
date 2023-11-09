@@ -1,6 +1,9 @@
 // assets
 import { Shield, GppGood, AdminPanelSettings } from '@mui/icons-material';
 
+import AddModeratorIcon from '@mui/icons-material/AddModerator';
+import InventoryIcon from '@mui/icons-material/Inventory';
+
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
 
 const menuAdmin = {
@@ -21,16 +24,26 @@ const menuAdmin = {
                     type: 'item',
                     url: '/solicitud',
                     breadcrumbs: false,
-                    icon: AdminPanelSettings,
+                    icon: AddModeratorIcon,
                 },
+              
                 {
-                    id: 'entrega',
-                    title: 'Entregar EPP',
+                    id: 'stock',
+                    title: 'Controlar stock',
                     type: 'item',
-                    url: '/entrega',
+                    url: '/stock',
                     breadcrumbs: false,
-                    icon: GppGood,
-                },         
+                    icon: InventoryIcon,
+                },    
+                {
+                    id: 'gsol',
+                    title: 'Gestionar solicitudes EPP',
+                    type: 'item',
+                    url: '/list_solicitudes',
+                    breadcrumbs: false,
+                    icon: AdminPanelSettings,
+                },               
+                 
             ]
         },
     ]

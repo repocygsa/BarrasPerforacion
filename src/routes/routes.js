@@ -10,6 +10,7 @@ import MensajeSinPermiso from 'components/theme/MensajeSinPermiso';
 import { Solicitudes } from 'views/pages/solicitudes/Solicitudes';
 import { Entregas } from 'views/pages/entregas/Entregas';
 import { ListSolicitudes } from 'views/pages/revSolicitudes/listSolicitudes';
+import { ListaStock } from 'views/pages/IngresoStock/listaStock';
 
 
 const Routes =({data})=>{
@@ -28,17 +29,22 @@ const Routes =({data})=>{
                     },
                     {
                         path: '/solicitud',
-                        element: perUsu===3 ? <Solicitudes permiso={perUsu} usuario={rutUsu} />:<Navigate to='/web/epp' />
+                        element: perUsu===1|| perUsu ===3? <Solicitudes permiso={perUsu} usuario={rutUsu} />:<Navigate to='/web/epp' />
                     
                     },
                     {
                         path: '/list_solicitudes',
-                        element: perUsu===2 ? <ListSolicitudes permiso={perUsu} usuario={rutUsu} />:<Navigate to='/web/epp' />
+                        element: perUsu===1 || perUsu ===2 ? <ListSolicitudes permiso={perUsu} usuario={rutUsu} />:<Navigate to='/web/epp' />
                     
                     },
                     {
                         path: '/entrega',
                         element: perUsu===1 ? <Entregas permiso={perUsu} usuario={rutUsu} />:<Navigate to='/web/epp' />
+                    
+                    },
+                    {
+                        path: '/stock',
+                        element: perUsu===1 || perUsu ===2 ?<ListaStock permiso={perUsu} usuario={rutUsu} /> : <Navigate to='/web/epp' />
                     
                     },
                     {

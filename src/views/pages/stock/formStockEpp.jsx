@@ -1,14 +1,13 @@
-import { useState, useRef } from 'react';
-import { Button, Grid, Typography, FormControl, FormHelperText } from '@mui/material';
+import { Button, FormControl, FormHelperText, Grid, Typography } from '@mui/material';
+import { useRef, useState } from 'react';
 
-import { Form, Formik, FieldArray } from 'formik';
+import { FieldArray, Form, Formik } from 'formik';
 import * as yup from "yup";
-import { CustomInput } from 'components/forms/CustomInput';
-import InputsSolicitudEpp from './inputsSolicitud';
-import { DialogEnviarSolicitud } from './dialogEnviarSolicitud';
+import { DialogEnviarStock } from './dialogEnviarStock';
+import InputsStockEpp from './inputsStockEpp';
 
 
-export const FormSolicitudEpp = ({ permiso, usuario, setSnackMensaje }) => {
+export const FormStockEpp = ({ permiso, usuario, setSnackMensaje, setModalPrin }) => {
 
   const [helperText, setHelperText] = useState('');
   const [abrirDialog, setAbrirDialog] = useState(false);
@@ -76,33 +75,13 @@ export const FormSolicitudEpp = ({ permiso, usuario, setSnackMensaje }) => {
       setHelperText('');
       return true; // No se encontraron elementos duplicados
     }),
-    obsEpp: yup
-      .string()
-    ,
-    corEpp: yup
-      .string()
-      .email('Debe ingresar un correo')
-      .required('Campo Requerido')
-      /*
-      .when('obsEpp', {
-        is: (obsEpp) => obsEpp && obsEpp.length > 0,
-        then: yup.string().required('El correo es obligatorio cuando hay una observación'),
-        otherwise: yup.string(),
-      
-    })
-    */
-    ,
-    fonEpp: yup
-      .string()
-      .matches(/^\d{8}$/, 'El número de teléfono debe tener 8 dígitos')
-      .nullable()
-    ,
+   
   })
 
 
   return (
     <>
-    <DialogEnviarSolicitud 
+    <DialogEnviarStock
       abrirDialog={abrirDialog} 
       setAbrirDialog={setAbrirDialog}
       setSnackMensaje={setSnackMensaje}
@@ -110,6 +89,8 @@ export const FormSolicitudEpp = ({ permiso, usuario, setSnackMensaje }) => {
       dataSolicitud={dataSolicitud}
       submiteado={submiteado}
       setSubmiteado={setSubmiteado}
+      setModalPrin={setModalPrin}
+      usuario={usuario}
     />
     <Formik
       innerRef={formikRef}
@@ -121,7 +102,7 @@ export const FormSolicitudEpp = ({ permiso, usuario, setSnackMensaje }) => {
         setDataSolicitud(values);
         setAbrirDialog(true);
 
-        // console.log(values);
+       //  console.log(values);
         // resetForm();
         // mutateSolicitud(values)
   
@@ -148,7 +129,7 @@ export const FormSolicitudEpp = ({ permiso, usuario, setSnackMensaje }) => {
               const canEpp = `solicitud[${index}].canEpp`;
 
               return (
-                <InputsSolicitudEpp 
+                <InputsStockEpp
                   detEpp={detEpp} 
                   sexEpp={sexEpp} 
                   talEpp={talEpp} 
@@ -191,51 +172,27 @@ export const FormSolicitudEpp = ({ permiso, usuario, setSnackMensaje }) => {
         )}
         </FieldArray>
 
-        <Grid container spacing={1} rowSpacing={4} mb={1}>
-          <Grid item md={12} xs={12}>
-            <CustomInput
-              type={3}
-              cantRows={2}
-              name='obsEpp'
-              label="Observaciones"
-            />
-          </Grid>
-        </Grid>
-
-        <Grid container spacing={1} rowSpacing={4} mb={3}>
-          <Grid item md={6} xs={12}>
-            <CustomInput
-              type={3}
-              cantRows={1}
-              name='corEpp'
-              label="Correo"
-            />
-          </Grid>
-          <Grid item md={6} xs={12}>
-            <CustomInput
-              type={4}
-              cantRows={1}
-              name='fonEpp'
-              label="Teléfono"
-              adorment='+56 9'
-            />
-          </Grid>
-        </Grid>
-
         <Grid container spacing={1} rowSpacing={4}>
-            <Grid item md={12} xs={12} textAlign='center'>
+            <Grid item md={10.5} xs={12} textAlign='right'>
+              <FormControl>
+              <Button color="error" variant="contained"style= {{textTransform: 'none'}} autoFocus onClick={()=>setModalPrin(false)}>
+                   Cerrar
+                </Button>
+              </FormControl>
+            </Grid>
+            <Grid item md={1.5} xs={12} textAlign='right'>
               <FormControl>
                 <Button
                   type="submit"
                   color="primary"
                   variant="contained"
                 >
-                  Enviar solicitud
+                 Registrar
                 </Button>
               </FormControl>
             </Grid>
           </Grid>
-
+       
       </Form>
     )}
     </Formik>

@@ -1,8 +1,8 @@
-import { useState, useEffect, memo } from "react";
-import { useQuery } from 'react-query';
+import { useState, useEffect, memo, useContext } from "react";
+import { useQuery, useQueryClient } from 'react-query';
 import { Button, CircularProgress, Grid, FormControl, Typography } from '@mui/material';
 import { CustomInput } from 'components/forms/CustomInput';
-
+import { SocketContext } from 'context/SocketContext';
 import { getEquiposEpp, getSexoByEppId, getTallaByEppId } from './helperSolicitudes';
 
 const InputsSolicitudEpp = ({ detEpp, sexEpp, talEpp, canEpp, values, remove, index, submiteado }) => {
@@ -10,20 +10,73 @@ const InputsSolicitudEpp = ({ detEpp, sexEpp, talEpp, canEpp, values, remove, in
   const [idEpp, setIdEpp] = useState('');
   const [idSex, setIdSex] = useState('');
   const [idtal, setIdTal] = useState('');
+  const [activa, setActiva] = useState(true);
+  const queryClient = useQueryClient();
+  const { socket } = useContext(SocketContext);
 
   const [inventario, setInventario] = useState(0);
+  const [inventarioM, setInventarioM] = useState(0);
 
   const {data:epps, isLoading:isLoadingEpps} = useQuery('queryEpps',()=>getEquiposEpp());
   const {data:sexoEpp, isLoading:isLoadingSexoEpp} = useQuery(['querySexoByEppId',idEpp],()=>getSexoByEppId(idEpp));
   const {data:tallaEpp, isLoading:isLoadingTallaEpp} = useQuery(['queryTallaByEppId', idEpp, idSex],()=>getTallaByEppId(idEpp, idSex));
-
+  /*
   useEffect(() => {
     if(!isLoadingTallaEpp){
       if(tallaEpp.data.length > 0){
         setInventario(tallaEpp.data.find(x => x.id === idtal).total)
+
+        console.log(tallaEpp.data, 'talla')
       }
    }
-  },[idtal])
+  },[idtal, inventario])
+
+*/
+let inv=0
+if(!isLoadingTallaEpp){
+  if(tallaEpp.data.length > 0){
+   // setInventario(tallaEpp.data.find(x => x.id === idtal).total)
+    inv=tallaEpp.data[0].total
+  }
+}
+
+
+useEffect(() => {
+  if(!isLoadingTallaEpp){
+    if(tallaEpp.data.length > 0){
+    //  setInventario(tallaEpp.data[0].total)
+    setInventario(tallaEpp.data.find(x => x.id === idtal).total)
+    }
+ }
+},[idtal]) 
+
+
+  useEffect(() => {
+    socket.on('resSocketReserva', () => {
+      // Invalida la consulta 'queryTallaByEppId' para que se vuelva a ejecutar automáticamente
+      queryClient.invalidateQueries('queryTallaByEppId');
+
+
+    });
+
+    socket.on('resSocketStock', () => {
+      // Invalida la consulta 'queryTallaByEppId' para que se vuelva a ejecutar automáticamente
+      queryClient.invalidateQueries('queryTallaByEppId');
+
+
+    });
+  }, [socket]);  
+/*
+  if(!isLoadingTallaEpp || idtal !== ''){
+    if(tallaEpp.data.length > 0){
+      setInventario(tallaEpp.data.find(x => x.id === idtal).total)
+    }
+ }
+ */ 
+  
+  
+
+  
 
   useEffect(() => {
     setInventario(0);

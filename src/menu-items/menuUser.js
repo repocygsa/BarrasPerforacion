@@ -1,5 +1,5 @@
 import { Shield, AdminPanelSettings } from '@mui/icons-material';
-
+import AddModeratorIcon from '@mui/icons-material/AddModerator';
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
 
 const menuUser = {
@@ -20,7 +20,7 @@ const menuUser = {
                     type: 'item',
                     url: '/solicitud',
                     breadcrumbs: false,
-                    icon: AdminPanelSettings,
+                    icon: AddModeratorIcon,
                 },          
             ]
         },

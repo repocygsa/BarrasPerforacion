@@ -1,5 +1,6 @@
 // assets
  import { Shield, GppGood, AdminPanelSettings } from '@mui/icons-material';
+ import InventoryIcon from '@mui/icons-material/Inventory';
 
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
 
@@ -16,12 +17,20 @@ const menuGestion = {
             breadcrumbs: false,
             children: [
                 {
+                    id: 'stock',
+                    title: 'Controlar stock',
+                    type: 'item',
+                    url: '/stock',
+                    breadcrumbs: false,
+                    icon: InventoryIcon,
+                },    
+                {
                     id: 'entrega',
                     title: 'Gestionar solicitudes EPP',
                     type: 'item',
                     url: '/list_solicitudes',
                     breadcrumbs: false,
-                    icon: GppGood,
+                    icon: AdminPanelSettings,
                 },          
             ]
         },

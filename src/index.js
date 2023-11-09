@@ -13,10 +13,11 @@ import App from 'App';
 import 'assets/scss/style.scss';
 
 import { QueryClient,QueryClientProvider } from 'react-query';
-import { SocketProvider } from 'context/SocketContext';
+
 
 import {store,Persistor} from './store';
 import { PersistGate } from 'redux-persist/integration/react';
+import { SocketProvider } from 'context/SocketContext';
 
 // ==============================|| REACT DOM RENDER  ||============================== //
 const queryClient =  new QueryClient()

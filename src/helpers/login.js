@@ -1,14 +1,16 @@
 import { llamadaApi, llamadaApi2 } from "api/reqApi";
-
-/* const getSessionUsu = async()=>{ 
+/*
+const getSessionUsu = async()=>{ 
     const getSessionUsu = await llamadaApi2.post('http://appsgobm.com/web/includes/Globales/funciones/getSession.php',{getSessionUsu:'1'})   
     return getSessionUsu;
 } 
+
+
 */
   
 
 const getSessionUsu = async()=>{
-    const data = {rut:'17.521.229-9',empresa:'78.318.570-9',ctto:'4600021050'}
+    const data = {rut:'17.526.007-2',empresa:'78.318.570-9',ctto:'4600021050'}
     const res={data}; 
     return res;
 }
