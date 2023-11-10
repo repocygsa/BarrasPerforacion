@@ -136,21 +136,21 @@ const [rechaza, setRechaza] = useState('')
 
       const validationUsers = yup.object().shape({
         ftur_ultima_actividad: yup
-        .date()
-        .transform((value, originalValue) => {
-          // Convierte el valor en una fecha válida utilizando Moment.js
-          const parsedDate = moment(originalValue, 'YYYY-MM-DD', true);
-          return parsedDate.isValid() ? parsedDate.toDate() : null;
-        })
-        .test('is-future-date', 'La fecha no puede ser anterior a la fecha actual', (value) => {
-          // Compara la fecha con la fecha actual utilizando Moment.js
-          if (value && moment(value).isBefore(moment(), 'day')) {
-            return false; // La fecha es anterior a la fecha actual
-          }
-          return true; // La fecha es válida
-        })
-        .required('Fecha hora es requerido')
-        .nullable(),
+    .date()
+    .transform((value, originalValue) => {
+      // Convierte el valor en una fecha válida utilizando Moment.js
+      const parsedDate = moment(originalValue, 'YYYY-MM-DD HH:mm', true);
+      return parsedDate.isValid() ? parsedDate.toDate() : null;
+    })
+    .test('is-future-date', 'La fecha y hora no puede ser anterior a la actual', (value) => {
+      // Compara la fecha con la fecha actual utilizando Moment.js
+      if (value && moment(value).isBefore(moment(), 'minute')) {
+        return false; // La fecha es anterior a la fecha actual
+      }
+      return true; // La fecha es válida
+    })
+    .required('Fecha hora es requerido')
+    .nullable(),
 
               ftur_mejora:yup
                 .string()
