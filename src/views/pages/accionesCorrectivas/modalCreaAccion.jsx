@@ -1,14 +1,14 @@
-import { Button, DialogActions, DialogContent } from '@mui/material';
+import { DialogContent } from '@mui/material';
 import { BootstrapDialog, BootstrapDialogTitle } from 'components/ModalStyle';
-import { Stock } from '../stock/stock';
+import { Accion } from './accion';
 
 
 
-import { FormStock } from './formStock';
 
 
 
-export const ModalCreaStock = ({ abrirModal, setAbrirModal, tipo, setSnackMensaje, usuario }) => {
+
+export const ModalCreaAccion = ({ abrirModal, setAbrirModal, tipo, setSnackMensaje, usuario }) => {
 
     const nada = ''
    
@@ -16,15 +16,15 @@ export const ModalCreaStock = ({ abrirModal, setAbrirModal, tipo, setSnackMensaj
         <>
         <BootstrapDialog
             open={abrirModal}
-            maxWidth="md"
+            maxWidth="xL"
             fullWidth
         >
             <BootstrapDialogTitle id="customized-dialog-title">
-              Ingreso de stock de elementos de protección personal
+              Registro de aprendizaje
             </BootstrapDialogTitle>
             <DialogContent dividers>
             {/* <FormStock setAbrirModal={setAbrirModal}/> */} 
-             <Stock usuario ={usuario} setModalPrin = {setAbrirModal} />
+             <Accion usuario ={usuario} setModalPrin = {setAbrirModal} setSnackMensaje={setSnackMensaje} />
             </DialogContent>
            {
             /*

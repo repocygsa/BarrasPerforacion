@@ -1,17 +1,18 @@
 /* eslint-disable array-callback-return */
-import { useContext, useEffect, useState } from 'react';
 import { Grid } from '@mui/material';
-import MainCard from 'ui-component/cards/MainCard';
 import { SnackComponent } from 'components/theme/SnackComponent';
-import { getEppAll } from 'helpers/gets';
+import { getEppAll, getIncidentes } from 'helpers/gets';
+import { useContext, useEffect, useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
-import { FormStockFilter } from './formStockFilter';
-import { TablaStock } from './tablaStock';
+import MainCard from 'ui-component/cards/MainCard';
+
+import { TablaAcciones } from './tablaAcciones';
 
 
 import { SocketContext } from 'context/SocketContext';
+import { FormAccionesFilter } from './formAccionesFilter';
 
-export const ListaStock = ({permiso, usuario}) => {
+export const ListaAcciones = ({permiso, usuario}) => {
 
     const [snackMensaje, setSnackMensaje] = useState('');
     const [filtrosStock, setFiltroStock] = useState([0])
@@ -25,6 +26,19 @@ export const ListaStock = ({permiso, usuario}) => {
     } = useQuery(['QueryEppAll', filtrosStock], 
       ()=>getEppAll(filtrosStock)
     );
+
+    const {
+      data: DataIncidente, 
+      isLoading:isLoadingDataIncidente
+    } = useQuery(['QueryIncidente'], 
+      ()=>getIncidentes()
+    );
+if(!isLoadingDataIncidente){
+  console.log(DataIncidente,'1')
+
+}
+ 
+
 
 
     useEffect(()=>{
@@ -42,15 +56,18 @@ export const ListaStock = ({permiso, usuario}) => {
     },[socket])
 
     return (
-<MainCard title="Control de stock">
+<MainCard title="Acciones correctivas">
   <SnackComponent snackMensaje={snackMensaje} setSnackMensaje={setSnackMensaje} />
 
   <Grid container spacing={2} rowSpacing={1} mt={1} justifyContent="center" alignItems="center">
+    
     <Grid item md={12} xs={12}>
-      <FormStockFilter setFiltroStock={setFiltroStock} usuario={usuario}/>
+      <FormAccionesFilter setFiltroStock={setFiltroStock} usuario={usuario} setSnackMensaje={setSnackMensaje}/>
     </Grid>
-    <Grid item md={9} xs={12}>
-      {isLoadingDataEppAll ? '' : <TablaStock dataRegistroStock={DataEppAll.data.result} setSnackMensaje={setSnackMensaje} />}
+    
+
+    <Grid item md={12} xs={12}>
+      {isLoadingDataIncidente ? '' : <TablaAcciones dataRegistroStock={DataIncidente.data.result} setSnackMensaje={setSnackMensaje} />}
     </Grid>
   </Grid>
 </MainCard>

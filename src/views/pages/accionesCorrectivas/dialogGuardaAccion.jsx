@@ -4,11 +4,11 @@ import { Send } from '@mui/icons-material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { SocketContext } from 'context/SocketContext';
-import { insertStock } from 'helpers/gets';
+import { guardarIncidente } from 'helpers/gets';
 import { useContext } from 'react';
 
 
-export const DialogEnviarStock = ({ abrirDialog, setAbrirDialog, setSnackMensaje, formikRef, dataSolicitud, submiteado, setSubmiteado, setModalPrin, usuario }) => {
+export const DialogGuardaAccion = ({ abrirDialog, setAbrirDialog, setSnackMensaje,formik, formikRef, datos, submiteado, setSubmiteado, setModalPrin, usuario }) => {
   const queryClient = useQueryClient();
   const preguntar =()=> {
     setAbrirDialog(!abrirDialog)
@@ -16,10 +16,10 @@ export const DialogEnviarStock = ({ abrirDialog, setAbrirDialog, setSnackMensaje
 
   const { socket } = useContext(SocketContext);
 
-    const {mutate: mutateInsertStock, isLoading:isLoadindMutateSaveStock} = useMutation(insertStock,{
+    const {mutate: mutateInsertStock, isLoading:isLoadindMutateSaveStock} = useMutation(guardarIncidente,{
       onSuccess:(res)=>{
- 
-          if(res.data===1){
+ console.log(res)
+          if(res.data.result.affectedRows===1){
               
               setSnackMensaje({                   
                   open:true,
@@ -27,9 +27,9 @@ export const DialogEnviarStock = ({ abrirDialog, setAbrirDialog, setSnackMensaje
                   estado:'success'
               });
     
-              queryClient.invalidateQueries('QueryEppAll');
-              socket.emit('eppStock')
-              
+              queryClient.invalidateQueries('QueryIncidente');
+           //   socket.emit('eppStock')
+           formik.resetForm();
           }else{
     
               setSnackMensaje({
@@ -44,15 +44,9 @@ export const DialogEnviarStock = ({ abrirDialog, setAbrirDialog, setSnackMensaje
   });
 
   const confirmaSalida =()=> {
-    formikRef.current?.resetForm();
-    const dataInsert ={
-      dataSolicitud,
-      usuario
-    }
-    mutateInsertStock(dataInsert);
-    setSubmiteado(!submiteado);
+    mutateInsertStock(datos); 
     setAbrirDialog(false);
-
+    setModalPrin(false);
   }
    
   return (
@@ -64,11 +58,11 @@ export const DialogEnviarStock = ({ abrirDialog, setAbrirDialog, setSnackMensaje
         maxWidth="sm"
       >
         <DialogTitle sx={{fontSize: '18px'}}>
-          Registro de stock EPP
+          Registro incidente
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            ¿Está seguro de registrar los stocks?
+            ¿Está seguro de registrar el incidente?
           </DialogContentText>
         </DialogContent>
         <DialogActions>

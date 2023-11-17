@@ -1,11 +1,13 @@
-import { useState, memo } from 'react';
-import IconButton from '@mui/material/IconButton';
 import { Grid, Tooltip } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import { ModalEditSol } from './modalEditSol';
+import IconButton from '@mui/material/IconButton';
+import { memo, useState } from 'react';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import FindInPageIcon from '@mui/icons-material/FindInPage';
+import TimelineIcon from '@mui/icons-material/Timeline';
+// import { ModalMostrarDetalle } from './modalMostrarDetalle';
 
 
-export const BtnUpdSol= ({row, setSnackMensaje}) => {
+export const BtnEditar = ({row}) => {
 
 
   const [abrirModal, setAbrirModal] = useState(false);
@@ -17,12 +19,14 @@ export const BtnUpdSol= ({row, setSnackMensaje}) => {
   };
   return (
     <>
-    <ModalEditSol
+   {/*
+      <ModalMostrarDetalle 
       abrirModal={abrirModal} 
       setAbrirModal={setAbrirModal}
       row={row}
-      setSnackMensaje={setSnackMensaje}
     />
+   */}
+ 
 
 <Grid
       container
@@ -33,9 +37,9 @@ export const BtnUpdSol= ({row, setSnackMensaje}) => {
       style={{ minHeight: '100vh' }}
     >
       <Grid item>
-      <Tooltip title="Modificar Reserva" arrow>
+      <Tooltip title="Editar acciones correctivas" arrow>
       <IconButton aria-label="boton respaldo" onClick={()=>setAbrirModal(true)}  >
-        <EditIcon fontSize="medium" color="info"/>
+        <ModeEditIcon fontSize="medium" color="success"/>
       </IconButton>
     </Tooltip>
       </Grid>
@@ -47,4 +51,4 @@ export const BtnUpdSol= ({row, setSnackMensaje}) => {
   )
 
 }
-export default memo(BtnUpdSol);
+export default memo(BtnEditar);

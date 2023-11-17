@@ -1,13 +1,13 @@
-import { useState, memo } from 'react';
-import { Article } from '@mui/icons-material';
-import IconButton from '@mui/material/IconButton';
 import { Grid, Tooltip } from '@mui/material';
-
+import IconButton from '@mui/material/IconButton';
+import { memo, useState } from 'react';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import FindInPageIcon from '@mui/icons-material/FindInPage';
-import { ModalMostrarDetalle } from './modalMostrarDetalle';
+import TimelineIcon from '@mui/icons-material/Timeline';
+// import { ModalMostrarDetalle } from './modalMostrarDetalle';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
 
-
-export const BtnMostrarDetalle = ({row}) => {
+export const BtnCestado = ({row}) => {
 
 
   const [abrirModal, setAbrirModal] = useState(false);
@@ -19,12 +19,14 @@ export const BtnMostrarDetalle = ({row}) => {
   };
   return (
     <>
-   
-    <ModalMostrarDetalle 
+   {/*
+      <ModalMostrarDetalle 
       abrirModal={abrirModal} 
       setAbrirModal={setAbrirModal}
       row={row}
     />
+   */}
+ 
 
 <Grid
       container
@@ -35,9 +37,9 @@ export const BtnMostrarDetalle = ({row}) => {
       style={{ minHeight: '100vh' }}
     >
       <Grid item>
-      <Tooltip title="Mostrar detalle" arrow>
+      <Tooltip title="Cargar evidencia de cierre" arrow>
       <IconButton aria-label="boton respaldo" onClick={()=>setAbrirModal(true)}  >
-        <FindInPageIcon fontSize="medium" color="info"/>
+        <UploadFileIcon fontSize="medium" color="info"/>
       </IconButton>
     </Tooltip>
       </Grid>
@@ -49,4 +51,4 @@ export const BtnMostrarDetalle = ({row}) => {
   )
 
 }
-export default memo(BtnMostrarDetalle);
+export default memo(BtnCestado);

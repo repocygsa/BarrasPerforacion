@@ -13,36 +13,22 @@ const menuAdmin = {
     children: [
         {
             id: 'epp',
-            title: 'EPP',
+            title: 'ACCIONES CORRECTIVAS ',
             type: 'collapse',
             icon: Shield,
             breadcrumbs: false,
             children: [
-                {
-                    id: 'solicitud',
-                    title: 'Solicitar EPP',
-                    type: 'item',
-                    url: '/solicitud',
-                    breadcrumbs: false,
-                    icon: AddModeratorIcon,
-                },
+
               
                 {
-                    id: 'stock',
-                    title: 'Controlar stock',
+                    id: 'accCorr',
+                    title: 'Acciones correctivas',
                     type: 'item',
-                    url: '/stock',
+                    url: '/registro',
                     breadcrumbs: false,
                     icon: InventoryIcon,
                 },    
-                {
-                    id: 'gsol',
-                    title: 'Gestionar solicitudes EPP',
-                    type: 'item',
-                    url: '/list_solicitudes',
-                    breadcrumbs: false,
-                    icon: AdminPanelSettings,
-                },               
+                       
                  
             ]
         },

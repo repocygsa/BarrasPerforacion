@@ -1,14 +1,13 @@
-import { useState, memo } from 'react';
-import { Article } from '@mui/icons-material';
-import IconButton from '@mui/material/IconButton';
 import { Grid, Tooltip } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import { memo, useState } from 'react';
 
 import FindInPageIcon from '@mui/icons-material/FindInPage';
-import {  ModalMostrarDetalleSol } from './modalMostrarDetalleSol';
-import { ModalMostrarDetalleSolEntrega } from './modalMostrarDetalleSolEntrega';
+// import { ModalMostrarDetalle } from './modalMostrarDetalle';
 
 
-export const BtnMostrarDetalleSol = ({row, setSnackMensaje}) => {
+export const BtnMostrarDetalle = ({row}) => {
+
 
   const [abrirModal, setAbrirModal] = useState(false);
   const centerIconButtonStyles = {
@@ -19,24 +18,14 @@ export const BtnMostrarDetalleSol = ({row, setSnackMensaje}) => {
   };
   return (
     <>
-   {
-row.status_solicitud === 1?
-<ModalMostrarDetalleSol
-abrirModal={abrirModal} 
-setAbrirModal={setAbrirModal}
-row={row}
-setSnackMensaje={setSnackMensaje}
-/>
-:
-<ModalMostrarDetalleSolEntrega
-abrirModal={abrirModal} 
-setAbrirModal={setAbrirModal}
-row={row}
-setSnackMensaje={setSnackMensaje}
-/>
-
-   }
-   
+   {/*
+      <ModalMostrarDetalle 
+      abrirModal={abrirModal} 
+      setAbrirModal={setAbrirModal}
+      row={row}
+    />
+   */}
+ 
 
 <Grid
       container
@@ -61,4 +50,4 @@ setSnackMensaje={setSnackMensaje}
   )
 
 }
-export default memo(BtnMostrarDetalleSol);
+export default memo(BtnMostrarDetalle);

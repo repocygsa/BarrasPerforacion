@@ -1,18 +1,16 @@
-import { useState } from 'react';
-import { FlashAuto } from '@mui/icons-material';
-import { Tooltip, Button } from '@mui/material';
 import AddModeratorIcon from '@mui/icons-material/AddModerator';
-import { Box } from '@mui/system';
-import { ModalCreaStock } from './modalCreaStock';
+import { Button, Tooltip } from '@mui/material';
+import { useState } from 'react';
+import { ModalCreaAccion } from './modalCreaAccion';
 
-export const BtnNuevoStock = ({setSnackMensaje, tipo, usuario}) => {
+export const BtnNuevaAccion = ({setSnackMensaje, tipo, usuario}) => {
 
   const [abrirModal, setAbrirModal] = useState(false);
 
   return (
     <>
     
-    <ModalCreaStock 
+    <ModalCreaAccion 
       abrirModal={abrirModal} 
       setAbrirModal={setAbrirModal}
       tipo={tipo}
