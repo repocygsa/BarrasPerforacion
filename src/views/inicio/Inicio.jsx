@@ -14,7 +14,7 @@ export const Inicio = ({permiso}) =>{
          navigate(`${config.basename}/entrega`)
       }
 
-    }, [permiso])
+    }, [navigate, permiso])
     
    return  <SamplePage/>
 

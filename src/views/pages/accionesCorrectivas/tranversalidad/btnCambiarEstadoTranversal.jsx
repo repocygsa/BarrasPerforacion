@@ -2,25 +2,21 @@ import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { Grid, Tooltip } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import { memo, useState } from 'react';
-import { ModalCierraAccion } from './modalCierraAccion';
 
-export const BtnCestado = ({row, setSnackMensaje}) => {
+
+export const BtnCestadoTranversal = ({row, setSnackMensaje}) => {
 
 
   const [abrirModal, setAbrirModal] = useState(false);
-
+  const centerIconButtonStyles = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh', // Asegura que el botón esté centrado verticalmente en la ventana.
+  };
   return (
     <>
-   
-      <ModalCierraAccion
-      abrirModal={abrirModal} 
-      setAbrirModal={setAbrirModal}
-      row={row}
-      setSnackMensaje={setSnackMensaje}
-
-    />
-   
- 
+  
 
   <Grid
     container
@@ -32,9 +28,9 @@ export const BtnCestado = ({row, setSnackMensaje}) => {
   >
 
 
-{row.inc_det_estado !== 3 && (
+{row.inc_tran_estado !== 1 && (
     <Grid item>
-       <Tooltip title="Cargar evidencia de cierre" arrow>
+       <Tooltip title="Cerrar medida correctiva" arrow>
         <IconButton aria-label="boton respaldo" onClick={()=>setAbrirModal(true)}  >
           <UploadFileIcon fontSize="medium" color="info"/>
         </IconButton>
@@ -42,9 +38,9 @@ export const BtnCestado = ({row, setSnackMensaje}) => {
     </Grid>
   )}
 
-{row.inc_det_estado === 3 && (
+{row.inc_tran_estado === 1 && (
     <Grid item>
-      <Tooltip title="Evidencia ya cargada" arrow>
+      <Tooltip title="Medida correctiva ya cerrada" arrow>
         <IconButton aria-label="boton respaldo"  >
           <UploadFileIcon fontSize="medium" color="gray"/>
         </IconButton>
@@ -63,4 +59,4 @@ export const BtnCestado = ({row, setSnackMensaje}) => {
   )
 
 }
-export default memo(BtnCestado);
+export default memo(BtnCestadoTranversal);

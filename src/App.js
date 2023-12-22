@@ -10,9 +10,10 @@ import Routes from 'routes';
 import themes from 'themes';
 
 // project imports
-import { getPermisoSessionEpp } from 'helpers/login';
+
 import NavigationScroll from 'layout/NavigationScroll';
 import { useQuery } from 'react-query';
+import { getPermisoSessionAprendizaje } from 'helpers/login';
 
 // import { io } from 'socket.io-client';
 // import { useEffect, useState } from 'react';
@@ -23,7 +24,7 @@ import { useQuery } from 'react-query';
 const App = () => {
 
     const customization = useSelector((state) => state.customization);
-    const {data, isLoading} = useQuery('getPermisoSessionEpp',()=>getPermisoSessionEpp());
+    const {data, isLoading} = useQuery('getPermisoSessionAprendizaje',()=>getPermisoSessionAprendizaje());
  
     return (
         <StyledEngineProvider injectFirst>

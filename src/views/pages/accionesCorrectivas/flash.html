@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reporte de Incidente</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f6f9; /* Gris claro */
+      color: #37474f; /* Gris oscuro */
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    
+    }
+
+    .card {
+      max-width: 800px;
+      width: 100%;
+      background-color: #fff; /* Blanco */
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 2px solid #e1e8ed; /* Gris más claro */
+      margin-bottom: 20px;
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+
+    .banner {
+      background-color: #3498db; /* Celeste */
+      color: #fff; /* Blanco */
+      text-align: center;
+      padding: 10px;
+      border-radius: 5px 5px 0 0;
+    }
+
+
+
+    .section-card {
+      background-color: #e1e8ed; /* Gris más claro */
+      color: #37474f; /* Gris oscuro */
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 15px;
+      min-width: 120px;
+    }
+
+    .icon {
+      font-size: 24px;
+      margin-right: 10px;
+      color: #3498db; /* Celeste */
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #546e7a; /* Gris medio */
+    }
+
+    p {
+      margin: 0 0 10px;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      border-radius: 5px;
+          background-color: #e1e8ed;
+          margin-bottom: 15px;
+    }
+
+    button {
+      background-color: #3498db; /* Celeste */
+      color: #fff; /* Blanco */
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .informe img {
+  max-width: '50%';
+  margin-right: 5px;
+  vertical-align: middle;
+}
+    button:hover {
+      background-color: #2980b9; /* Celeste más oscuro */
+    }
+
+    .email-content {
+      margin-top: 20px;
+      font-size: 16px;
+    }
+
+    .email-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #3498db; /* Fondo del contenedor - celeste */
+    }
+
+    .banner img {
+      max-width: 150px;
+      margin-right: 5px;
+      vertical-align: middle;
+    }
+
+    .title {
+      flex-grow: 1; /* El título crecerá para ocupar el espacio restante */
+      text-align: center;
+      background-color: #3498db; /* Color de fondo del título */
+      padding: 10px; /* Añadir relleno al título */
+      color: #fff; /* Color del texto del título */
+    }
+
+
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="email-container">
+        <div class="banner">
+          <img src="https://www.codelco.com/prontus_codelco/site/artic/20230623/imag/foto_0000000120230623105135/logo-footer.svg" alt="Logo Izquierdo">
+        </div>
+    
+        <div class="title">
+          <h2>Aprendizajes de Incidentes GOM</h2>
+        </div>
+    
+        <div class="banner">
+          <img src="http://appsgobm.com/web/gobmdigital/wp-content/uploads/2023/02/Blanco-150x150.png" alt="Logo Derecho">
+        </div>
+      </div>
+    <div class="card-body">
+      <div class="info-row">
+        <div class="section-card">
+          <h2>🏢<i class="email-content"></i> Empresa</h2>
+          <label>Nombre:</label>
+          <p>Tu Empresa S.A.</p>
+        </div>
+
+        <div class="section-card">
+          <h2>📅<i class="email-content"></i> Fecha y Hora</h2>
+          <label>Incidente:</label>
+          <p>04 de diciembre de 2023, 14:30</p>
+        </div>
+
+        <div class="section-card">
+          <h2>📌<i class="email-content"></i> Lugar</h2>
+          <label>Ubicación:</label>
+          <p>Oficina principal</p>
+        </div>
+      </div>
+
+      <div class="section-card">
+        <h2>⚠️<i class="email-content"></i> Tipo de Incidente</h2>
+        <label>Reportado:</label>
+        <p>Problemas con la red</p>
+      </div>
+      <div class="info-row">
+      <div class="section-card">
+        <h2>💿<i class="email-content"></i> ¿Qué Sucedió?</h2>
+        <label>Descripción:</label>
+        <p>Se experimentaron interrupciones en la red durante una reunión importante.</p>
+      </div>
+      <div class="section-card">
+        <img src="C:\Users\Andres-PC\Pictures\bloqueo.png" width="100%" alt="Descripción de la imagen">
+      </div>
+      </div>
+
+      <div class="section-card">
+        <h2>📑<i class="email-content"></i> Acciones Correctivas</h2>
+        <label>Tomadas:</label>
+        <p>Se reiniciaron los routers y se contactó al proveedor de servicios.</p>
+      </div>
+
+      <div class="section-card">
+        <h2>💡<i class="email-content"></i> Aprendizaje</h2>
+        <label>Lecciones:</label>
+        <p>Revisar la infraestructura de red para evitar futuros inconvenientes.</p>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

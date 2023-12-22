@@ -1,6 +1,6 @@
 // assets
- import { Shield, GppGood, AdminPanelSettings } from '@mui/icons-material';
- import InventoryIcon from '@mui/icons-material/Inventory';
+ import { AdminPanelSettings, Shield } from '@mui/icons-material';
+import InventoryIcon from '@mui/icons-material/Inventory';
 
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
 

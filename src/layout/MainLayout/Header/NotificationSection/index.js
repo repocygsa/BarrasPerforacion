@@ -1,10 +1,4 @@
 import {
-    Avatar,
-    Badge,
-    Box,
-    Button,
-    ButtonBase,
-    CardActions,
     ClickAwayListener,
     Divider,
     Grid,
@@ -13,7 +7,7 @@ import {
     useMediaQuery
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 // third-party
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -21,14 +15,10 @@ import PerfectScrollbar from 'react-perfect-scrollbar';
 // project imports
 import MainCard from 'ui-component/cards/MainCard';
 import Transitions from 'ui-component/extended/Transitions';
-import NotificationList from './NotificationList';
 
 // assets
-import { IconBell } from '@tabler/icons';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useQueryClient } from 'react-query';
 
-import { orange } from '@mui/material/colors';
-import { SocketContext } from 'context/SocketContext';
 
 // ==============================|| NOTIFICATION ||============================== //
 
@@ -38,8 +28,7 @@ const NotificationSection = ({permiso}) => {
     const theme = useTheme();
     const matchesXs = useMediaQuery(theme.breakpoints.down('md'));
     const [open, setOpen] = useState(false);
-    const [openDialogNoti, setOpenDialogNoti] = useState(false)
-    const [detaVali, setDetaVali] = useState('')
+
     // const [setValue] = useState('');
     /**
      * anchorRef is used on different componets and specifying one type leads to other components throwing an error
@@ -71,33 +60,17 @@ const NotificationSection = ({permiso}) => {
 
 
 
-   const { socket } = useContext(SocketContext);
-   const [cantNoti, setCantNoti] = useState(0)
+
 
 
 
    
   
-     socket.on('avaValidados',()=>{
-        queryClient.invalidateQueries('getUserNoti')             
-     })
-     
-     socket.on('notificaPamResp',()=>{
-        queryClient.invalidateQueries('getUserNoti')             
-     })
 
-     
-     socket.on('notificaHitoResp',()=>{
-        queryClient.invalidateQueries('getUserNoti')             
-     })
    
    
    
-   const handleToggle = () => {          
-            // limpiar notificaciones leídas
-   setOpen((prevOpen) => !prevOpen);
 
-};
 
     return (
         <>

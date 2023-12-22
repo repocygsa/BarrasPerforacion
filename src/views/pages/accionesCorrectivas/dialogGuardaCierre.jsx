@@ -1,40 +1,34 @@
-/* eslint-disable no-unused-vars */
 import { useMutation, useQueryClient } from 'react-query';
 
 import { Send } from '@mui/icons-material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import { guardarIncidente } from 'helpers/gets';
+import { guardarCierre } from 'helpers/gets';
 
 
-export const DialogGuardaAccion = ({ abrirDialog, setAbrirDialog, setSnackMensaje,formik, datos, submiteado, setSubmiteado, setModalPrin, usuario, formHijoRef }) => {
+export const DialogGuardaCierre = ({ abrirDialog, setAbrirDialog, setSnackMensaje,formik, datos,  setModalPrin }) => {
   const queryClient = useQueryClient();
   const preguntar =()=> {
     setAbrirDialog(!abrirDialog)
-  
   }
 
 
 
-    const {mutate: mutateInsertStock, isLoading:isLoadindMutateSaveStock} = useMutation(guardarIncidente,{
+    const {mutate: mutateInsertStock, isLoading:isLoadindMutateSaveStock} = useMutation(guardarCierre,{
       onSuccess:(res)=>{
-
-          if(res.result.affectedRows===1){
+ 
+          if(res.data.result.affectedRows===1){
               
               setSnackMensaje({                   
                   open:true,
-                  mensaje:'Datos registrados correctamente',
+                  mensaje:'Cierre registrado correctamente',
                   estado:'success'
               });
     
+              queryClient.invalidateQueries('QueryIncidenteDet');
               queryClient.invalidateQueries('QueryIncidente');
            //   socket.emit('eppStock')
            formik.resetForm();
-        
-           if (formHijoRef.current) {
-               formHijoRef.current.resetForm();
-             
-             }
           }else{
     
               setSnackMensaje({
@@ -49,10 +43,10 @@ export const DialogGuardaAccion = ({ abrirDialog, setAbrirDialog, setSnackMensaj
   });
 
   const confirmaSalida =()=> {
+
     mutateInsertStock(datos); 
     setAbrirDialog(false);
-
-   // setModalPrin(false);
+    setModalPrin(false);
   }
    
   return (
@@ -64,11 +58,11 @@ export const DialogGuardaAccion = ({ abrirDialog, setAbrirDialog, setSnackMensaj
         maxWidth="sm"
       >
         <DialogTitle sx={{fontSize: '18px'}}>
-          Registro incidente
+          Cierre de medida correctiva
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            ¿Está seguro de registrar el incidente?
+            ¿Está seguro de realizar el cierre de la medida correctiva?
           </DialogContentText>
         </DialogContent>
         <DialogActions>

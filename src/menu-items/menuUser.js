@@ -1,4 +1,4 @@
-import { Shield, AdminPanelSettings } from '@mui/icons-material';
+import { Shield } from '@mui/icons-material';
 import AddModeratorIcon from '@mui/icons-material/AddModerator';
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
 

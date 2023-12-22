@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-nv+DQu4fa37JUbZz4uKd4+p3bC5dPOJnCrrxwo9+Ewsj1rg2tLk8JOGpZl+FX0oZi5lZDDlZDx5llLq3LSC9iA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Seguridad</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #container {
+            width: 50%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #banner {
+            background-color: #2E93E2;
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px 10px 0 0;
+            color: #fff;
+        }
+
+        #banner h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 10px;
+            margin-top: 20px;
+            color: #000;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h2 {
+            font-weight: bold;
+            background-color: #56C4AD;
+            padding: 10px;
+            border-radius: 10px 10px 0 0;
+            margin: 0;
+            color: #fff;
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            flex-wrap: wrap;
+        }
+
+        .options label {
+            display: flex;
+            align-items: center;
+            margin-right: 15px;
+            margin-bottom: 10px;
+        }
+
+        .options input {
+            margin-right: 5px;
+        }
+
+        .options label {
+            white-space: nowrap; /* Evitar el salto de línea en las etiquetas */
+        }
+        .side-by-side {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.side-by-side .card {
+    width: 48%; /* Cambia este valor según tus necesidades */
+    box-sizing: border-box; /* Incluye el padding y el borde en el ancho del elemento */
+    margin-bottom: 20px;
+}
+
+.side-by-side img {
+    max-width: 100%; /* La imagen se ajustará al ancho del contenedor padre */
+    height: auto; /* La altura se ajustará automáticamente para mantener la proporción */
+}
+
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="banner">
+            <h1>Flash de seguridad n°104</h1>
+        </div>
+
+        <div class="card">
+            <h2>Calificación del evento significativo</h2>
+            <div class="options">
+                <label><input type="radio" name="calificacion" value="conLesion">Con Lesión</label>
+                <label><input type="radio" name="calificacion" value="sinLesion">Sin Lesión</label>
+                <label><input type="radio" name="calificacion" value="dePerdida">De Pérdida</label>
+                <label><input type="radio" name="calificacion" value="sinPersonasExpuestas">Sin Personas Expuestas</label>
+                <label><input type="radio" name="calificacion" value="noSignificativo">No Significativo</label>
+               
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Tipo de Incidente</h2>
+            <div class="options">
+                <label><input type="radio" name="tipoIncidente" value="deTrabajo">De Trabajo</label>
+                <label><input type="radio" name="tipoIncidente" value="deTrayecto">De Trayecto</label>
+                <label><input type="radio" name="tipoIncidente" value="cuasiAccidente">Cuasi Accidente</label>
+                <label><input type="radio" name="tipoIncidente" value="danioPropiedad">Daño a la Propiedad</label>
+                <label><input type="radio" name="tipoIncidente" value="fallaOperacional">Falla Operacional</label>
+            </div>
+        </div>
+                <!-- Descripción y Foto (Lado a Lado) -->
+                <div class="side-by-side">
+                    <div class="card">
+                        <h2>Descripción</h2>
+                        <div class="options">
+                            <p>Texto de descripción aquí.</p>
+                        </div>
+                    </div>
+        
+                    <div class="card">
+                        <h2>Foto</h2>
+                        <div class="options">
+                            <img src="ruta_de_la_imagen.jpg" alt="Imagen relacionada al incidente">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Detalles del Evento</h2>
+                    <div class="icon-cards">
+                        <div class="icon-card">
+                            <i class="fas fa-building"></i>
+                            <p>Gerencia: Nombre de la Gerencia</p>
+                        </div>
+                        <div class="icon-card">
+                            <i class="fas fa-industry"></i>
+                            <p>Empresa: Nombre de la Empresa</p>
+                        </div>
+                        <!-- Agrega más icon-cards para FECHA, HORA, LUGAR, etc. -->
+                    </div>
+                </div>
+                
+    </div>
+</body>
+</html>
+
+
+
+
+

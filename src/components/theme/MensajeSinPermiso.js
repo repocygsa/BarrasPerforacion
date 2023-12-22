@@ -6,11 +6,12 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { orange } from '@mui/material/colors';
-import React from 'react';
+import {useState} from 'react';
 
 export default function MensajeSinPermiso() {
   
- const [open, setOpen] = React.useState(true);
+ const [open, setOpen] = useState(true);
+ setOpen(true)
 
   // const handleClickOpen = () => {
   //   setOpen(true);

@@ -17,12 +17,12 @@ const getSessionUsu = async()=>{
 
 
 // Va a buscar si tiene permisos para administrar ya que todos los usuarios de la appsgom pueden pedir epp
-const getPermisoSessionEpp = ()=>getSessionUsu().then(async(res)=>{   
-    const getPermisoSessionEpp = await llamadaApi.post('/epp/getPermisoSessionEpp',{res})       
-    return getPermisoSessionEpp;
+const getPermisoSessionAprendizaje = ()=>getSessionUsu().then(async(res)=>{   
+    const getPermisoSessionAprendizaje = await llamadaApi.post('/aprendizaje/getPermisoSessionAprendizaje',{res})       
+    return getPermisoSessionAprendizaje;
 })
 
 export{ 
     getSessionUsu,
-    getPermisoSessionEpp
+    getPermisoSessionAprendizaje
 }

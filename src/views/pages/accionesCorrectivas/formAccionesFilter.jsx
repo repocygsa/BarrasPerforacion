@@ -1,16 +1,15 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable array-callback-return */
-import { CircularProgress, FormControl, FormHelperText, Grid, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { CircularProgress, FormControl, FormHelperText, Grid, InputLabel, MenuItem, Select, TextField, Tooltip } from '@mui/material';
 import { useState } from 'react';
 import * as yup from "yup";
 
-import { SnackComponent } from 'components/theme/SnackComponent';
-import { useFormik } from 'formik';
-import { getContratos, getEmpresa, getMaterial, getSexo, getTalla, insertStock } from 'helpers/gets';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { BtnNuevaAccion } from './btnNuevaAccion';
-import { LoadingButton } from '@mui/lab';
 import SearchIcon from '@mui/icons-material/Search';
+import { LoadingButton } from '@mui/lab';
 import { Box } from '@mui/system';
+import { useFormik } from 'formik';
+import { getContratos, getEmpresa, insertStock } from 'helpers/gets';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 
 export const FormAccionesFilter = ({setFiltroStock, usuario, setSnackMensaje}) => {
 
@@ -37,36 +36,10 @@ export const FormAccionesFilter = ({setFiltroStock, usuario, setSnackMensaje}) =
   } = useQuery(['QueryCttos', empFil], 
       ()=>getContratos(empFil)
   );
-  const {
-    data: DataMaterial, 
-    isLoading:isLoadingDataMaterial
-} = useQuery(['QueryMaterial'], 
-    ()=>getMaterial()
-);
 
 
-const [tallas, setTallas] = useState([])
-const {
-  data: DataTalla, 
-  isLoading:isLoadingDataTalla
-} = useQuery(['QueryTalla', tipoVestimenta], 
-  ()=>getTalla(tipoVestimenta),{
-    onSuccess: (fTall) => {
-  setTallas([{id:0, des_tal:'Todos', tip_tal:0}].concat(fTall.data.result))
-    }
-  }
-);
-const [sexo, setSexo] = useState([])
-const {
-data: DataSexo, 
-isLoading:isLoadingDataSexo
-} = useQuery(['QuerySexo', tipoSex], 
-()=>getSexo(tipoSex),{
-  onSuccess: (sex)=>{
-    setSexo([{id:0, des_sex:'Todos', tip_sex:0}].concat(sex.data.result))
-  }
-}
-);
+
+
 
 const {mutate: mutateInsertStock, isLoading:isLoadindMutateSaveStock} = useMutation(insertStock,{
   onSuccess:(res)=>{
@@ -93,9 +66,9 @@ const {mutate: mutateInsertStock, isLoading:isLoadindMutateSaveStock} = useMutat
   }
 });
   const validaciones = yup.object().shape({
-    sel_epp: yup
+    emp_inf: yup
     .string()
-    .required('Debe ingresar un EPP')
+    // .required('Debe ingresar una empresa')
 ,
 
      
@@ -107,12 +80,11 @@ const {mutate: mutateInsertStock, isLoading:isLoadindMutateSaveStock} = useMutat
 const formik = useFormik({
 
   initialValues: {
-    sel_epp :eppSeleccionado,
-    epp_talla: '',
-    epp_sexo: '',
-    epp_cantidad: '',
-    epp_movimiento: 1,
    
+    emp_inf:'',
+    ctt_inf:'',
+    pos_inf:'',
+
   },
 
   validationSchema: validaciones,
@@ -151,7 +123,7 @@ const handleEppChange = (event, newValue) => {
         <>
 
         <form onSubmit={formik.handleSubmit}>
-        <Grid container spacing={1} rowSpacing={1} mt={1} justifyContent="center" alignItems="center">
+        <Grid container spacing={1} rowSpacing={1} mt={1} >
                   
         
        
@@ -172,7 +144,7 @@ const handleEppChange = (event, newValue) => {
                             }}
                             onChange={(e) => {
                                 formik.setFieldValue('emp_inf', e.target.value);
-                                formik.setFieldValue('ctt_inf', '');
+                                formik.setFieldValue('ctt_inf', 'Todo');
                                 setEmpFil(e.target.value);
                                 
 
@@ -184,7 +156,7 @@ const handleEppChange = (event, newValue) => {
                                 <CircularProgress />
                             </Box>
                             :
-                            DataEmpresas.data.result && DataEmpresas.data.result.filter(emps => emps.rut_empre !== '0').map(emp => (
+                            DataEmpresas.data.result && DataEmpresas.data.result.map(emp => (
                                     <MenuItem key={emp.rut_empre} value={emp.rut_empre} >
                                         {emp.nom_empre}
                                     </MenuItem>
@@ -196,7 +168,7 @@ const handleEppChange = (event, newValue) => {
                     </FormControl>
           </Grid> 
 
-          <Grid item md={3} xs={12}>
+          <Grid item md={2.3} xs={12}>
             <FormControl
                         fullWidth
                         size="small"
@@ -221,7 +193,7 @@ const handleEppChange = (event, newValue) => {
                                 <CircularProgress />
                             </Box>
                             :
-                            DataCttos.data.result && DataCttos.data.result.filter(cttos => cttos.num_ctto !== 'Todo').map(ctt => (
+                            DataCttos.data.result && DataCttos.data.result.map(ctt => (
                             <MenuItem key={ctt.num_ctto} value={ctt.num_ctto} >
                                 {ctt.num_ctto}
                             </MenuItem>
@@ -231,13 +203,13 @@ const handleEppChange = (event, newValue) => {
                         <FormHelperText>{formik.touched.ctt_inf && formik.errors.ctt_inf}</FormHelperText>
                     </FormControl>
           </Grid>
-          <Grid item md={4} xs={12}>
+          <Grid item md={5} xs={12}>
              <TextField
                         fullWidth
                         size="small"
                         autoComplete="off"
                         name="pos_inf"
-                        label="Aprendizaje"
+                        label="Palabras claves acciones correctivas"
                         value={formik.values.pos_inf}
                         onChange={formik.handleChange}
                         error={formik.touched.pos_inf && Boolean(formik.errors.pos_inf)}
@@ -250,30 +222,30 @@ const handleEppChange = (event, newValue) => {
 
           
        
-          <Grid item md={1} xs={1} >
-            <LoadingButton
-              type="submit"
-              loading={isLoadindMutateSaveStock}
-              loadingPosition="start"
-              style={{ textTransform: 'none'}}
-              startIcon={<SearchIcon />}
-              variant="contained"
-            >
-              Buscar
-            </LoadingButton>
-          </Grid>
-
- 
-      
-          <Grid item md={1} xs={1} >
-            <BtnNuevaAccion setSnackMensaje={setSnackMensaje} usuario={usuario}  style={{ textTransform: 'none', marginLeft: '1px' }} />
-          </Grid>
-        </Grid>
-        
 
 
 
-      </form></>
+  <Grid item md={0.8} xs={12}>
+  <Tooltip title="Buscar aprendizaje" arrow>
+    <LoadingButton
+      type="submit"
+      loading={isLoadindMutateSaveStock}
+      loadingPosition="start"
+      style={{ textTransform: 'none', margin: '1px' }}
+      startIcon={<SearchIcon />}
+      variant="contained"
+/>
+</Tooltip>
+  </Grid>
+ {/**
+   <Grid item md={0.5} xs={12}  >
+    <BtnNuevaAccion setSnackMensaje={setSnackMensaje} usuario={usuario} style={{ textTransform: 'none'}} />
+  </Grid>  
+  
+  */} 
+
+</Grid>
+</form></>
 
 
     )

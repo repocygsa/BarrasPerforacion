@@ -1,10 +1,11 @@
-import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { Grid, Tooltip } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import { memo, useState } from 'react';
-import { ModalCierraAccion } from './modalCierraAccion';
 
-export const BtnCestado = ({row, setSnackMensaje}) => {
+import SourceIcon from '@mui/icons-material/Source';
+import { ModalDownloadArch2 } from './modalDownloadArch2';
+
+export const BtnVerArch = ({row, setSnackMensaje}) => {
 
 
   const [abrirModal, setAbrirModal] = useState(false);
@@ -12,7 +13,7 @@ export const BtnCestado = ({row, setSnackMensaje}) => {
   return (
     <>
    
-      <ModalCierraAccion
+      <ModalDownloadArch2
       abrirModal={abrirModal} 
       setAbrirModal={setAbrirModal}
       row={row}
@@ -32,21 +33,21 @@ export const BtnCestado = ({row, setSnackMensaje}) => {
   >
 
 
-{row.inc_det_estado !== 3 && (
+{row.inc_det_estado === 3 && (
     <Grid item>
-       <Tooltip title="Cargar evidencia de cierre" arrow>
+       <Tooltip title="Evidencia ya cargada" arrow>
         <IconButton aria-label="boton respaldo" onClick={()=>setAbrirModal(true)}  >
-          <UploadFileIcon fontSize="medium" color="info"/>
+          <SourceIcon fontSize="medium" color="info"/>
         </IconButton>
       </Tooltip>
     </Grid>
   )}
 
-{row.inc_det_estado === 3 && (
+{row.inc_det_estado !== 3 && (
     <Grid item>
-      <Tooltip title="Evidencia ya cargada" arrow>
+      <Tooltip title=" Evidencia de cierre no cargada" arrow>
         <IconButton aria-label="boton respaldo"  >
-          <UploadFileIcon fontSize="medium" color="gray"/>
+          <SourceIcon fontSize="medium" color="gray"/>
         </IconButton>
       </Tooltip>
     </Grid>
@@ -63,4 +64,4 @@ export const BtnCestado = ({row, setSnackMensaje}) => {
   )
 
 }
-export default memo(BtnCestado);
+export default memo(BtnVerArch);

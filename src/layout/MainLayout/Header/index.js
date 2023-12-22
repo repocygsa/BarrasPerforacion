@@ -66,7 +66,7 @@ const Header = ({ handleLeftDrawerToggle,permiso}) => {
             {/* <SearchSection /> */}
             <Box sx={{ flexGrow: 0.03 }} />
             <Box component="span" sx={{ display: { xs: 'none', md: 'block' }, flexGrow: 1 }}>
-                <h2>ACCIONES CORRECTIVAS </h2>
+                <h2>Control y seguimiento de acciones correctivas</h2>
             </Box>
 
             <NotificationSection permiso={permiso}/>

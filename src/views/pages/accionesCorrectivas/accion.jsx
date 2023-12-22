@@ -1,6 +1,4 @@
 import { Grid } from '@mui/material';
-import { SnackComponent } from 'components/theme/SnackComponent';
-import { useState } from 'react';
 import { FormAcciones } from './formAcciones';
 
 export const Accion = ({ permiso, usuario, setModalPrin, setSnackMensaje}) => (

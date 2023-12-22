@@ -1,9 +1,9 @@
 // assets
-import { Shield, GppGood, AdminPanelSettings } from '@mui/icons-material';
 
-import AddModeratorIcon from '@mui/icons-material/AddModerator';
+import AltRouteIcon from '@mui/icons-material/AltRoute';
+import FactCheckIcon from '@mui/icons-material/FactCheck';
 import InventoryIcon from '@mui/icons-material/Inventory';
-
+import PendingActionsIcon from '@mui/icons-material/PendingActions';
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
 
 const menuAdmin = {
@@ -13,22 +13,38 @@ const menuAdmin = {
     children: [
         {
             id: 'epp',
-            title: 'ACCIONES CORRECTIVAS ',
+            title: 'Acciones correctivas',
             type: 'collapse',
-            icon: Shield,
+            icon: PendingActionsIcon,
             breadcrumbs: false,
             children: [
 
               
                 {
                     id: 'accCorr',
-                    title: 'Acciones correctivas',
+                    title: 'Registro de acciones',
+                    type: 'item',
+                    url: '/accCorrectivas',
+                    breadcrumbs: false,
+                    icon: InventoryIcon,
+                },         
+                
+                {
+                    id: 'accCorr2',
+                    title: 'Listado de registros',
                     type: 'item',
                     url: '/registro',
                     breadcrumbs: false,
-                    icon: InventoryIcon,
-                },    
-                       
+                    icon: FactCheckIcon,
+                },   
+                {
+                    id: 'accCorr3',
+                    title: 'Acciones por contrato',
+                    type: 'item',
+                    url: '/tranversal',
+                    breadcrumbs: false,
+                    icon: AltRouteIcon,
+                },   
                  
             ]
         },

@@ -2,35 +2,39 @@
 
 
 import { useFormik } from 'formik';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import * as yup from "yup";
 
 import { Save, Search } from '@mui/icons-material';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, Button, CircularProgress, FormControl, FormControlLabel, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, MenuItem, Select, TextField } from '@mui/material';
-
-import { getActividad, getActividad2, getActividad3, getActividad4, getArea, getContratos, getEmpresa, getMina, getNivel, getPersona } from 'helpers/gets';
-
+import { Box, CircularProgress, FormControl, FormControlLabel, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
+import { getActividad, getActividad2, getActividad3, getActividad4, getArea, getCalIncidente, getContratos, getEmpresa, getJerarquia, getMina, getNivel, getPersona, getRiesgoCritico, getTipoIncidente } from 'helpers/gets';
 
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import esLocale from "date-fns/locale/es";
 
 import Checkbox from '@mui/material/Checkbox';
+import { DateTimePicker } from '@mui/x-date-pickers';
+import { UploadComponentImg } from 'components/upload/UploadComponentImg';
+import { UploadComponentMantencion } from 'components/upload/UploadComponentMantencion';
+import moment from 'moment';
 import { checkRut, prettifyRut } from 'react-rut-formatter';
 import { DialogGuardaAccion } from './dialogGuardaAccion';
+import { App } from './myForm';
 
 
 
-export const FormAcciones = ({  setModalPrin, setSnackMensaje}) => {
 
-  
+export const FormAccionesArray = ({ setSnackMensaje}) => {
+
+
   const [abrirDialog, setAbrirDialog] = useState(false);
-
+ 
   const [submiteado, setSubmiteado] = useState(false);
-
+  const [valManual, setValManual] = useState(0)
+const [valoresArray, setValoresArray] = useState([]);
   const [activaSnack, setActivaSnack] = useState(false)
   const [buscarDCC, setBuscarDCC] = useState(false);
   const [rutBuscar, setRutBuscar] = useState('');
@@ -43,8 +47,18 @@ export const FormAcciones = ({  setModalPrin, setSnackMensaje}) => {
     const [idAct2, setIdAct2] = useState('')
     const [idAct3, setIdAct3] = useState('')
     const [data, setData] = useState({})
+    const [validationState, setValidationState] = useState(null);
+   
+    const [tipoIncidenteDesc, setTipoIncidenteDesc] = useState('');
+    const [empreDesc, setEmpreDesc] = useState('')
 
+    const [calificaIncidenteDesc, setCalificaIncidenteDesc] = useState('')
 
+    const [rcDesc, setRcDesc] = useState('');
+
+    const [minaIncidenteDesc, setMinaIncidenteDesc] = useState('')
+    const [areaIncidenteDesc, setAreaIncidenteDesc] = useState('')
+    const [nivelIncidenteDesc, setNivelIncidenteDesc] = useState('')
 
     useEffect(() => {
         const usu = localStorage.getItem('rut_session');
@@ -53,6 +67,46 @@ export const FormAcciones = ({  setModalPrin, setSnackMensaje}) => {
 
     const queryClient = useQueryClient();
 
+    const formHijoRef = useRef();
+
+    const validationSchemaHijo = yup.object({
+        items: yup.array().of(
+            yup.object().shape({
+        
+              rut_responsable: 
+              yup.string()
+              .required('Ingrese un responsable')
+              .max(12, 'Máximo de 12 caracteres')
+              .trim('No debe dejar campos en blanco')
+              .strict(true)
+              .test('test-name','Rut inválido', (value)=>checkRut(value))
+              ,
+              nom_usu_det:yup
+                .string()
+                .required('ingrese un rut valido para el responsable'),
+
+                fec_cierre: yup
+                .date()
+                .required('Ingrese una fecha válida')
+                .nullable('Ingrese fecha')
+                .min(moment().startOf('day'), 'La fecha de cierre no puede ser anterior a la fecha actual'),
+            
+            
+
+                  fk_jerarquia: yup
+                  .string()
+                  .required('Debe seleccionar una jerarquia')
+                  ,
+              
+              
+              
+
+             
+
+              acc_correctiva: yup.string().required('Este campo es obligatorio'),
+            })
+          ),
+      });
 
     const {
         data: DataMina, 
@@ -74,12 +128,38 @@ export const FormAcciones = ({  setModalPrin, setSnackMensaje}) => {
     } = useQuery(['QueryNivel'], 
         ()=>getNivel()
     );
-
+    const {
+        data: DataTipoIncidente, 
+        isLoading:isLoadingTipoIncidente
+    } = useQuery(['QueryTipIncidente'], 
+        ()=>getTipoIncidente()
+    );
+    const {
+        data: DataCalIncidente, 
+        isLoading:isLoadingCalIncidente
+    } = useQuery(['QueryCalIncidente'], 
+        ()=>getCalIncidente()
+    );
+  
     const {
         data: DataActividad, 
         isLoading:isLoadingDataActividad
     } = useQuery(['QueryActividad'], 
         ()=>getActividad()
+    );
+
+    const {
+        data: DataJer, 
+        isLoading:isLoadingDataJer
+    } = useQuery(['QueryJer'], 
+        ()=>getJerarquia()
+    );
+
+    const {
+        data: DataRC, 
+        isLoading:isLoadingDataRc
+    } = useQuery(['QueryRc'], 
+        ()=>getRiesgoCritico()
     );
 
     const {
@@ -136,14 +216,13 @@ if(!isLoadingDataTipo){
     console.log(textoC)
 } */
   
-const preguntar =()=> {
-  setModalPrin(false)
-}
+
 
 const BuscarRut = (rut) => {
     setRutBuscar(rut);
    setBuscarDCC(true)  
 }    
+
 
 
     const validaciones = yup.object().shape({
@@ -173,28 +252,59 @@ const BuscarRut = (rut) => {
         .required('Debe ingresar un lugar')
         .trim('No debe contener espacios')
     ,
-
+/*
     acc_corr: yup
     .string()
     .required('Debe ingresar acciones correctivas')
     .trim('No debe contener espacios')
     ,
 
+        nom_usu_resp:yup
+    .string()
+    .required('ingrese un rut valido para el responsable')
+    ,
+
+*/
     incidente: yup
     .string()
     .required('Debe ingresar un incidente')
     .trim('No debe contener espacios')
 ,
 
-    nom_usu_resp:yup
-    .string()
-    .required('ingrese un rut valido para el responsable')
-    ,
 
 
     acc_Actividad: yup
         .string()
         .required('Debe seleccionar una actividad')
+        ,
+    
+        cal_inc: yup
+        .string()
+        .required('Debe seleccionar una calificación')
+        ,
+
+        tipo_incidente: yup
+        .string()
+        .required('Debe seleccionar un tipo de incidente')
+        ,
+
+        inc_aprendizaje:yup
+        .string()
+        .required('Ingrese un aprendizaje')
+        ,
+        inc_causas_principales:yup
+        .string()
+        .required('Ingrese una causa principal del incidente')
+        ,
+        inc_consecuencias:yup
+        .string()
+        .required('Ingrese una consecuencia')
+        ,
+
+
+        fk_rc: yup
+        .string()
+        .required('Debe seleccionar un riesgo crítico')
         ,
         
     acc_Actividad_2: yup
@@ -214,13 +324,17 @@ const BuscarRut = (rut) => {
 
     fec_ins: yup
     .date('Fecha invalida')
-    .required('Debe seleccionar una fecha'),
+    .nullable('ingrese fecha')
+    .required('Debe seleccionar una fecha')
+    .max(moment().endOf('day'), 'La fecha del incidente no puede ser posterior a la fecha actual')
+    ,
 
+/*
     fec_cierr: yup
     .date('Fecha invalida')
     .required('Debe seleccionar una fecha')
     .when('fec_ins', (fecIns, schema) => schema.min(yup.ref('fec_ins'), 'La fecha de cierre debe ser mayor que la fecha del incidente')),
-
+*/
     isComisionInvestigadora: yup.boolean(),
     rut_usu: yup
       .string()
@@ -244,6 +358,19 @@ const BuscarRut = (rut) => {
         otherwise: yup.string(), // Sin reglas de validación si isComisionInvestigadora es false
       }),
 
+      fil_tab: yup
+      .mixed()
+      .required('Debe seleccionar un archivo')
+    /*  .test('maxarchivos', 'Máximo 1 archivo', (values) => {
+          let respuesta = '';
+          if (values !== null) {
+              respuesta = values.length <= 1;
+          }
+          return respuesta;
+      }) */
+  ,
+      
+/*
     rut_usu_resp: yup
     .string()
     .required('Ingrese un responsable')
@@ -252,7 +379,7 @@ const BuscarRut = (rut) => {
     .strict(true)
     .test('test-name','Rut inválido', (value)=>checkRut(value))
     ,
-  
+  */
        
     }).required('Campo Requerido');
 
@@ -268,7 +395,7 @@ const BuscarRut = (rut) => {
             niv_inf: '',
             pos_inf: '',
             tip_seg: '',
-            fec_ins: '',
+            fec_ins: null,
             iel_identificador:texto,
             fec_cierr:'',
             acc_corr:'',
@@ -281,15 +408,64 @@ const BuscarRut = (rut) => {
             incidente:'',
             nom_usu_resp:'',
             isComisionInvestigadora: false,
+            fil_tab:'',
+            cal_inc:'',
+            tipo_incidente:'',
+            inc_aprendizaje:'',
+            tipoIncidenteDesc:'',
+            calificaIncidenteDesc:'',
+            minaIncidenteDesc:'',
+            areaIncidenteDesc:'',
+            nivelIncidenteDesc:'',
+            empreDesc:'',
+            fil_tab_img:'',
+            inc_consecuencias:'',
+            inc_causas_principales:'',
+            fk_rc:'',
+            rcDesc:'',
+          
+
+            
+
         },
         validationSchema: validaciones,
         enableReinitialize: true,
-        onSubmit: (datos) => {
+        onSubmit: (datos, { setSubmitting }) => {
+            setSubmitting(true);
+          
+            const datosArr = {
+              valoresArray,
+              datos,
+            };
 
-        setData(datos)
-            setAbrirDialog(true);
-            // formik.resetForm();
-        }
+            setData(datosArr);
+      
+         //   setAbrirDialog(true);
+
+         
+
+
+if(formHijoRef.current.isValid ===true && valManual=== 1){
+    setAbrirDialog(true);
+
+}else{
+
+   // formHijoRef.current.submitForm()   
+}
+
+if (valManual===0) {
+    setValManual(1)
+    formHijoRef.current.submitForm();
+
+} 
+
+            // Maneja el submit del formulario hijo
+
+
+          
+         
+          }
+          
     });
 
     const {
@@ -343,16 +519,18 @@ const BuscarRut = (rut) => {
       datos={data}
       submiteado={submiteado}
       setSubmiteado={setSubmiteado}
-      setModalPrin={setModalPrin}
       usuario={usuario}
+      formHijoRef={formHijoRef}
     />
+
+    
      
         <form onSubmit={ formik.handleSubmit }>
 
   
 
             <Grid container spacing={1} mt={1} rowSpacing={1}>
-            <Grid item md={2} xs={12}>
+            <Grid item md={3} xs={12}>
                     <FormControl
                         fullWidth
                         size="small"
@@ -371,6 +549,15 @@ const BuscarRut = (rut) => {
                                 formik.setFieldValue('emp_inf', e.target.value);
                                 formik.setFieldValue('ctt_inf', '');
                                 setEmpFil(e.target.value);
+
+                                const selectedEmpre = DataEmpresas.data.result.find(emp => emp.rut_empre === e.target.value);
+                                const tipoEmpre = selectedEmpre ? selectedEmpre.nom_empre : '';
+                                
+                                // Guarda la descripción en el estado
+                                setEmpreDesc(tipoEmpre);
+                                 // Actualiza el valor de tipoIncidenteDesc en Formik
+                                 formik.setFieldValue('empreDesc', tipoEmpre);
+                           
                                 
 
                             }}
@@ -392,7 +579,7 @@ const BuscarRut = (rut) => {
                         <FormHelperText>{formik.touched.emp_inf && formik.errors.emp_inf}</FormHelperText>
                     </FormControl>
                 </Grid> 
-                <Grid item md={2} xs={12}>
+                <Grid item md={3} xs={12}>
                     <FormControl
                         fullWidth
                         size="small"
@@ -427,7 +614,7 @@ const BuscarRut = (rut) => {
                         <FormHelperText>{formik.touched.ctt_inf && formik.errors.ctt_inf}</FormHelperText>
                     </FormControl>
                 </Grid> 
-                <Grid item md={2} xs={12}>
+                <Grid item md={3} xs={12}>
                     <FormControl
                         fullWidth
                         size="small"
@@ -446,6 +633,15 @@ const BuscarRut = (rut) => {
                                 formik.setFieldValue('min_inf', e.target.value);
                                 formik.setFieldValue('are_inf', '');
                                 setMinFil(e.target.value);
+
+                                const selectedMina = DataMina.data.result.find(act => act.id === e.target.value);
+                                const minaIncidenteDesc2 = selectedMina ? selectedMina.nom : '';
+                                
+                                // Guarda la descripción en el estado
+                                setMinaIncidenteDesc(minaIncidenteDesc2);
+                              
+                                // Actualiza el valor de tipoIncidenteDesc en Formik
+                                formik.setFieldValue('minaIncidenteDesc', minaIncidenteDesc2);
                             }}
                         >
                         {
@@ -464,7 +660,7 @@ const BuscarRut = (rut) => {
                         <FormHelperText>{formik.touched.min_inf && formik.errors.min_inf}</FormHelperText>
                     </FormControl>
                 </Grid> 
-                <Grid item md={2} xs={12}>
+                <Grid item md={3} xs={12}>
                     <FormControl
                         fullWidth
                         size="small"
@@ -481,6 +677,14 @@ const BuscarRut = (rut) => {
                             }}
                             onChange={(e) => {
                                 formik.setFieldValue('are_inf', e.target.value);
+
+                                const selectedArea = DataArea.data.result.find(act => act.id === e.target.value);
+                                const areaIncidenteDesc2 = selectedArea ? selectedArea.nom : '';
+                                
+                                // Guarda la descripción en el estado
+                                setAreaIncidenteDesc(areaIncidenteDesc2);
+                                // Actualiza el valor de tipoIncidenteDesc en Formik
+                                formik.setFieldValue('areaIncidenteDesc', areaIncidenteDesc2);
                             }}
                         >
                         {
@@ -499,7 +703,7 @@ const BuscarRut = (rut) => {
                         <FormHelperText>{formik.touched.are_inf && formik.errors.are_inf}</FormHelperText>
                     </FormControl>
                 </Grid> 
-                <Grid item md={2} xs={12}>
+                <Grid item md={3} xs={12}>
                     <FormControl
                         fullWidth
                         size="small"
@@ -516,6 +720,14 @@ const BuscarRut = (rut) => {
                             }}
                             onChange={(e) => {
                                 formik.setFieldValue('niv_inf', e.target.value);
+
+                                const selectedNivel = DataNivel.data.result.find(act => act.id === e.target.value);
+                                const nivelIncidenteDesc2 = selectedNivel ? selectedNivel.nom : '';
+                                
+                                // Guarda la descripción en el estado
+                                setNivelIncidenteDesc(nivelIncidenteDesc2);
+                                // Actualiza el valor de tipoIncidenteDesc en Formik
+                                formik.setFieldValue('nivelIncidenteDesc', nivelIncidenteDesc2);
                             }}
                         >
                         {
@@ -535,7 +747,7 @@ const BuscarRut = (rut) => {
                     </FormControl>
                 </Grid> 
              
-                <Grid item md={2} xs={12}>
+                <Grid item md={3} xs={12}>
                     <TextField
                         fullWidth
                         size="small"
@@ -551,7 +763,101 @@ const BuscarRut = (rut) => {
                         }}
                     />
                 </Grid>
-                <Grid item md={2} xs={12}>
+
+                <Grid item md={3} xs={12}>
+                    <FormControl
+                        fullWidth
+                        size="small"
+                        error={formik.touched.tipo_incidente && Boolean(formik.errors.tipo_incidente)}
+                    >
+                        <InputLabel id="Tincidente">Tipo de incidente</InputLabel>
+                        <Select
+                            
+                            name="tipo_incidente"
+                            label="Tipo de incidente"
+                            labelId="Tincidente"
+                            value={formik.values.tipo_incidente}
+                            onBlur={(e) => {
+                                formik.handleBlur(e);
+                            }}
+                            onChange={(e) => {
+                                formik.setFieldValue('tipo_incidente', e.target.value);
+                                // Busca el tipo de incidente seleccionado en tus datos y obtén la descripción
+                                const selectedTipoIncidente = DataTipoIncidente.data.result.find(act => act.id === e.target.value);
+                                const tipoIncidenteDesc2 = selectedTipoIncidente ? selectedTipoIncidente.tip_inc_desc : '';
+                                
+                                // Guarda la descripción en el estado
+                                setTipoIncidenteDesc(tipoIncidenteDesc2);
+                                // Actualiza el valor de tipoIncidenteDesc en Formik
+                                formik.setFieldValue('tipoIncidenteDesc', tipoIncidenteDesc2);
+                                
+                                
+                            }}
+                        >
+                        {
+                        isLoadingTipoIncidente ?
+                            <Box sx={{ display: 'flex' }}>
+                                <CircularProgress />
+                            </Box>
+                            :
+                            DataTipoIncidente.data.result && DataTipoIncidente.data.result.map((act) => (
+                            <MenuItem key={act.id} value={act.id} >
+                                {act.tip_inc_desc}
+                            </MenuItem>
+                            ))
+                        }
+                        </Select>
+                        <FormHelperText>{formik.touched.acc_Actividad && formik.errors.acc_Actividad}</FormHelperText>
+                    </FormControl>
+                </Grid> 
+                <Grid item md={3} xs={12}>
+                    <FormControl
+                        fullWidth
+                        size="small"
+                        error={formik.touched.cal_inc && Boolean(formik.errors.cal_inc)}
+                    >
+                        <InputLabel id="lbl_califica">Calificación del evento</InputLabel>
+                        <Select
+                            
+                            name="cal_inc"
+                            label="Calificación del evento"
+                            labelId="lbl_califica"
+                            value={formik.values.cal_inc}
+                            onBlur={(e) => {
+                                formik.handleBlur(e);
+                            }}
+                            onChange={(e) => {
+                                formik.setFieldValue('cal_inc', e.target.value);
+                               
+                                const selectedCalifica = DataCalIncidente.data.result.find(act => act.id === e.target.value);
+                                const calificaIncidenteDesc2 = selectedCalifica ? selectedCalifica.cal_incidente_desc : '';
+                                
+                                // Guarda la descripción en el estado
+                                setCalificaIncidenteDesc(calificaIncidenteDesc2);
+                                // Actualiza el valor de tipoIncidenteDesc en Formik
+                                formik.setFieldValue('calificaIncidenteDesc', calificaIncidenteDesc2);
+                                
+                            }}
+                        >
+                        {
+                        isLoadingCalIncidente ?
+                            <Box sx={{ display: 'flex' }}>
+                                <CircularProgress />
+                            </Box>
+                            :
+                            DataCalIncidente.data.result && DataCalIncidente.data.result.map((act) => (
+                            <MenuItem key={act.id} value={act.id} >
+                                {act.cal_incidente_desc}
+                            </MenuItem>
+                            ))
+                        }
+                        </Select>
+                        <FormHelperText>{formik.touched.cal_inc && formik.errors.cal_inc}</FormHelperText>
+                    </FormControl>
+                </Grid> 
+                
+
+                <Grid item md={3} xs={12}>
                 <FormControlLabel
                     control={
                     <Checkbox
@@ -576,7 +882,7 @@ const BuscarRut = (rut) => {
                 />
                 </Grid>
 
-                <Grid item md={2} xs={12}>
+                <Grid item md={3} xs={12}>
   {formik.values.isComisionInvestigadora && (
     <TextField
       name="rut_usu"
@@ -623,7 +929,7 @@ const BuscarRut = (rut) => {
   )}
 </Grid>
 
-<Grid item md={2} xs={12}>
+<Grid item md={6} xs={12}>
   {formik.values.isComisionInvestigadora && (
     <TextField
       fullWidth
@@ -646,8 +952,8 @@ const BuscarRut = (rut) => {
   )}
 </Grid>
 
-
-                <Grid item md={3} xs={12}>
+{/*
+                <Grid item md={2} xs={12}>
                     <FormControl fullWidth>
                         <LocalizationProvider 
                             dateAdapter={AdapterDateFns} 
@@ -661,6 +967,8 @@ const BuscarRut = (rut) => {
                                 autocomplete="off"
                                 onChange={(fecha) => {
                                     formik.setFieldValue("fec_ins",fecha)
+                                    setFecCierre(fecha)
+                                    console.log(fecCierre)
                                 }}
                                 InputProps={{
                                     autoComplete: 'off', 
@@ -682,9 +990,136 @@ const BuscarRut = (rut) => {
                             />
                         </LocalizationProvider>
                     </FormControl>
-                </Grid>
+                </Grid> */}
                 <Grid item md={3} xs={12}>
-                    <FormControl fullWidth>
+                        <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={esLocale}>
+                        <DateTimePicker
+                            name="fec_ins"
+                            autoComplete='off'
+                            label="Fecha ocurrencia"
+                            value={formik.values.fec_ins}
+                            onChange={(newValue) => {
+                            formik.setFieldValue('fec_ins',newValue);
+                            
+                           // setFechaHora(moment(newValue).format('DD-MM-YYYY HH:mm'))
+                           
+                            }
+                            }
+                            renderInput={(params) => (
+                            <TextField {...params}
+                            size='small'
+                            error ={formik.touched.fec_ins && Boolean(formik.errors.fec_ins)}
+                            helperText={formik.touched.fec_ins && formik.errors.fec_ins} 
+                            onBlur={formik.handleBlur}
+                            onKeyDown={noIngreso}
+                            fullWidth
+                            />
+                            )}
+                        />
+                        </LocalizationProvider>
+                        </Grid>
+{ /*
+                        <Grid item md={3} xs={12}>
+                    <FormControl
+                        fullWidth
+                        size="small"
+                        error={formik.touched.fk_jerarquia && Boolean(formik.errors.fk_jerarquia)}
+                    >
+                        <InputLabel id="lbl_emp_fk_jerarquia">Jerarquia</InputLabel>
+                        <Select
+                            name="fk_jerarquia"
+                            label="Jerarquia"
+                            labelId="lbl_emp_fk_jerarquia"
+                            value={formik.values.fk_jerarquia}
+                            onBlur={(e) => {
+                                formik.handleBlur(e);
+                            }}
+                            onChange={(e) => {
+                                formik.setFieldValue('fk_jerarquia', e.target.value);
+
+                                const selectedJer = DataJer.data.result.find(emp => emp.id === e.target.value);
+                                const Jer = selectedJer ? selectedJer.nom : '';
+                                
+                                // Guarda la descripción en el estado
+                                setJerDesc(Jer);
+                                 // Actualiza el valor de tipoIncidenteDesc en Formik
+                                 formik.setFieldValue('jerDesc', Jer);
+                               
+                                
+
+                            }}
+                        >
+                        {
+                        isLoadingDataJer ?
+                            <Box sx={{ display: 'flex' }}>
+                                <CircularProgress />
+                            </Box>
+                            :
+                            DataJer.data.result && DataJer.data.result.filter(emps => emps.id !== '0').map(emp => (
+                                    <MenuItem key={emp.id} value={emp.id} >
+                                        {emp.nom}
+                                    </MenuItem>
+                                  )
+                             )}
+
+                        </Select>
+                        <FormHelperText>{formik.touched.emp_inf && formik.errors.emp_inf}</FormHelperText>
+                    </FormControl>
+                </Grid> 
+                            */ }
+                <Grid item md={6} xs={12}>
+                    <FormControl
+                        fullWidth
+                        size="small"
+                        error={formik.touched.fk_rc && Boolean(formik.errors.fk_rc)}
+                    >
+                        <InputLabel id="lbl_fk_rc">Riesgo crítico</InputLabel>
+                        <Select
+                            name="fk_rc"
+                            label="Riesgo crítico"
+                            labelId="lbl_fk_rc"
+                            value={formik.values.fk_rc}
+                            onBlur={(e) => {
+                                formik.handleBlur(e);
+                            }}
+                            onChange={(e) => {
+                                formik.setFieldValue('fk_rc', e.target.value);
+                               
+      
+
+                                const selectedRc = DataRC.data.result.find(emp => emp.id === e.target.value);
+                                const rc = selectedRc ? selectedRc.resultConcat : '';
+                                
+                                // Guarda la descripción en el estado
+                                setRcDesc(rc);
+                                 // Actualiza el valor de tipoIncidenteDesc en Formik
+                                 formik.setFieldValue('rcDesc', rc);
+                            
+                                
+
+                            }}
+                        >
+                        {
+                        isLoadingDataRc ?
+                            <Box sx={{ display: 'flex' }}>
+                                <CircularProgress />
+                            </Box>
+                            :
+                            DataRC.data.result && DataRC.data.result.filter(emps => emps.id !== '0').map(emp => (
+                                    <MenuItem key={emp.id} value={emp.id} >
+                                        {emp.resultConcat}
+                                    </MenuItem>
+                                  )
+                             )}
+
+                        </Select>
+                        <FormHelperText>{formik.touched.fk_rc && formik.errors.fk_rc}</FormHelperText>
+                    </FormControl>
+                </Grid> 
+           
+                <Grid item md={3} xs={12}>
+                 {/*
+                  <FormControl fullWidth>
                         <LocalizationProvider 
                             dateAdapter={AdapterDateFns} 
                             adapterLocale={esLocale}
@@ -717,6 +1152,7 @@ const BuscarRut = (rut) => {
                             />
                         </LocalizationProvider>
                     </FormControl>
+                 */}   
                 </Grid>
                 </Grid>
             <Grid container spacing={1} rowSpacing={1} mt={1}>
@@ -883,50 +1319,131 @@ const BuscarRut = (rut) => {
                 </Grid> 
 
          
-                   
-{/* 
+            
+            
+                 
+
+                <Grid item md={12} xs={3}>
+    <TextField
+        fullWidth
+        size="small"
+        autoComplete="off"
+        name="incidente"
+        label="Descripción del incidente"
+        multiline
+        rows={3}
+      //  placeholder="Control critico ausente o fallido (en eventos significativos)"
+        value={formik.values.incidente}
+        onChange={formik.handleChange}
+        error={formik.touched.incidente && Boolean(formik.errors.incidente)}
+        helperText={formik.touched.incidente && formik.errors.incidente}
+        onBlur={(e) => {
+            formik.handleBlur(e);
+        }}
+    />
+</Grid>
                 <Grid item md={12} xs={3}>
                     <TextField
                         fullWidth
                         size="small"
                         autoComplete="off"
-                        name="incidente"
-                        label="Descripción del incidente"
+                        name="inc_aprendizaje"
+                        label="Aprendizaje"
                         multiline
                         rows={3}
-                        value={formik.values.incidente}
+                        placeholder="Control critico ausente o fallido (en eventos significativos)"
+                        value={formik.values.inc_aprendizaje}
                         onChange={formik.handleChange}
-                        error={formik.touched.incidente && Boolean(formik.errors.incidente)}
-                        helperText={formik.touched.incidente && formik.errors.incidente}
+                        error={formik.touched.inc_aprendizaje && Boolean(formik.errors.inc_aprendizaje)}
+                        helperText={formik.touched.inc_aprendizaje && formik.errors.inc_aprendizaje}
                         onBlur={(e) => {
                             formik.handleBlur(e);
                         }}
                     />
                 </Grid>
+                <Grid item md={6} xs={3}>
+                    <TextField
+                        fullWidth
+                        size="small"
+                        autoComplete="off"
+                        name="inc_causas_principales"
+                        label="Causas principales"
+                        multiline
+                        rows={3}
+                        value={formik.values.inc_causas_principales}
+                        onChange={formik.handleChange}
+                        error={formik.touched.inc_causas_principales && Boolean(formik.errors.inc_causas_principales)}
+                        helperText={formik.touched.inc_causas_principales && formik.errors.inc_causas_principales}
+                        onBlur={(e) => {
+                            formik.handleBlur(e);
+                        }}
+                    />
+                </Grid>
+                <Grid item md={6} xs={3}>
+                    <TextField
+                        fullWidth
+                        size="small"
+                        autoComplete="off"
+                        name="inc_consecuencias"
+                        label="Consecuencias"
+                        multiline
+                        rows={3}
+                        value={formik.values.inc_consecuencias}
+                        onChange={formik.handleChange}
+                        error={formik.touched.inc_consecuencias && Boolean(formik.errors.inc_consecuencias)}
+                        helperText={formik.touched.inc_consecuencias && formik.errors.inc_consecuencias}
+                        onBlur={(e) => {
+                            formik.handleBlur(e);
+                        }}
+                    />
+                </Grid>
+                <Grid container spacing={1} rowSpacing={1} mt={1}>
+                <Grid item md={6} xs={12} align="center" style={{ boxShadow:'rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px'}} p={2}>
+                    <FormControl fullWidth>
+                        <Typography variant="h5" component="div">
+                            Seleccionar informe de incidente
+                        </Typography>
+                        <Typography variant="h6" component="div">
+                            Clic en el clip para adjuntar
+                        </Typography>
+                        <UploadComponentMantencion setFieldValue={formik.setFieldValue} />
+                        {
+                        formik.values.fil_tab &&
+                            formik.values.fil_tab.map((file, i) => (
+                                <li key={i} style={{fontSize:"12px"}} >
+                                    {`Doc ${i+1} : ${file.name}`}{' '}
+                                </li>
+                            ))
+                        }
+                        <FormHelperText error>{formik.touched.fil_tab && formik.errors.fil_tab}</FormHelperText>
+                    </FormControl>
+                </Grid>
+                <Grid item md={6} xs={12} align="center" style={{ boxShadow:'rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px'}} p={2}>
+                    <FormControl fullWidth>
+                        <Typography variant="h5" component="div">
+                            Seleccionar Imagen del incidente
+                        </Typography>
+                        <Typography variant="h6" component="div">
+                            Clic en el clip para adjuntar
+                        </Typography>
+                        <UploadComponentImg setFieldValue={formik.setFieldValue} />
+                        {
+                        formik.values.fil_tab_img &&
+                            formik.values.fil_tab_img.map((file, i) => (
+                                <li key={i} style={{fontSize:"12px"}} >
+                                    {`img ${i+1} : ${file.name}`}{' '}
+                                </li>
+                            ))
+                        }
+                        <FormHelperText error>{formik.touched.fil_tab_img && formik.errors.fil_tab_img}</FormHelperText>
+                    </FormControl>
+                </Grid>
+            </Grid>
 
    
 
-                <Grid item md={12} xs={3}>
-                    <TextField
-                        fullWidth
-                        size="small"
-                        autoComplete="off"
-                        name="acc_corr"
-                        label="Acciones correctivas"
-                        multiline
-                        rows={3}
-                        value={formik.values.acc_corr}
-                        onChange={formik.handleChange}
-                        error={formik.touched.acc_corr && Boolean(formik.errors.acc_corr)}
-                        helperText={formik.touched.acc_corr && formik.errors.acc_corr}
-                        onBlur={(e) => {
-                            formik.handleBlur(e);
-                        }}
-                    />
-                </Grid>
-
-        
-
+               
+                {/*
                 <Grid item md={3} xs={12}>
             <TextField
                 name="rut_usu_resp"
@@ -966,8 +1483,6 @@ const BuscarRut = (rut) => {
                 }}
             />
         </Grid>
-
-        */}
     
   
         <Grid item md={3} xs={12}>
@@ -991,15 +1506,28 @@ const BuscarRut = (rut) => {
                         }}
                     />
                 </Grid>
+                 */} 
             </Grid>
+
+           
+
+            <App 
+            setValoresArray={setValoresArray} 
+            setSnackMensaje={setSnackMensaje} 
+            validationSchema={validationSchemaHijo}   
+            
+            ref={formHijoRef} 
+            />
+              {/* Visualización del estado de validación del formulario hijo */}
+      {validationState && (
+        <pre>{JSON.stringify(validationState.errors, null, 2)}</pre>
+      )}
 
 
 
             <Grid container spacing={1} rowSpacing={1} columnSpacing={2} mt={1} align="right">
                 <Grid item md={12} xs={12} align="right">
-                <Button color="error" variant="contained" style= {{textTransform: 'none'}}onClick={()=>preguntar()} autoFocus>
-            Cancelar
-          </Button>
+
           
                     <LoadingButton
                         type="submit" 

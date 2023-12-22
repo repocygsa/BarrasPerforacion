@@ -3,23 +3,22 @@ import IconButton from '@mui/material/IconButton';
 import { memo, useState } from 'react';
 
 import FindInPageIcon from '@mui/icons-material/FindInPage';
-import { ModalVerRegistro } from './modalVerRegistro';
+
 // import { ModalMostrarDetalle } from './modalMostrarDetalle';
 
 
-export const BtnMostrarDetalle = ({row}) => {
+export const BtnMostrarTranversal = ({row}) => {
 
 
   const [abrirModal, setAbrirModal] = useState(false);
-
+  const centerIconButtonStyles = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100vh', // Asegura que el botón esté centrado verticalmente en la ventana.
+  };
   return (
-    <>
-   
-      <ModalVerRegistro 
-      abrirModal={abrirModal} 
-      setAbrirModal={setAbrirModal}
-      row={row}
-    />
+
    
  
 
@@ -42,8 +41,8 @@ export const BtnMostrarDetalle = ({row}) => {
 
     
    
-    </>
+  
   )
 
 }
-export default memo(BtnMostrarDetalle);
+export default memo(BtnMostrarTranversal);
