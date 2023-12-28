@@ -19,18 +19,8 @@ export const ListaAccionesArchDet2 = ({id,row, permiso, usuario}) => {
       pos_inf:'',
   }
 
-    const [filtrosStock, setFiltroStock] = useState(filtroInicial)
 
-    const queryClient = useQueryClient();
-    const { socket } = useContext(SocketContext);
-
-    const {
-      data: DataEppAll, 
-      isLoading:isLoadingDataEppAll
-    } = useQuery(['QueryEppAll', filtrosStock], 
-      ()=>getEppAll(filtrosStock)
-    );
-
+   
   
 
     const {
@@ -44,19 +34,7 @@ export const ListaAccionesArchDet2 = ({id,row, permiso, usuario}) => {
 
 
 
-    useEffect(()=>{
-      socket.on('resSocketReserva',()=>{
-        queryClient.invalidateQueries('QueryEppAll');
-      })
-
-      socket.on('resSocketStock', () => {
-        // Invalida la consulta 'queryTallaByEppId' para que se vuelva a ejecutar automáticamente
-        queryClient.invalidateQueries('QueryEppAll');
-  
-  
-      });
-
-    },[socket])
+    
 
     return (
 

@@ -180,9 +180,17 @@ const guardarIncidente = async (data) => {
             }
         } = data;
 
+        let nId=0;
         const getDatosParaInsert = await llamadaApi.post('aprendizaje/getCantidadId');
+        const getCorreosFlash = await llamadaApi.post('aprendizaje/getCorreosFlash');
+       
 
-        const nId= getDatosParaInsert.data.result[0].numero_id + 1
+        if(getDatosParaInsert.data.result.length > 0){
+             nId= getDatosParaInsert.data.result[0].numero_id + 1
+        }else{
+            nId=1
+        }
+        
 
         const formData = new FormData();
 
@@ -222,6 +230,8 @@ const guardarIncidente = async (data) => {
             formData.append(`valoresArray[${index}]`, JSON.stringify(valor));
         });
 
+       
+
         // Manejar archivos
     /*    fil_tab.forEach((file_inf) => {
             formData.append('files_inf', file_inf);
@@ -238,6 +248,12 @@ const guardarIncidente = async (data) => {
         for (let i = 0; i < fil_tab_img.length; i += 1) {
             formData.append('files_img', fil_tab_img[i]);
         }
+
+        for (let i = 0; i < getCorreosFlash.data.result.length; i += 1) {
+            formData.append('correosArray', getCorreosFlash.data.result[i].correo);
+        }
+
+      
     
         // idem
         formData.append('can_inf', formData.getAll('files_inf').length);
@@ -245,7 +261,6 @@ const guardarIncidente = async (data) => {
 
 
 
-     
 
         const response = await llamadaApi.post('aprendizaje/guardarIncidente', formData);
         return response.data;  // Retorna los datos de la respuesta (ajusta esto según la estructura de tu respuesta)

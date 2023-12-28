@@ -1,8 +1,10 @@
-import { Grid, Typography } from '@mui/material';
+import { Grid, IconButton, Typography } from '@mui/material';
 import { DataGrid, esES } from '@mui/x-data-grid';
 import moment from 'moment';
 import { memo } from 'react';
 import DownloadIcon from '@mui/icons-material/Download';
+import { Link } from 'react-router-dom';
+import { Box } from '@mui/system';
 
 
 
@@ -21,7 +23,26 @@ export const TablaAccionesArchDet = ({dataRegistroStock, setSnackMensaje }) => {
         minWidth: 100,
         renderCell:(params)=> 
         <>
-          <DownloadIcon color='info'/> 
+        <Link
+              to={`./../documentos/cierres/${params.row.fk_inc_detalle}/${encodeURIComponent(params.row.inc_arch_det_nom)}`}
+              components='button'
+              variant='body2'
+              target="_blank"
+              
+          
+          >
+              <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  height="100vh"
+                >
+                <IconButton>
+                  <DownloadIcon color='info' />
+                </IconButton>
+              </Box>
+            
+        </Link>
         </>,
     },
 

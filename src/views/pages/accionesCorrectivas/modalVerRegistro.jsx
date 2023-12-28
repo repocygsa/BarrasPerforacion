@@ -33,7 +33,10 @@ const {
   ()=>getIncidentesArch(row.id)
 );
 
-
+const ajustarRuta = (rutaCompleta) => {
+  const posicionDocumentos = rutaCompleta.indexOf("documentos");
+  return posicionDocumentos !== -1 ? `./../${rutaCompleta.substring(posicionDocumentos)}` : rutaCompleta;
+};
 
       const CustomEstatusCell = ({ estatus, est }) => {
        
@@ -179,7 +182,7 @@ const {
                   </TableCell>
                   <TableCell>
                   <Link
-                        to={fila.inc_arch_ruta}
+                        to={ajustarRuta(fila.inc_arch_ruta)}
                         components='button'
                         variant='body2'
                         target="_blank"

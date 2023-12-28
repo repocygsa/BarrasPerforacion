@@ -1,6 +1,6 @@
 import { llamadaApi, llamadaApi2 } from "api/reqApi";
 
-const getSessionUsu = async()=>{ 
+ const getSessionUsu = async()=>{ 
     const getSessionUsu = await llamadaApi2.post('http://appsgobm.com/web/includes/Globales/funciones/getSession.php',{getSessionUsu:'1'})   
     return getSessionUsu;
 } 
