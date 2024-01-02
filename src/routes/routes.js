@@ -9,17 +9,19 @@ import MensajeSinPermiso from 'components/theme/MensajeSinPermiso';
 import { FormularioRegistroAcciones } from 'views/pages/accionesCorrectivas/formularioRegistroAcciones';
 import { ListaAcciones } from 'views/pages/accionesCorrectivas/listaAcciones';
 import { ListaTranversal } from 'views/pages/accionesCorrectivas/tranversalidad/listaTranversal';
+import TabsTranversalidad from 'views/pages/accionesCorrectivas/tranversalidad/tabTranversalidad';
 
 
 const Routes =({data})=>{
 
     const { rutUsu, perUsu, cttUsu } = data.user;
+   
 
     if(perUsu !== null){
         return (
             [{
                 path: '/',
-                element:  cttUsu === '4600021050' ? <MainLayout permiso={perUsu}/>:<MensajeSinPermiso/>,
+                element:  perUsu ===1? <MainLayout permiso={perUsu}/>:<MensajeSinPermiso/>,
                 children: [
                     {
                         path: '/inicio',
@@ -36,14 +38,14 @@ const Routes =({data})=>{
                         element: perUsu===1 || perUsu ===2 ?<FormularioRegistroAcciones permiso={perUsu} usuario={rutUsu} /> : <Navigate to='/web/accionesCorrectivas' />
                     
                     },
-                    {
+                   {
                         path: '/tranversal',
-                        element: perUsu===1 || perUsu ===2 ?<ListaTranversal permiso={perUsu} usuario={rutUsu} /> : <Navigate to='/web/accionesCorrectivas' />
+                        element: perUsu===1 || perUsu ===2 ?<TabsTranversalidad permiso={perUsu} usuario={rutUsu} /> : <Navigate to='/web/accionesCorrectivas' />
                     
-                    },
+                    }, 
                     {
                         path: '*',
-                        element: <Navigate to='/epp' />
+                        element: <Navigate to='/accionesCorrectivas' />
                     },               
                     
                 ]

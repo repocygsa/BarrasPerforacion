@@ -27,7 +27,7 @@ import { App } from './myForm';
 
 
 
-export const FormAccionesArray = ({ setSnackMensaje}) => {
+export const FormAccionesArray = ({ setSnackMensaje, user}) => {
 
 
   const [abrirDialog, setAbrirDialog] = useState(false);
@@ -46,6 +46,8 @@ const [valoresArray, setValoresArray] = useState([]);
     const [idAct1, setIdAct1] = useState('')
     const [idAct2, setIdAct2] = useState('')
     const [idAct3, setIdAct3] = useState('')
+    const [userCrea, setUserCrea] = useState(user)
+    
     const [data, setData] = useState({})
     const [validationState, setValidationState] = useState(null);
    
@@ -423,6 +425,7 @@ const BuscarRut = (rut) => {
             inc_causas_principales:'',
             fk_rc:'',
             rcDesc:'',
+            user:userCrea,
           
 
             

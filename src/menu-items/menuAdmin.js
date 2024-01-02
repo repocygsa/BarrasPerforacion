@@ -8,7 +8,7 @@ import PendingActionsIcon from '@mui/icons-material/PendingActions';
 
 const menuAdmin = {
     id: 'menuAdmin',
-    title: 'Menú administrador',
+    title: 'Menú',
     type: 'ADMINISTRADOR',
     children: [
         {
@@ -37,14 +37,14 @@ const menuAdmin = {
                     breadcrumbs: false,
                     icon: FactCheckIcon,
                 },   
-                {
+              /*  {
                     id: 'accCorr3',
                     title: 'Acciones por contrato',
                     type: 'item',
                     url: '/tranversal',
                     breadcrumbs: false,
                     icon: AltRouteIcon,
-                },   
+                },   */
                  
             ]
         },
