@@ -599,40 +599,6 @@ contratos: yup
                         </LocalizationProvider>
                         </Grid>
 
- 
-           
-
-
-
- 
-
- 
-
-         
-            
-            
-                 
-
-
-                <Grid item md={12} xs={3}>
-                    <TextField
-                        fullWidth
-                        size="small"
-                        autoComplete="off"
-                        name="inc_aprendizaje"
-                        label="Observación"
-                        multiline
-                        rows={3}
-                       
-                        value={formik.values.inc_aprendizaje}
-                        onChange={formik.handleChange}
-                        error={formik.touched.inc_aprendizaje && Boolean(formik.errors.inc_aprendizaje)}
-                        helperText={formik.touched.inc_aprendizaje && formik.errors.inc_aprendizaje}
-                        onBlur={(e) => {
-                            formik.handleBlur(e);
-                        }}
-                    />
-                </Grid>
                 <Grid item md={4} xs={12}>
           <FormControl fullWidth size="small"  error={formik.touched.contratos && Boolean(formik.errors.contratos)}>
             <InputLabel id='contratos'>Contratos</InputLabel>
