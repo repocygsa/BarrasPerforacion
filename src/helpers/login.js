@@ -7,12 +7,14 @@ import { llamadaApi, llamadaApi2 } from "api/reqApi";
 */
 
 
-  
-
 const getSessionUsu = async()=>{
-    const data = {rut:'17.526.007-2',empresa:'78.318.570-9',ctto:'4600021050'}
-    const res={data}; 
-    return res;
+
+    const userAgent = navigator.userAgent;      
+    let data ={}
+    if (userAgent.includes('Firefox')) {
+        data = {rut:'17.521.229-9',empresa:'78.318.570-9',ctto:'4600021050'}
+    }          
+    return {data}; ;
 }
 
 

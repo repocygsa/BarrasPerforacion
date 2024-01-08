@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 
-import { llamadaApi } from '../api/reqApi';
+import { llamadaApi } from "api/reqApi";
 
 
 

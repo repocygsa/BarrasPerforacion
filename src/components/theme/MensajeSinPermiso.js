@@ -9,10 +9,9 @@ import { orange } from '@mui/material/colors';
 import { useState } from 'react';
 
 export default function MensajeSinPermiso() {
+  
   const [open, setOpen] = useState(true);
-
-  // Remove this line, as it's unnecessary and might cause issues
-  // setOpen(true);
+  // setOpen(true)
 
   // const handleClickOpen = () => {
   //   setOpen(true);
