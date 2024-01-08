@@ -1,12 +1,11 @@
 /* eslint-disable array-callback-return */
 import { Grid } from '@mui/material';
 import { SnackComponent } from 'components/theme/SnackComponent';
-import { getEppAll, getTranversal } from 'helpers/gets';
+import {  getTranversal } from 'helpers/gets';
 import { useContext, useEffect, useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import MainCard from 'ui-component/cards/MainCard';
 import { TablaTranversal } from './tablaTranversal';
-
 import { SocketContext } from 'context/SocketContext';
 
 
@@ -25,12 +24,7 @@ export const ListaTranversal = ({permiso, usuario}) => {
     const queryClient = useQueryClient();
     const { socket } = useContext(SocketContext);
 
-    const {
-      data: DataEppAll, 
-      isLoading:isLoadingDataEppAll
-    } = useQuery(['QueryEppAll', filtrosStock], 
-      ()=>getEppAll(filtrosStock)
-    );
+
 
     const {
       data: DataTranversal, 
@@ -58,23 +52,21 @@ export const ListaTranversal = ({permiso, usuario}) => {
     },[socket])
 
     return (
-<MainCard title="Listado de registros">
-  <SnackComponent snackMensaje={snackMensaje} setSnackMensaje={setSnackMensaje} />
 
-  <Grid container spacing={2} rowSpacing={1} mt={1} justifyContent="center" alignItems="center">
-   {/*
-      <Grid item md={12} xs={12}>
-      <FormAccionesFilter setFiltroStock={setFiltroStock} usuario={usuario} setSnackMensaje={setSnackMensaje}/>
-    </Grid>
-   */} 
- 
-    
+  <><SnackComponent snackMensaje={snackMensaje} setSnackMensaje={setSnackMensaje} /><Grid container spacing={2} rowSpacing={1} mt={1} justifyContent="center" alignItems="center">
+        {/*
+       <Grid item md={12} xs={12}>
+       <FormAccionesFilter setFiltroStock={setFiltroStock} usuario={usuario} setSnackMensaje={setSnackMensaje}/>
+     </Grid>
+    */}
 
-    <Grid item md={12} xs={12}>
-      {isLoadingDataTranversal ? '' : <TablaTranversal dataRegistroStock={DataTranversal.data.result} setSnackMensaje={setSnackMensaje} />}
-    </Grid>
-  </Grid>
-</MainCard>
+
+
+        <Grid item md={12} xs={12}>
+          {isLoadingDataTranversal ? '' : <TablaTranversal dataRegistroStock={DataTranversal.data.result} setSnackMensaje={setSnackMensaje} />}
+        </Grid>
+      </Grid></>
+
     )
 
 }

@@ -7,6 +7,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { Box } from '@mui/system';
 import BtnCambiarEstadoTranversal from './btnCambiarEstadoTranversal';
 import { BtnMostrarTranversal } from './btnMostrarDetalleTranversal';
+import {BtnEliminarTranversal} from './editarTranversalidad/btnEliminarTranversal';
 
 
 
@@ -24,6 +25,9 @@ export const TablaTranversal = ({dataRegistroStock, setSnackMensaje }) => {
         } else if (est === 1) {
           textColor = 'blue';
           estatus=`Cerrado`
+        } else if (est ===4){
+          textColor = 'gray';
+          estatus=`Eliminado`
         }
       
         return (
@@ -54,76 +58,81 @@ export const TablaTranversal = ({dataRegistroStock, setSnackMensaje }) => {
 
 
 
-    const columnasDatosStock=[  
-      {
-        field:'accion',
-        headerName:'Acciones',
-        headerAlign: 'center',
-        minWidth: 100,
-        renderCell:(params)=> 
-        <>
-          <BtnCambiarEstadoTranversal row={params.row} />
-          <BtnMostrarTranversal row={params.row}/>
-        {/*  <BtnEditar row={params.row}/> */} 
-       {/*
-        <BtnCestado row={params.row} setSnackMensaje={setSnackMensaje}/>
-       */}  
-            
-        </>,
-    },
-
-      {
-        field:'estado',
-        headerName:'Estado',
-        align:'left',
-        minWidth: 100,
-        renderCell:(params)=> <CustomEstatusCell2 est={params.row.inc_tran_estado} />
-    }, 
-
-    {
-      field:'emp',
-      headerName:'Empresa',
-      align:'left',
-      minWidth: 100,
-      valueGetter:(params)=>params.row.nom_empre
-  },
-
-  {
-    field:'ctto',
-    headerName:'Contrato',
-    align:'left',
-    minWidth: 150,
-    valueGetter:(params)=>params.row.num_ctto
-},
+        const columnasDatosStock=[  
+          {
+            field:'accion',
+            headerName:'Acciones',
+            headerAlign: 'center',
+            minWidth: 100,
+            renderCell:(params)=> 
+            <>
+    
+    <BtnEliminarTranversal row={params.row} setSnackMensaje={setSnackMensaje}/>
+            {/*  <BtnEditar row={params.row}/> */} 
+           {/*
+            <BtnCestado row={params.row} setSnackMensaje={setSnackMensaje}/>
+           */}  
+                
+            </>,
+        },
+    
+          {
+            field:'estado',
+            headerName:'Estado',
+            align:'left',
+            minWidth: 100,
+            renderCell:(params)=> <CustomEstatusCell2 est={params.row.inc_tran_estado} />
+        }, 
+    
+        {
+          field:'emp',
+          headerName:'Empresa',
+          align:'left',
+          minWidth: 100,
+          valueGetter:(params)=>params.row.nom_empre
+      },
     
       {
-        field:'medCorr',
-        headerName:'Medida Correctiva',
+        field:'ctto',
+        headerName:'Contrato',
         align:'left',
-        minWidth: 300,
-        flex:'1',
-     //   valueGetter:(params)=>params.row.inc_med_correctiva
-     renderCell:(params)=>  <>
-  <Grid
-      container
-      style={{
-        alignItems: 'center',
-        whiteSpace: 'normal',
-        wordWrap: 'break-word',
-        fontSize: '13px', // Tamaño de la letra más pequeño
-        lineHeight: '1.5', // Altura de la fila más alta
-        margin: '8px', // Margen alrededor del contenido
-      }}
-    >
-      {params.row.inc_med_correctiva}
-    </Grid>
-     </>,
+        minWidth: 150,
+        valueGetter:(params)=>params.row.num_ctto
     },
-
-   
-
-
-
+        
+          {
+            field:'medCorr',
+            headerName:'Medida Correctiva',
+            align:'left',
+            minWidth: 300,
+            flex:'1',
+         //   valueGetter:(params)=>params.row.inc_med_correctiva
+         renderCell:(params)=>  <>
+      <Grid
+          container
+          style={{
+            alignItems: 'center',
+            whiteSpace: 'normal',
+            wordWrap: 'break-word',
+            fontSize: '13px', // Tamaño de la letra más pequeño
+            lineHeight: '1.5', // Altura de la fila más alta
+            margin: '8px', // Margen alrededor del contenido
+          }}
+        >
+          {params.row.inc_med_correctiva}
+        </Grid>
+         </>,
+        },
+    
+        {
+          field:'obsCierr',
+          headerName:'Observación',
+          align:'left',
+          minWidth: 400,
+          valueGetter:(params)=>params.row.inc_obs_cierre?`${moment(params.row.inc_fec_cierre).format('DD-MM-YYYY HH:mm')}: ${ params.row.inc_obs_cierre}`:''
+      },
+    
+    
  
      
        

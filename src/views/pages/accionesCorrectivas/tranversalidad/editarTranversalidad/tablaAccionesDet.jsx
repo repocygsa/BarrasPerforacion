@@ -2,17 +2,19 @@ import { Grid, Typography } from '@mui/material';
 import { DataGrid, esES } from '@mui/x-data-grid';
 import moment from 'moment';
 import { memo } from 'react';
-import BtnCambiarEstado, { BtnCestado } from './btnCambiarEstado';
-import {BtnEditar} from './btnEditar';
-import {BtnMostrarDetalle} from './btnMostrarDetalle';
+
+
+
 import CircularProgress from '@mui/material/CircularProgress';
 import { Box } from '@mui/system';
-import {BtnEditarTransversal} from './tranversalidad/editarTranversalidad/btnEditarTransversal';
+import {BtnEliminarTranversal} from './btnEliminarTranversal';
 
 
 
 
-export const TablaAcciones = ({dataRegistroStock, setSnackMensaje }) => {
+
+
+export const TablaTranversales = ({dataRegistroStock, setSnackMensaje }) => {
    
     const CustomEstatusCell2 = ({ estatus, est, diferencia }) => {
        
@@ -40,7 +42,7 @@ export const TablaAcciones = ({dataRegistroStock, setSnackMensaje }) => {
 
       const CustomEstatusCell = ({ estatus, porcentaje }) => (
         <Box position="relative" display="inline-flex">
-        <CircularProgress size={40} variant="determinate" value={porcentaje} />
+        <CircularProgress size={30} variant="determinate" value={porcentaje} />
         <Box
           top={0}
           left={0}
@@ -65,14 +67,11 @@ export const TablaAcciones = ({dataRegistroStock, setSnackMensaje }) => {
         minWidth: 100,
         renderCell:(params)=> 
         <>
-          <BtnMostrarDetalle row={params.row} />
+          {/* <BtnMostrarDetalle row={params.row} />
+         <BtnEditar row={params.row}/> */} 
+         
+          <BtnEliminarTranversal row={params.row} setSnackMensaje={setSnackMensaje}/>
         
-        {/*  <BtnEditar row={params.row}/>
-          <BtnEditarTransversal row={params.row}/>
-        */} 
-       {/*
-        <BtnCestado row={params.row} setSnackMensaje={setSnackMensaje}/>
-       */}  
             
         </>,
     },
@@ -82,75 +81,48 @@ export const TablaAcciones = ({dataRegistroStock, setSnackMensaje }) => {
         field:'estP',
         headerName:'Progreso',
         align:'left',
-        minWidth: 90,
+        minWidth: 160,
         renderCell:(params)=> 
         <>
-            <CustomEstatusCell estatus='' est={params.row.inc_estado} porcentaje={params.row.porcentaje_estado_3}/>
+            <CustomEstatusCell2 estatus='' est={params.row.inc_det_estado} diferencia={params.row.dias_diferencia}/>
            
             
         </>,
     }, 
 
     {
-      field:'est',
-      headerName:'Estado',
+      field:'fCierr',
+      headerName:'Cierre',
       align:'left',
       minWidth: 150,
-      valueGetter:(params)=>params.row.texto_resultado
+      valueGetter:(params)=>moment(params.row.inc_det_fecha_cierre).format('DD-MM-YYYY')
   },    
     {
-      field:'emp',
-      headerName:'Empresa',
+      field:'medcorr',
+      headerName:'Acción correctiva',
       align:'left',
-      minWidth: 100,
-      valueGetter:(params)=>params.row.nom_empre
+      minWidth: 300,
+      valueGetter:(params)=>params.row.inc_med_correctiva
   },
+  {
+    field:'resp',
+    headerName:'Responsable',
+    align:'left',
+    minWidth: 300,
+    valueGetter:(params)=>params.row.Nombre
+},
 
   {
-    field:'ctto',
-    headerName:'Contrato',
+    field:'obs',
+    headerName:'Observación',
     align:'left',
-    minWidth: 150,
-    valueGetter:(params)=>params.row.fk_ctto
+    minWidth: 300,
+    valueGetter:(params)=>params.row.inc_obs?params.row.inc_obs:'Sin observación'
 },
-     /*   {
-            field:'mina',
-            headerName:'Mina',
-            align:'left',
-            minWidth: 100,
-            valueGetter:(params)=>params.row.nom_mina
-        }, */
-        {
-          field:'area',
-          headerName:'Área',
-          align:'left',
-          minWidth: 200,
-          valueGetter:(params)=>params.row.nom_area
-      },
-    /*  {
-        field:'nivel',
-        headerName:'Nivel',
-        align:'left',
-        minWidth: 150,
-        valueGetter:(params)=>params.row.nom_nivel
-    }, 
-        {
-            field:'lugar',
-            headerName:'Lugar',
-            align:'left',
-            minWidth: 200,
-            valueGetter:(params)=>params.row.inc_lugar
-        },
-      
-        {
-          field:'act1',
-          headerName:'Actividad',
-          align:'left',
-          minWidth: 100,
-          valueGetter:(params)=>params.row.actividad1
-      },
 
-     */ 
+
+    
+        
      
    /*      {
             field:'lider',
@@ -158,7 +130,7 @@ export const TablaAcciones = ({dataRegistroStock, setSnackMensaje }) => {
             align:'left',
             minWidth: 250,
             valueGetter:(params)=>params.row.lider
-        }, */
+        },
        {
           field:'incidente',
           headerName:'Incidente',
@@ -166,14 +138,8 @@ export const TablaAcciones = ({dataRegistroStock, setSnackMensaje }) => {
           minWidth: 200,
           valueGetter:(params)=>params.row.inc_incidente
       },
+*/
 
-      {
-        field:'fechaIns',
-        headerName:'Fec. ocurrencia',
-        align:'left',
-        minWidth: 200,
-        valueGetter:(params)=>moment(params.row.inc_fec_ocurrencia).format('DD-MM-YYYY HH:MM')
-    },
        
 
 
@@ -250,6 +216,6 @@ export const TablaAcciones = ({dataRegistroStock, setSnackMensaje }) => {
     )
 
 }
-export default memo(TablaAcciones);
+export default memo(TablaTranversales);
 
 

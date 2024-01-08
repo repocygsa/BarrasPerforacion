@@ -1,16 +1,15 @@
-
+// project imports
 // project imports
 import MainLayout from 'layout/MainLayout';
 import { Navigate } from 'react-router';
 import { Inicio } from 'views/inicio/Inicio';
-
 import MensajeSinPermiso from 'components/theme/MensajeSinPermiso';
-
 import { FormularioRegistroAcciones } from 'views/pages/accionesCorrectivas/formularioRegistroAcciones';
 import { ListaAcciones } from 'views/pages/accionesCorrectivas/listaAcciones';
 import { ListaTranversal } from 'views/pages/accionesCorrectivas/tranversalidad/listaTranversal';
 import { ReporteCorreo } from 'views/reporte/reporte';
-
+import TabsTranversalidad from 'views/pages/accionesCorrectivas/tranversalidad/tabTranversalidad';
+import PermisoModal from 'components/theme/SPermiso';
 
 const Routes =({data})=>{
 
@@ -42,36 +41,39 @@ const Routes =({data})=>{
                     {
                         path: '/tranversal',
                         element: perUsu===1 || perUsu ===2 ?<ListaTranversal permiso={perUsu} usuario={rut} /> : <Navigate to='/web/accionesCorrectivas' />
-                    
+                    },
+                    {
+                        path: '/reporteCorreo',
+                        element: <ReporteCorreo/>,  
+                
                     },
                     {
                         path: '*',
-                        element: <Navigate to='/epp' />
-                    },               
+                        element: <MensajeSinPermiso/>,  
+                
+                    },             
                     
                 ]
-            }]  
+            }]
         )
     }
 
+
     return(
         [
-
             {
                 path: '/reporteCorreo',
                 element: <ReporteCorreo/>,  
-        
+
             },
             {
                 path: '*',
                 element: <MensajeSinPermiso/>,  
-        
+
             },
-    
         ] 
     )
-
-
 }
+
 
 export default Routes;

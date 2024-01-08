@@ -374,8 +374,8 @@ const MyForm = ({ setValoresArray, setSnackMensaje, setReport, report })=> {
                 </Field>
             </FormControl>
             </Grid>
-
-            <br/>
+{/* 
+ <br/>
             <Grid item md={6} xs={12}>
             <FormControl fullWidth size="small">
                 <InputLabel id={`items[${index}].contratos`}>Contratos</InputLabel>
@@ -412,6 +412,8 @@ const MyForm = ({ setValoresArray, setSnackMensaje, setReport, report })=> {
                 </Field>
             </FormControl>
             </Grid>
+*/}
+           
 
         <br/>
         <Grid item md={6} xs={12}>

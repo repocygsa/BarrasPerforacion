@@ -6,7 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { orange } from '@mui/material/colors';
-import {useState} from 'react';
+import { useState } from 'react';
 
 export default function MensajeSinPermiso() {
   
@@ -28,16 +28,27 @@ export default function MensajeSinPermiso() {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title" style={{fontSize:"20px"}}>
-        SIN PERMISOS
+        <DialogTitle id="alert-dialog-title" style={{ fontSize: "20px" }}>
+          SIN PERMISOS
         </DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description" style={{fontSize:"16px"}}>
-          Usted no cuenta con los permisos necesarios para ingresar a este módulo o su sesión ha caducado
+          <DialogContentText
+            id="alert-dialog-description"
+            style={{ fontSize: "16px" }}
+          >
+            Usted no cuenta con los permisos necesarios para ingresar a este
+            módulo o su sesión ha caducado
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button variant="contained" onClick={() => window.location.replace(`../../../`)}  sx={{ backgroundColor: orange[500], '&:hover': { backgroundColor: orange[800] } }}>
+          <Button
+            variant="contained"
+            onClick={() => window.location.replace(`../../../`)}
+            sx={{
+              backgroundColor: orange[500],
+              '&:hover': { backgroundColor: orange[800] },
+            }}
+          >
             Volver a la APPSGOBM
           </Button>
         </DialogActions>

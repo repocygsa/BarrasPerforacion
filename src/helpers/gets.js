@@ -100,6 +100,11 @@ const getIncidentesDet = (data) => {
     return getIncidentesDet;
 };
 
+const getIncidentesTran = () => {
+    const getIncidentesTran = llamadaApi.post('aprendizaje/getIncidentesTran');
+    return getIncidentesTran;
+};
+
 const getEmpresa = () => {
     const getEmpresa = llamadaApi.post('aprendizaje/getEmpresa');
     return getEmpresa;
@@ -137,6 +142,29 @@ const getRiesgoCritico = () => {
     const getRiesgoCritico = llamadaApi.post('aprendizaje/getRiesgoCritico');
     return getRiesgoCritico;
 };
+
+const getTranversalId = (data) => {
+    const getTranversalId = llamadaApi.post('aprendizaje/getTranversalId',{data});
+    return getTranversalId;
+};
+
+
+const eliminarAccionTranversal = (data) => {
+    const eliminarAccionTranversal = llamadaApi.post('aprendizaje/eliminarAccionTranversal',{data});
+    return eliminarAccionTranversal;
+};
+
+const AgregarAccionTranversal = (data) => {
+    const AgregarAccionTranversal = llamadaApi.post('aprendizaje/AgregarAccionTranversal',{data});
+    return AgregarAccionTranversal;
+};
+
+const getCorrectivaId = (data) => {
+    const getCorrectivaId = llamadaApi.post('aprendizaje/getCorrectivaId',{data});
+    return getCorrectivaId;
+};
+
+
 
 
 
@@ -176,7 +204,7 @@ const guardarIncidente = async (data) => {
                 jerDesc,
                 fk_rc,
                 fk_jerarquia,
-
+                user,
             }
         } = data;
 
@@ -224,7 +252,7 @@ const guardarIncidente = async (data) => {
         formData.append('fk_jerarquia', fk_jerarquia);
         formData.append('fk_rc', fk_rc);
         formData.append('nId', nId);
-
+        formData.append('user', user);
         // Manejar valoresArray
         valoresArray.forEach((valor, index) => {
             formData.append(`valoresArray[${index}]`, JSON.stringify(valor));
@@ -358,7 +386,12 @@ export {
     getContratosEmpresa,
     getTranversal,
     getRiesgoCritico,
-    getJerarquia
+    getJerarquia,
+    getTranversalId,
+    eliminarAccionTranversal,
+    AgregarAccionTranversal,
+    getCorrectivaId,
+    getIncidentesTran
 
 
 }
