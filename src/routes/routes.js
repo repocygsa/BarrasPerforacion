@@ -21,7 +21,7 @@ const Routes =({data})=>{
         return (
             [{
                 path: '/',
-                element:  ctto === '4600021050' ? <MainLayout permiso={perUsu}/>:<MensajeSinPermiso/>,
+                element:  perUsu === 1 ? <MainLayout permiso={perUsu}/>:<MensajeSinPermiso/>,
                 children: [
                     {
                         path: '/inicio',

@@ -8,7 +8,7 @@ import * as yup from "yup";
 
 import { Save, Search } from '@mui/icons-material';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, CircularProgress, FormControl, FormControlLabel, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
+import { Alert, Box, CircularProgress, FormControl, FormControlLabel, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, MenuItem, Select, Stack, TextField, Typography } from '@mui/material';
 import { getActividad, getActividad2, getActividad3, getActividad4, getArea, getCalIncidente, getContratos, getEmpresa, getJerarquia, getMina, getNivel, getPersona, getRiesgoCritico, getTipoIncidente } from 'helpers/gets';
 
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -439,6 +439,7 @@ const BuscarRut = (rut) => {
         validationSchema: validaciones,
         enableReinitialize: true,
         onSubmit: (datos, { setSubmitting }) => {
+            
             setSubmitting(true);
           
             const datosArr = {
@@ -447,6 +448,7 @@ const BuscarRut = (rut) => {
             };
 
             setData(datosArr);
+
       
          //   setAbrirDialog(true);
 
@@ -516,6 +518,14 @@ if (valManual===0) {
             enabled: buscarDCC
         }
     );
+
+
+    const hayErrores = Object.keys(formik.errors).length > 0;
+    if (hayErrores) {
+      console.log('Hay errores de validación en el formulario');
+    } else {
+      console.log('El formulario es válido');
+    }
 
     return (
         <>
@@ -1535,7 +1545,9 @@ if (valManual===0) {
 
             <Grid container spacing={1} rowSpacing={1} columnSpacing={2} mt={1} align="right">
                 <Grid item md={12} xs={12} align="right">
-
+                {hayErrores && (
+                    <Alert severity="error">Formulario con errores, favor revisar antes de continuar</Alert>
+                 )}
           
                     <LoadingButton
                         type="submit" 
