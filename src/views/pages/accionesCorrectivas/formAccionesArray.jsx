@@ -87,13 +87,14 @@ const [valoresArray, setValoresArray] = useState([]);
                 .string()
                 .required('ingrese un rut valido para el responsable'),
 
-              /*  fec_cierre: yup
+                fec_cierre: yup
                 .date()
                 .required('Ingrese una fecha válida')
                 .nullable('Ingrese fecha')
-                .min(moment().startOf('day'), 'La fecha de cierre no puede ser anterior a la fecha actual'),
+                // .min(moment().startOf('day'), 'La fecha de cierre no puede ser anterior a la fecha actual')
+                ,
             
-            */
+            
 
                   fk_jerarquia: yup
                   .string()
