@@ -13,8 +13,8 @@ export const TablaReporte = ({dataReporte}) => {
   const { empresa, fecha, lugar, mina,	area,	nivel,	tipo,	calificacion,	quesucedio,	evidencia,	rc,	medidas,	causas,	consecuencias, aprendizaje } = dataReporte.result[0];
   const medida = medidas.split('-|-')
   
-  const evi = evidencia.replace('C:\\wamp64\\www\\gobm\\web\\', '');
-  const direvi = evi.replaceAll('\\', '/');
+  const direvi = evidencia.replace('/var/www/html/', '');
+  // const direvi = evi.replaceAll('\\', '/');
 
   const StyledTableCell = styled(TableCell)(() => ({
     [`&.${tableCellClasses.head}`]: {
