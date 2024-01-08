@@ -11,7 +11,7 @@ import Ejemplo from './imgs/ejemplo.png';
 export const TablaReporte = ({dataReporte}) => {
 
   const { empresa, fecha, lugar, mina,	area,	nivel,	tipo,	calificacion,	quesucedio,	evidencia,	rc,	medidas,	causas,	consecuencias, aprendizaje } = dataReporte.result[0];
-  const medida = medidas.split(',')
+  const medida = medidas.split('-|-')
   
   const evi = evidencia.replace('C:\\wamp64\\www\\gobm\\web\\', '');
   const direvi = evi.replaceAll('\\', '/');
