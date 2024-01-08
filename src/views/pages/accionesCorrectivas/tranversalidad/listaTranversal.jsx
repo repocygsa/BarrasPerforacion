@@ -5,9 +5,9 @@ import { getEppAll, getTranversal } from 'helpers/gets';
 import { useContext, useEffect, useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import MainCard from 'ui-component/cards/MainCard';
+import { TablaTranversal } from './tablaTranversal';
 
 import { SocketContext } from 'context/SocketContext';
-import {TablaTranversal} from './tablaTranversal';
 
 
 export const ListaTranversal = ({permiso, usuario}) => {

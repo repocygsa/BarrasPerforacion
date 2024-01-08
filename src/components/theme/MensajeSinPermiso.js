@@ -10,8 +10,8 @@ import {useState} from 'react';
 
 export default function MensajeSinPermiso() {
   
- const [open, setOpen] = useState(true);
- setOpen(true)
+  const [open, setOpen] = useState(true);
+  // setOpen(true)
 
   // const handleClickOpen = () => {
   //   setOpen(true);

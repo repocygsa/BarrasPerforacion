@@ -9,17 +9,20 @@ import MensajeSinPermiso from 'components/theme/MensajeSinPermiso';
 import { FormularioRegistroAcciones } from 'views/pages/accionesCorrectivas/formularioRegistroAcciones';
 import { ListaAcciones } from 'views/pages/accionesCorrectivas/listaAcciones';
 import { ListaTranversal } from 'views/pages/accionesCorrectivas/tranversalidad/listaTranversal';
+import { ReporteCorreo } from 'views/reporte/reporte';
 
 
 const Routes =({data})=>{
 
-    const { rutUsu, perUsu, cttUsu } = data.user;
+    if(data.permiso.length > 0){
 
-    if(perUsu !== null){
+        const { rut, ctto } = data.datosSesion;
+        const perUsu =  data.permiso[0].fk_perfil
+
         return (
             [{
                 path: '/',
-                element:  cttUsu === '4600021050' ? <MainLayout permiso={perUsu}/>:<MensajeSinPermiso/>,
+                element:  ctto === '4600021050' ? <MainLayout permiso={perUsu}/>:<MensajeSinPermiso/>,
                 children: [
                     {
                         path: '/inicio',
@@ -28,17 +31,17 @@ const Routes =({data})=>{
                   
                     {
                         path: '/registro',
-                        element: perUsu===1 || perUsu ===2 ?<ListaAcciones permiso={perUsu} usuario={rutUsu} /> : <Navigate to='/web/accionesCorrectivas' />
+                        element: perUsu===1 || perUsu ===2 ?<ListaAcciones permiso={perUsu} usuario={rut} /> : <Navigate to='/web/accionesCorrectivas' />
                     
                     },
                     {
                         path: '/accCorrectivas',
-                        element: perUsu===1 || perUsu ===2 ?<FormularioRegistroAcciones permiso={perUsu} usuario={rutUsu} /> : <Navigate to='/web/accionesCorrectivas' />
+                        element: perUsu===1 || perUsu ===2 ?<FormularioRegistroAcciones permiso={perUsu} usuario={rut} /> : <Navigate to='/web/accionesCorrectivas' />
                     
                     },
                     {
                         path: '/tranversal',
-                        element: perUsu===1 || perUsu ===2 ?<ListaTranversal permiso={perUsu} usuario={rutUsu} /> : <Navigate to='/web/accionesCorrectivas' />
+                        element: perUsu===1 || perUsu ===2 ?<ListaTranversal permiso={perUsu} usuario={rut} /> : <Navigate to='/web/accionesCorrectivas' />
                     
                     },
                     {
@@ -54,6 +57,11 @@ const Routes =({data})=>{
     return(
         [
 
+            {
+                path: '/reporteCorreo',
+                element: <ReporteCorreo/>,  
+        
+            },
             {
                 path: '*',
                 element: <MensajeSinPermiso/>,  

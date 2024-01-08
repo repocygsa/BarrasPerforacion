@@ -29,7 +29,7 @@ export const DialogGuardaAccion = ({ abrirDialog, setAbrirDialog, setSnackMensaj
     
               queryClient.invalidateQueries('QueryIncidente');
            //   socket.emit('eppStock')
-           formik.resetForm();
+           // formik.resetForm();
         
            if (formHijoRef.current) {
                formHijoRef.current.resetForm();
