@@ -164,6 +164,12 @@ const getCorrectivaId = (data) => {
     return getCorrectivaId;
 };
 
+const getContratosCst = (data) => {
+    console.log(data,'sa')
+    const getContratosCst = llamadaApi.post('aprendizaje/getContratosCst',{data});
+    return getContratosCst;
+};
+
 
 
 
@@ -391,7 +397,8 @@ export {
     eliminarAccionTranversal,
     AgregarAccionTranversal,
     getCorrectivaId,
-    getIncidentesTran
+    getIncidentesTran,
+    getContratosCst
 
 
 }

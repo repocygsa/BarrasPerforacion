@@ -65,7 +65,7 @@ export const ListaTranversal = ({permiso, usuario}) => {
 
 
         <Grid item md={12} xs={12}>
-          {isLoadingDataTranversal ? '' : <TablaTranversal dataRegistroStock={DataTranversal.data.result} setSnackMensaje={setSnackMensaje} />}
+          {isLoadingDataTranversal ? '' : <TablaTranversal dataRegistroStock={DataTranversal.data.result} setSnackMensaje={setSnackMensaje} user={usuario} />}
         </Grid>
       </Grid></>
 

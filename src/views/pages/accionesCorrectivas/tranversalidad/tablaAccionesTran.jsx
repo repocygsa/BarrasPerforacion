@@ -12,7 +12,7 @@ import {BtnEditarTransversal} from './editarTranversalidad/btnEditarTransversal'
 
 
 
-export const TablaAccionesTran = ({dataRegistroStock, setSnackMensaje }) => {
+export const TablaAccionesTran = ({dataRegistroStock, setSnackMensaje, usuario }) => {
    
   const CustomEstatusCell2 = ({ estatus, est  }) => {
        
@@ -63,7 +63,7 @@ export const TablaAccionesTran = ({dataRegistroStock, setSnackMensaje }) => {
         <>
           {/* <BtnMostrarDetalle row={params.row} />
          <BtnEditar row={params.row}/> */} 
-         <BtnEditarTransversal row={params.row}/>
+         <BtnEditarTransversal row={params.row} usuario={usuario}/>
         
             
         </>,
@@ -101,18 +101,18 @@ export const TablaAccionesTran = ({dataRegistroStock, setSnackMensaje }) => {
     field:'resp',
     headerName:'Responsable',
     align:'left',
-    minWidth: 300,
+    minWidth: 450,
     valueGetter:(params)=>params.row.Nombre
 },
 
-  {
+ /* {
     field:'obs',
     headerName:'Observación',
     align:'left',
     minWidth: 300,
     valueGetter:(params)=>params.row.inc_obs?params.row.inc_obs:'Sin observación'
 },
-
+*/
 
     
         

@@ -13,17 +13,17 @@ import { useDropzone } from "react-dropzone";
       multiple: true,
       noClick: true,
       noKeyboard: true,
-      accept: {
+    /*  accept: {
         'image/jpeg': [],
         'image/png': [],
-        'document/pdf': [],
+        'application/pdf':['.pdf'],
         'application/msword': ['.doc'],
         'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
         'application/vnd.ms-excel': ['.xls', '.xlsx'],
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'],
         'application/vnd.ms-powerpoint': ['.ppt', '.pptx'],
         'application/vnd.openxmlformats-officedocument.presentationml.presentation': ['.pptx']
-      }
+      } */
     });
 
     return (

@@ -23,7 +23,7 @@ const TabPanel = (props) => {
   );
 };
 
-const TabsTranversalidad = () => {
+const TabsTranversalidad = (usuario) => {
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -37,10 +37,10 @@ const TabsTranversalidad = () => {
         <Tab label="Acciones por contrato" />
       </Tabs>
       <TabPanel value={value} index={0}>
-        <ListaAccionesTran/>
+        <ListaAccionesTran usuario ={usuario}/>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <ListaTranversal/>
+        <ListaTranversal usuario={usuario} />
       </TabPanel>
     </div>
   );

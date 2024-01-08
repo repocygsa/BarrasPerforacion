@@ -46,7 +46,7 @@ export const ListaAccionesTran = ({id,permiso, usuario}) => {
 
   <><SnackComponent snackMensaje={snackMensaje} setSnackMensaje={setSnackMensaje} /><Grid container spacing={2} rowSpacing={1} mt={1} justifyContent="center" alignItems="center">
         <Grid item md={12} xs={12}>
-          {isLoadingDataIncidenteDet ? '' : <TablaAccionesTran dataRegistroStock={DataIncidenteDet.data.result} setSnackMensaje={setSnackMensaje} />}
+          {isLoadingDataIncidenteDet ? '' : <TablaAccionesTran dataRegistroStock={DataIncidenteDet.data.result} setSnackMensaje={setSnackMensaje} usuario={usuario}/>}
         </Grid>
       </Grid></>
 

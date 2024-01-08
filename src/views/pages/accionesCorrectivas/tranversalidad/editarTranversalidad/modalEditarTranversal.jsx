@@ -9,7 +9,7 @@ import { ListaTranversalId } from './listaTranversalId';
 
 
 
-export const ModalEditarTranversal = ({ abrirModal, setAbrirModal, row }) => {
+export const ModalEditarTranversal = ({ abrirModal, setAbrirModal, row, usuario }) => {
 
     function createData(
         name,
@@ -38,7 +38,7 @@ export const ModalEditarTranversal = ({ abrirModal, setAbrirModal, row }) => {
                     <Card variant="outlined" style={{ borderRadius: '10px' }}>
                         <CardContent>
 
-                        <ListaTranversalId id={row.id} row={row}/>
+                        <ListaTranversalId id={row.id} row={row} user={usuario}/>
                     </CardContent>
                     </Card>
                     </Grid>

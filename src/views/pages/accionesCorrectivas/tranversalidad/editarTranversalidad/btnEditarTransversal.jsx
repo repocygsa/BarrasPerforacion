@@ -4,7 +4,7 @@ import IconButton from '@mui/material/IconButton';
 import { memo, useState } from 'react';
 import { ModalEditarTranversal } from './modalEditarTranversal';
 
-export const BtnEditarTransversal = ({row}) => {
+export const BtnEditarTransversal = ({row, usuario}) => {
 
 
   const [abrirModal, setAbrirModal] = useState(false);
@@ -16,6 +16,7 @@ export const BtnEditarTransversal = ({row}) => {
       abrirModal={abrirModal} 
       setAbrirModal={setAbrirModal}
       row={row}
+      usuario={usuario}
     />
    
  
