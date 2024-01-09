@@ -43,11 +43,6 @@ const Routes =({data})=>{
                         element: perUsu===1 || perUsu ===2 ?<ListaTranversal permiso={perUsu} usuario={rut} /> : <Navigate to='/web/accionesCorrectivas' />
                     },
                     {
-                        path: '/reporteCorreo',
-                        element: <ReporteCorreo/>,  
-                
-                    },
-                    {
                         path: '*',
                         element: <MensajeSinPermiso/>,  
                 
