@@ -165,10 +165,17 @@ const getCorrectivaId = (data) => {
 };
 
 const getContratosCst = (data) => {
-    console.log(data,'sa')
     const getContratosCst = llamadaApi.post('aprendizaje/getContratosCst',{data});
     return getContratosCst;
 };
+
+const getCtaCascos = (data) => {
+
+    const getCtaCascos = llamadaApi.post('aprendizaje/getCtaCascos',{data});
+    return getCtaCascos;
+};
+
+
 
 
 
@@ -211,6 +218,7 @@ const guardarIncidente = async (data) => {
                 fk_rc,
                 fk_jerarquia,
                 user,
+                Otras_actividades,
             }
         } = data;
 
@@ -259,6 +267,7 @@ const guardarIncidente = async (data) => {
         formData.append('fk_rc', fk_rc);
         formData.append('nId', nId);
         formData.append('user', user);
+        formData.append('Otras_actividades', Otras_actividades);
         // Manejar valoresArray
         valoresArray.forEach((valor, index) => {
             formData.append(`valoresArray[${index}]`, JSON.stringify(valor));
@@ -398,7 +407,8 @@ export {
     AgregarAccionTranversal,
     getCorrectivaId,
     getIncidentesTran,
-    getContratosCst
+    getContratosCst,
+    getCtaCascos
 
 
 }

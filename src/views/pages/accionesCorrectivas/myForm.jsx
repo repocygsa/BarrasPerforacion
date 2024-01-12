@@ -40,6 +40,8 @@ import Stack from '@mui/material/Stack';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
+import { ModalBuscarCtaCascos } from './busquedaCuentaCascos/modalBuscarCtaCascos';
 
 /*
 const validationSchema = Yup.object().shape({
@@ -68,7 +70,9 @@ const MyForm = ({ setValoresArray, setSnackMensaje, setReport, report })=> {
   const [activaSnack, setActivaSnack] = useState(false);
   const [buscarDCC, setBuscarDCC] = useState(false);
   const [jerDesc, setJerDesc] = useState('');
-  
+  const [nom, setNom] = useState('')
+const [rut, setRut] = useState('')
+const [ind, setInd]=useState(0)
   const {
     data: DataEmpCtto, 
     isLoading:isLoadingEmpCtto
@@ -114,7 +118,7 @@ const MyForm = ({ setValoresArray, setSnackMensaje, setReport, report })=> {
                     mensaje:'Trabajador no encontrado',
                     estado:'error'
                 });
-                setFieldValue(`items[${trut}].nom_usu_det`, '');
+                setFieldValue(`items[${ind}].nom_usu_det`, '');
                
               
 
@@ -127,7 +131,7 @@ const MyForm = ({ setValoresArray, setSnackMensaje, setReport, report })=> {
                     estado:'success'
                 });
 
-                    setFieldValue(`items[${trut}].nom_usu_det`, usuario.data.result[0].Nombre);
+                    setFieldValue(`items[${ind}].nom_usu_det`, usuario.data.result[0].Nombre);
                 
                
             
@@ -143,10 +147,27 @@ const MyForm = ({ setValoresArray, setSnackMensaje, setReport, report })=> {
  }, [values.items])
 
 
+ const [abrirModal, setAbrirModal] = useState(false);
+
+ const actualizarRutResponsable = (rutTrab, nomTrab ) => {
+  // Actualiza el valor en el campo rut_responsable del formulario
+  setFieldValue(`items[${ind}].rut_responsable`, rutTrab);
+ handleBuscarRut(rutTrab)
+};
+
+
 
   return (
 
     <>
+      <ModalBuscarCtaCascos 
+      abrirModal={abrirModal} 
+      setAbrirModal={setAbrirModal}
+      setSnackMensaje={setSnackMensaje}
+      actualizarRutResponsable={actualizarRutResponsable}
+      setRut={setRut}
+      setNom={setNom}
+    />
     <br/>
     <Stack sx={{ width: '100%' }} spacing={2}>
           <Alert severity="info">Ingrese las acciones correctivas correspondientes al incidente</Alert>
@@ -188,6 +209,7 @@ const MyForm = ({ setValoresArray, setSnackMensaje, setReport, report })=> {
             {...field}
             label="RUT Responsable"
             size="small"
+            
             fullWidth
             error={
               form.touched.items &&
@@ -210,7 +232,9 @@ const MyForm = ({ setValoresArray, setSnackMensaje, setReport, report })=> {
               );
             }}
             InputProps={{
-              endAdornment: (
+              readOnly: true,
+              disabled: true,
+            /*  endAdornment: (
                 <InputAdornment position="end">
                   <IconButton
                     color="primary"
@@ -228,6 +252,32 @@ const MyForm = ({ setValoresArray, setSnackMensaje, setReport, report })=> {
                     }}
                   >
                     <Search />
+                  </IconButton>
+                </InputAdornment> 
+              ), */
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    color="primary"
+                    aria-label="Buscar Rut"
+                    onClick={() => {
+                   /*   if (field.value.length > 0) {
+                        setInd(index);
+                        handleBuscarRut(field.value);
+                        setActivaSnack(true);
+                        form.setFieldValue(
+                          `items[${index}].rut_usu`,
+                          prettifyRut(field.value)
+                        ); 
+                      }else{
+                      setInd(index);
+                      setAbrirModal(true)
+                      } */
+                      setInd(index);
+                      setAbrirModal(true)
+                    }}
+                  >
+                    <PersonSearchIcon />
                   </IconButton>
                 </InputAdornment>
               ),
@@ -498,7 +548,7 @@ const [report, setReport]= useState(0);
 
     return(
         <Formik
-        initialValues={{ items: [{ rut_responsable: '', nom_usu_det: '', fec_cierre:null, acc_correctiva: '', isReport:false, contratos:'', fk_jerarquia:'', jerDesc:''}] }}
+        initialValues={{ items: [{ rut_responsable:'', nom_usu_det:'', fec_cierre:null, acc_correctiva: '', isReport:false, contratos:'', fk_jerarquia:'', jerDesc:''}] }}
         validationSchema={validationSchema}
         onSubmit={(values, { submitForm, setSubmitting }) => {
            console.log('')

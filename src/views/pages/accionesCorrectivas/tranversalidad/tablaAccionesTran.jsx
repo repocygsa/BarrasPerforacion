@@ -8,21 +8,23 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { Box } from '@mui/system';
 import {BtnEditarTransversal} from './editarTranversalidad/btnEditarTransversal';
 
+import {BtnMostrarDetalleTran} from './editarTranversalidad/btnMostrarDetalleTran';
+
 
 
 
 
 export const TablaAccionesTran = ({dataRegistroStock, setSnackMensaje, usuario }) => {
-   
+   console.log(dataRegistroStock,'registros')
   const CustomEstatusCell2 = ({ estatus, est  }) => {
        
     let textColor = 'black'; // Color predeterminado
     
-    if (est === 0) {
+    if (est === 'sin complementar') {
       textColor ='blue';
       estatus='Sin complementar'
     
-    } else if (est === 1) {
+    } else if (est === 'complementado') {
       textColor = 'green';
       estatus=`Complementado`
     }
@@ -61,10 +63,10 @@ export const TablaAccionesTran = ({dataRegistroStock, setSnackMensaje, usuario }
         minWidth: 100,
         renderCell:(params)=> 
         <>
-          {/* <BtnMostrarDetalle row={params.row} />
+          {/* 
          <BtnEditar row={params.row}/> */} 
          <BtnEditarTransversal row={params.row} usuario={usuario}/>
-        
+         <BtnMostrarDetalleTran row={params.row}/>
             
         </>,
     },
@@ -72,13 +74,13 @@ export const TablaAccionesTran = ({dataRegistroStock, setSnackMensaje, usuario }
     
      {
         field:'estP',
-        headerName:'Progreso',
+        headerName:'Estado',
         align:'left',
         minWidth: 160,
         renderCell:(params)=> 
         <>
-            <CustomEstatusCell2 estatus='' est={params.row.inc_complementada} />
-           
+            <CustomEstatusCell2 estatus='' est={params.row.estado_complemento} />
+          { /* <BtnMostrarDetalle row={params.row} /> */ }  
             
         </>,
     }, 

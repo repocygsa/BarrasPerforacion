@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-unused-vars */
 
 
@@ -23,7 +24,8 @@ import moment from 'moment';
 import { checkRut, prettifyRut } from 'react-rut-formatter';
 import { DialogGuardaAccion } from './dialogGuardaAccion';
 import { App } from './myForm';
-
+import { ModalBuscarCtaCascos } from './busquedaCuentaCascos/modalBuscarCtaCascos';
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 
 
 
@@ -61,7 +63,8 @@ const [valoresArray, setValoresArray] = useState([]);
     const [minaIncidenteDesc, setMinaIncidenteDesc] = useState('')
     const [areaIncidenteDesc, setAreaIncidenteDesc] = useState('')
     const [nivelIncidenteDesc, setNivelIncidenteDesc] = useState('')
-
+    const [nom, setNom] = useState('')
+    const [rut, setRut] = useState('')
     useEffect(() => {
         const usu = localStorage.getItem('rut_session');
         setUsuario(usu);
@@ -151,12 +154,7 @@ const [valoresArray, setValoresArray] = useState([]);
         ()=>getActividad()
     );
 
-    const {
-        data: DataJer, 
-        isLoading:isLoadingDataJer
-    } = useQuery(['QueryJer'], 
-        ()=>getJerarquia()
-    );
+ 
 
     const {
         data: DataRC, 
@@ -309,7 +307,7 @@ const BuscarRut = (rut) => {
         .string()
         .required('Debe seleccionar un riesgo crítico')
         ,
-        
+    /*    
     acc_Actividad_2: yup
     .string()
     .required('Debe seleccionar una Sub-Actividad nivel 1')
@@ -323,7 +321,30 @@ const BuscarRut = (rut) => {
     acc_Actividad_4: yup
     .string()
     .required('Debe seleccionar una Sub-Actividad nivel 3')
-    ,
+    , */
+    acc_Actividad_2: yup.string()
+    .when('acc_Actividad', {
+      is: acc_Actividad => acc_Actividad > 0,
+      then: yup.string().required('Debe seleccionar una Sub-Actividad nivel 1')
+    }),
+
+  acc_Actividad_3: yup.string()
+    .when('acc_Actividad', {
+      is: acc_Actividad => acc_Actividad > 0,
+      then: yup.string().required('Debe seleccionar una Sub-Actividad nivel 2')
+    }),
+
+  acc_Actividad_4: yup.string()
+    .when('acc_Actividad', {
+      is: acc_Actividad => acc_Actividad > 0,
+      then: yup.string().required('Debe seleccionar una Sub-Actividad nivel 3')
+    }),
+
+  Otras_actividades: yup.string()
+    .when('acc_Actividad', {
+      is: acc_Actividad => acc_Actividad === '0',
+      then: yup.string().required('Ingrese una actividad')
+    }),
 
     fec_ins: yup
     .date('Fecha invalida')
@@ -432,6 +453,8 @@ const BuscarRut = (rut) => {
             fk_rc:'',
             rcDesc:'',
             user:userCrea,
+            Otras_actividades:'',
+            idAct1:'',
           
 
             
@@ -506,11 +529,9 @@ if (valManual===0) {
                         mensaje:'Trabajador encontrado',
                         estado:'success'
                     });
-                    if(trut === '1'){
+                    
                         formik.setFieldValue('nom_usu', usuario.data.result[0].Nombre);
-                    }else if(trut ==='2'){
-                        formik.setFieldValue('nom_usu_resp', usuario.data.result[0].Nombre);
-                    }
+                    
                    
                 
                     setBuscarDCC(false);
@@ -520,7 +541,14 @@ if (valManual===0) {
         }
     );
 
+    const [abrirModal, setAbrirModal] = useState(false);
 
+    const actualizarRutResponsable = (rutTrab, nomTrab ) => {
+     // Actualiza el valor en el campo rut_responsable del formulario
+     formik.setFieldValue("rut_usu", prettifyRut(rutTrab))
+     BuscarRut(rutTrab)
+   };
+   
     const hayErrores = Object.keys(formik.errors).length > 0;
     if (hayErrores) {
       console.log('Hay errores de validación en el formulario');
@@ -542,7 +570,14 @@ if (valManual===0) {
       formHijoRef={formHijoRef}
     />
 
-    
+<ModalBuscarCtaCascos 
+      abrirModal={abrirModal} 
+      setAbrirModal={setAbrirModal}
+      setSnackMensaje={setSnackMensaje}
+      actualizarRutResponsable={actualizarRutResponsable}
+      setRut={setRut}
+      setNom={setNom}
+    />  
      
         <form onSubmit={ formik.handleSubmit }>
 
@@ -826,7 +861,7 @@ if (valManual===0) {
                             ))
                         }
                         </Select>
-                        <FormHelperText>{formik.touched.acc_Actividad && formik.errors.acc_Actividad}</FormHelperText>
+                        <FormHelperText>{formik.touched.tipo_incidente && formik.errors.tipo_incidente}</FormHelperText>
                     </FormControl>
                 </Grid> 
                 <Grid item md={3} xs={12}>
@@ -911,24 +946,25 @@ if (valManual===0) {
       autoComplete="off"
       value={formik.values.rut_usu}
       InputProps={{
+        readOnly: true,
+        disabled: true,
         endAdornment: (
           <InputAdornment position="end">
             <IconButton
               color="primary"
               aria-label="Buscar Rut"
               onClick={() => {
-                if (formik.values.rut_usu.length > 0) {
+               /* if (formik.values.rut_usu.length > 0) {
                   setActivaSnack(true);
                   setTrut('1');
                   BuscarRut(formik.values.rut_usu);
                 } else {
-                  setSnackMensaje({
-                    open: false,
-                  });
-                }
+                    setAbrirModal(true)
+                } */
+                setAbrirModal(true)
               }}
             >
-              <Search />
+               <PersonSearchIcon />
             </IconButton>
           </InputAdornment>
         ),
@@ -1086,7 +1122,7 @@ if (valManual===0) {
                     </FormControl>
                 </Grid> 
                             */ }
-                <Grid item md={6} xs={12}>
+                <Grid item md={9} xs={12}>
                     <FormControl
                         fullWidth
                         size="small"
@@ -1194,12 +1230,15 @@ if (valManual===0) {
                             }}
                             onChange={(e) => {
                                 formik.setFieldValue('acc_Actividad', e.target.value);
-                                formik.setFieldValue('acc_Actividad_2', '')
-                                formik.setFieldValue('acc_Actividad_3', '')
-                                formik.setFieldValue('acc_Actividad_4', '')
-                                setIdAct1( e.target.value)
-                                setIdAct2('')
-                                setIdAct3('')
+                              formik.setFieldValue('Otras_actividades','')
+                                setIdAct1(e.target.value);
+                                if (e.target.value === 0) {
+                                    formik.setFieldValue('acc_Actividad_2', '');
+                                    formik.setFieldValue('acc_Actividad_3', '');
+                                    formik.setFieldValue('acc_Actividad_4', '');
+                                    setIdAct2('');
+                                    setIdAct3('');
+                                } 
                                 
                             }}
                         >
@@ -1219,8 +1258,29 @@ if (valManual===0) {
                         <FormHelperText>{formik.touched.acc_Actividad && formik.errors.acc_Actividad}</FormHelperText>
                     </FormControl>
                 </Grid> 
-
-                <Grid item md={3} xs={12}>
+                {formik.values.acc_Actividad === 0 && (
+                    <Grid item md={9} xs={3}>
+                        <TextField
+                            fullWidth
+                            size="small"
+                            autoComplete="off"
+                            name="Otras_actividades"
+                            label="Otras Actividades"
+                            placeholder="ingrese una actividad"
+                            value={formik.values.Otras_actividades}
+                            onChange={formik.handleChange}
+                            error={formik.touched.Otras_actividades && Boolean(formik.errors.Otras_actividades)}
+                            helperText={formik.touched.Otras_actividades && formik.errors.Otras_actividades}
+                            onBlur={(e) => {
+                                formik.handleBlur(e);
+                            }}
+                        />
+                    </Grid>
+                    )}
+   
+                
+                <Grid item md={3} xs={12} style={{ display: formik.values.acc_Actividad === 0 ? 'none' : 'block' }}>
+             
                     <FormControl
                         fullWidth
                         size="small"
@@ -1259,9 +1319,12 @@ if (valManual===0) {
                         </Select>
                         <FormHelperText>{formik.touched.acc_Actividad_2 && formik.errors.acc_Actividad_2}</FormHelperText>
                     </FormControl>
+                    
                 </Grid> 
 
-                <Grid item md={3} xs={12}>
+
+                <Grid item md={3} xs={12} style={{ display: formik.values.acc_Actividad === 0 ? 'none' : 'block' }}>
+                
                     <FormControl
                         fullWidth
                         size="small"
@@ -1298,9 +1361,12 @@ if (valManual===0) {
                         </Select>
                         <FormHelperText>{formik.touched.acc_Actividad_3 && formik.errors.acc_Actividad_3}</FormHelperText>
                     </FormControl>
+                   
                 </Grid> 
 
-                <Grid item md={3} xs={12}>
+
+                <Grid item md={3} xs={12} style={{ display: formik.values.acc_Actividad === 0 ? 'none' : 'block' }}>
+              
                     <FormControl
                         fullWidth
                         size="small"
@@ -1335,9 +1401,10 @@ if (valManual===0) {
                         </Select>
                         <FormHelperText>{formik.touched.acc_Actividad_4 && formik.errors.acc_Actividad_4}</FormHelperText>
                     </FormControl>
+                  
+  
                 </Grid> 
 
-         
             
             
                  

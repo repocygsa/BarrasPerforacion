@@ -2,20 +2,21 @@ import { Button, Card, CardContent, DialogActions, DialogContent, Grid, IconButt
 import { Box, Container } from '@mui/system';
 import { BootstrapDialog, BootstrapDialogTitle } from 'components/ModalStyle';
 import moment from 'moment';
-import { Accion } from './accion';
+
 
 import DownloadIcon from '@mui/icons-material/Download';
 import { Link } from 'react-router-dom';
-import { ListaAccionesDet } from './listaAccionesDet';
+
 import { useQuery } from 'react-query';
 import { getIncidentesArch, getIncidentesArchDet } from 'helpers/gets';
+import { ListaAccionesDet } from '../../listaAccionesDet';
 
 
 
 
 
 
-export const ModalVerRegistro = ({ abrirModal, setAbrirModal, row }) => {
+export const ModalVerRegistroTran = ({ abrirModal, setAbrirModal, row }) => {
 
     function createData(
         name,

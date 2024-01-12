@@ -40,7 +40,7 @@ const Routes =({data})=>{
                     },
                     {
                         path: '/tranversal',
-                        element: perUsu===1 || perUsu ===2 ?<ListaTranversal permiso={perUsu} usuario={rut} /> : <Navigate to='/web/accionesCorrectivas' />
+                        element: perUsu===1 || perUsu ===2 ?<TabsTranversalidad usuario={rut} /> : <Navigate to='/web/accionesCorrectivas' />
                     },
                     {
                         path: '*',

@@ -8,6 +8,7 @@ import { Box } from '@mui/system';
 import BtnCambiarEstadoTranversal from './btnCambiarEstadoTranversal';
 import { BtnMostrarTranversal } from './btnMostrarDetalleTranversal';
 import {BtnEliminarTranversal} from './editarTranversalidad/btnEliminarTranversal';
+import {BtnMostrarDetalle} from '../btnMostrarDetalle';
 
 
 
@@ -66,7 +67,7 @@ export const TablaTranversal = ({dataRegistroStock, setSnackMensaje }) => {
             minWidth: 100,
             renderCell:(params)=> 
             <>
-    
+    { /* <BtnMostrarDetalle row={params.row} /> */ }  
     <BtnEliminarTranversal row={params.row} setSnackMensaje={setSnackMensaje}/>
             {/*  <BtnEditar row={params.row}/> */} 
            {/*
