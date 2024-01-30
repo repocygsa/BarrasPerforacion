@@ -1,20 +1,22 @@
-import { Grid, Typography } from '@mui/material';
+import { Grid, Tooltip, Typography } from '@mui/material';
 import { DataGrid, esES } from '@mui/x-data-grid';
 import moment from 'moment';
 import { memo } from 'react';
 
 import CircularProgress from '@mui/material/CircularProgress';
 import { Box } from '@mui/system';
-import { BtnVerArch } from '../btnVerArch';
-import { BtnCestadoTran } from './cierreTranversal/btnCambiarEstadoTran';
-import { BtnEliminarTranversal } from './editarTranversalidad/btnEliminarTranversal';
-import { BtnMostrarDetalleTran } from './editarTranversalidad/btnMostrarDetalleTran';
+import { BtnTranversalSelec } from './btnTranversalSelec';
 
 
 
 
-export const TablaTranversal = ({dataRegistroStock, setSnackMensaje }) => {
-   
+
+
+
+
+
+export const TablaCttoCst = ({dataRegistroStock, setSnackMensaje, user, idCab }) => {
+   console.log(dataRegistroStock, 'ssss')
     const CustomEstatusCell3 = ({ estatus, est  }) => {
        
         let textColor = 'black'; // Color predeterminado
@@ -38,7 +40,7 @@ export const TablaTranversal = ({dataRegistroStock, setSnackMensaje }) => {
         );
       };
 
-      const CustomEstatusCell2OLD = ({ estatus, est, diferencia }) => {
+      const CustomEstatusCell2 = ({ estatus, est, diferencia }) => {
        
         let textColor = 'black'; // Color predeterminado
         
@@ -56,35 +58,6 @@ export const TablaTranversal = ({dataRegistroStock, setSnackMensaje }) => {
         }else if (est ===4){
           textColor = 'gray';
           estatus=`Eliminado`
-        }
-      
-        return (
-          <Typography style={{ color: textColor }}>
-            {estatus}
-          </Typography>
-        );
-      };
-
-      const CustomEstatusCell2 = ({ estatus, est, diferencia }) => {
-
-   
-       
-        let textColor = 'black'; // Color predeterminado
-        
-        if (est === 1) {
-          textColor =diferencia ===0?'#9e9d24':'green';
-          estatus='En proceso'
-          estatus=diferencia ===0?'En proceso (último día)':'En proceso'
-        } else if (est === 2) {
-          textColor = 'red';
-        //  estatus=diferencia !==0?`Fuera de plazo (${diferencia})`:'En proceso (último día)'
-        estatus=`Fuera de plazo (${diferencia})`
-        }else if (est ===3){
-          textColor='blue';
-          estatus='Cerrado'
-        }else if (est===4){
-          textColor='red';
-          estatus='Eliminado'
         }
       
         return (
@@ -123,34 +96,13 @@ export const TablaTranversal = ({dataRegistroStock, setSnackMensaje }) => {
             minWidth: 180,
             renderCell:(params)=> 
             <>
-    { /* <BtnMostrarDetalle row={params.row} /> */ }  
-    <BtnEliminarTranversal row={params.row} setSnackMensaje={setSnackMensaje}/>
-    <BtnMostrarDetalleTran row={params.row}/>
-    <BtnCestadoTran row={params.row} setSnackMensaje={setSnackMensaje} />
-    <BtnVerArch  row={params.row} setSnackMensaje={setSnackMensaje}/>
-    
-            {/*  <BtnEditar row={params.row}/> */} 
-           {/*
-            <BtnCestado row={params.row} setSnackMensaje={setSnackMensaje}/>
-           */}  
-                
+            <BtnTranversalSelec row={params.row} usuario={user} ctto={params.row.fk_cst_ctto} idCab={idCab}/>
+         
+  
             </>,
         },
     
-          {
-            field:'estado',
-            headerName:'Progreso',
-            align:'left',
-            minWidth: 180,
-            renderCell:(params)=> <CustomEstatusCell2 estatus='' est={params.row.inc_det_estado} diferencia={params.row.dias_diferencia}/>
-        }, 
-        {
-          field:'fec_cierr',
-          headerName:'Fecha de cierre',
-          align:'left',
-          minWidth: 150,
-          valueGetter:(params)=>moment(params.row.inc_fec_cierre).format('DD-MM-YYYY')
-      },
+        
         {
           field:'emp',
           headerName:'Empresa',
@@ -164,61 +116,62 @@ export const TablaTranversal = ({dataRegistroStock, setSnackMensaje }) => {
         headerName:'Contrato',
         align:'left',
         minWidth: 150,
-        valueGetter:(params)=>params.row.fk_ctto
+        valueGetter:(params)=>params.row.fk_cst_ctto
     },
     
-    {
-      field:'jer',
-      headerName:'Jerarquia',
-      align:'left',
-      minWidth: 150,
-      valueGetter:(params)=>params.row.jerarquia
-  },
 
   {
-    field:'medCorr',
-    headerName:'Medida Correctiva',
-    align:'left',
-    minWidth: 400,
-    flex:'1',
- //   valueGetter:(params)=>params.row.inc_med_correctiva
- renderCell:(params)=>  <>
-<Grid
-  container
-  style={{
-    alignItems: 'center',
-    whiteSpace: 'normal',
-    wordWrap: 'break-word',
-    fontSize: '13px', // Tamaño de la letra más pequeño
-    lineHeight: '1.5', // Altura de la fila más alta
-    margin: '8px', // Margen alrededor del contenido
-  }}
->
-  {params.row.inc_med_correctiva}
-</Grid>
- </>,
-},
-
-    {
-      field:'resp',
-      headerName:'Responsable',
-      align:'left',
-      minWidth: 300,
-      valueGetter:(params)=>params.row.Nombre
+    field: 'sin',
+    headerName: 'S/C',
+    align: 'left',
+    minWidth: 60,
+    renderCell: (params) => (
+      <Tooltip title="Sin complementar" arrow>
+        <span>
+          {params.row.count_id_1 - (params.row.count_complementada_2 + params.row.count_complementada_3)}
+        </span>
+      </Tooltip>
+    ),
   },
 
- 
-        
+{
+  field:'comp',
+  headerName:'C/(Cerradas)',
+  align:'left',
+  minWidth: 150,
+  renderCell: (params) => (
+    <Tooltip title="Complementadas(Cerradas)" arrow>
+      <span>
+      {`${params.row.count_complementada_2} (${params.row.count_cerradas}) `}
+      </span>
+    </Tooltip>
+  ),
+},
 
-    
-        {
-          field:'obsCierr',
-          headerName:'Observación de cierre',
-          align:'left',
-          minWidth: 400,
-          valueGetter:(params)=>params.row.inc_obs?`${moment(params.row.inc_fec_cierre).format('DD-MM-YYYY HH:mm')}: ${ params.row.inc_obs}`:'sin-cierre'
-      },
-    
+{
+  field:'na',
+  headerName:'N/A',
+  align:'left',
+  minWidth: 60,
+  renderCell: (params) => (
+    <Tooltip title="No aplica" arrow>
+      <span>
+      {params.row.count_complementada_3}
+      </span>
+    </Tooltip>
+  ),
+},
+  {
+    field:'tot',
+    headerName:'Total',
+    align:'left',
+    minWidth: 235,
+    valueGetter:(params)=>params.row.count_id_1
+  },
+
+  
+
+ 
     
  
      
@@ -255,6 +208,6 @@ export const TablaTranversal = ({dataRegistroStock, setSnackMensaje }) => {
     )
 
 }
-export default memo(TablaTranversal);
+export default memo(TablaCttoCst);
 
 

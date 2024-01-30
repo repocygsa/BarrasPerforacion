@@ -37,18 +37,20 @@ export const BtnMostrarDetalleTran = ({row}) => {
       datosRow=DataIncidente.data.result[0]
     }
 
-console.log(datosRow)
+
  
 
   return (
     <>
-   
+   {!isLoadingDataIncidente?
       <ModalVerRegistroTran
       abrirModal={abrirModal} 
       setAbrirModal={setAbrirModal}
-      row={row}
+      row={DataIncidente.data.result[0]}
       />
-   
+      :
+      'Cargando....'
+    }
  
 
 <Grid

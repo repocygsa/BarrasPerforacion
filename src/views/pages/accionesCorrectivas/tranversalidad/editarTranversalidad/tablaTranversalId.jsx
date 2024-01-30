@@ -120,7 +120,7 @@ export const TablaTranversalId = ({dataRegistroStock, setSnackMensaje, row }) =>
     </Grid>
      </>,
     },
-
+    
     {
       field:'obsCierr',
       headerName:'Observación',

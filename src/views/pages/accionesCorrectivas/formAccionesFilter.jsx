@@ -209,7 +209,7 @@ const handleEppChange = (event, newValue) => {
                         size="small"
                         autoComplete="off"
                         name="pos_inf"
-                        label="Palabras claves acciones correctivas"
+                        label="Palabras claves"
                         value={formik.values.pos_inf}
                         onChange={formik.handleChange}
                         error={formik.touched.pos_inf && Boolean(formik.errors.pos_inf)}

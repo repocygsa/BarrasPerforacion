@@ -4,6 +4,7 @@ import AltRouteIcon from '@mui/icons-material/AltRoute';
 import FactCheckIcon from '@mui/icons-material/FactCheck';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import PendingActionsIcon from '@mui/icons-material/PendingActions';
+import SummarizeIcon from '@mui/icons-material/Summarize';
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
 
 const menuAdmin = {
@@ -37,14 +38,23 @@ const menuAdmin = {
                     breadcrumbs: false,
                     icon: FactCheckIcon,
                 },   
-              /*  {
+                {
                     id: 'accCorr3',
                     title: 'Acciones por contrato',
                     type: 'item',
                     url: '/tranversal',
                     breadcrumbs: false,
                     icon: AltRouteIcon,
-                },   */
+                },   
+
+                {
+                    id: 'report',
+                    title: 'Reporte tranversalidad',
+                    type: 'item',
+                    url: '/consultaTranversal',
+                    breadcrumbs: false,
+                    icon: SummarizeIcon,
+                },   
                  
             ]
         },

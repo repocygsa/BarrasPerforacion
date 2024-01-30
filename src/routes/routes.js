@@ -10,6 +10,7 @@ import { ListaTranversal } from 'views/pages/accionesCorrectivas/tranversalidad/
 import { ReporteCorreo } from 'views/reporte/reporte';
 import TabsTranversalidad from 'views/pages/accionesCorrectivas/tranversalidad/tabTranversalidad';
 import PermisoModal from 'components/theme/SPermiso';
+import { ListaCttoCstGen } from 'views/pages/accionesCorrectivas/tranversalidad/consultaTranversal/listaCttoCstGen';
 
 const Routes =({data})=>{
 
@@ -21,7 +22,7 @@ const Routes =({data})=>{
         return (
             [{
                 path: '/',
-                element:  perUsu === 1 ? <MainLayout permiso={perUsu}/>:<MensajeSinPermiso/>,
+                element:  perUsu === 1 || perUsu ===2 ? <MainLayout permiso={perUsu}/>:<MensajeSinPermiso/>,
                 children: [
                     {
                         path: '/inicio',
@@ -41,6 +42,10 @@ const Routes =({data})=>{
                     {
                         path: '/tranversal',
                         element: perUsu===1 || perUsu ===2 ?<TabsTranversalidad usuario={rut} /> : <Navigate to='/web/accionesCorrectivas' />
+                    },
+                    {
+                        path: '/consultaTranversal',
+                        element: perUsu ===1 ?<ListaCttoCstGen usuario={rut} /> : <Navigate to='/web/accionesCorrectivas' />
                     },
                     {
                         path: '*',

@@ -4,7 +4,7 @@ import IconButton from '@mui/material/IconButton';
 import { memo, useState } from 'react';
 import { ModalEditarTranversal } from './modalEditarTranversal';
 
-export const BtnEditarTransversal = ({row, usuario}) => {
+export const BtnEditarTransversal = ({row, usuario, ctto, empre, setSnackMensaje}) => {
 
 
   const [abrirModal, setAbrirModal] = useState(false);
@@ -17,6 +17,9 @@ export const BtnEditarTransversal = ({row, usuario}) => {
       setAbrirModal={setAbrirModal}
       row={row}
       usuario={usuario}
+      ctto= {ctto}
+      empre={empre}
+      setSnackMensaje={setSnackMensaje}
     />
    
  
@@ -30,11 +33,19 @@ export const BtnEditarTransversal = ({row, usuario}) => {
       style={{ minHeight: '100vh' }}
     >
       <Grid item>
-      <Tooltip title="Seleccionar y complementar" arrow>
+      {row.estado_complemento ===2?
+      <Tooltip title="Acción correctiva ya complementada" arrow>
+      <IconButton aria-label="boton respaldo"   >
+        <AppRegistrationIcon fontSize="medium" color="gray"/>
+      </IconButton>
+    </Tooltip>
+    :
+    <Tooltip title="Seleccionar y complementar" arrow>
       <IconButton aria-label="boton respaldo" onClick={()=>setAbrirModal(true)}  >
         <AppRegistrationIcon fontSize="medium" color="info"/>
       </IconButton>
     </Tooltip>
+}
       </Grid>
     </Grid>
 

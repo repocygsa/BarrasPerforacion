@@ -1,18 +1,16 @@
 import { Grid, Typography } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
+import { Box } from '@mui/system';
 import { DataGrid, esES } from '@mui/x-data-grid';
 import moment from 'moment';
 import { memo } from 'react';
-import BtnCambiarEstado, { BtnCestado } from './btnCambiarEstado';
-import {BtnEditar} from './btnEditar';
-import {BtnMostrarDetalle} from './btnMostrarDetalle';
-import CircularProgress from '@mui/material/CircularProgress';
-import { Box } from '@mui/system';
-import {BtnEditarTransversal} from './tranversalidad/editarTranversalidad/btnEditarTransversal';
+import { BtnMostrarDetalle } from './btnMostrarDetalle';
+import { BtnVerCttosTranversal } from './tranversalidad/cttosTranversal/btnVerCttosTranversal';
 
 
 
 
-export const TablaAcciones = ({dataRegistroStock, setSnackMensaje }) => {
+export const TablaAcciones = ({dataRegistroStock, setSnackMensaje, usuario}) => {
    
     const CustomEstatusCell2 = ({ estatus, est, diferencia }) => {
        
@@ -66,9 +64,9 @@ export const TablaAcciones = ({dataRegistroStock, setSnackMensaje }) => {
         renderCell:(params)=> 
         <>
           <BtnMostrarDetalle row={params.row} />
-        
-        {/*  <BtnEditar row={params.row}/>
-          <BtnEditarTransversal row={params.row}/>
+          <BtnVerCttosTranversal row={params.row} usuario={usuario} />
+        {/*  
+          
         */} 
        {/*
         <BtnCestado row={params.row} setSnackMensaje={setSnackMensaje}/>

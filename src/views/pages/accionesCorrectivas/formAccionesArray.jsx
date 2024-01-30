@@ -550,11 +550,7 @@ if (valManual===0) {
    };
    
     const hayErrores = Object.keys(formik.errors).length > 0;
-    if (hayErrores) {
-      console.log('Hay errores de validación en el formulario');
-    } else {
-      console.log('El formulario es válido');
-    }
+
 
     return (
         <>

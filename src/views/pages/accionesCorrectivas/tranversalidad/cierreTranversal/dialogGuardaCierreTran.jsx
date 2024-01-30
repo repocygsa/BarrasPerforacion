@@ -3,32 +3,30 @@ import { useMutation, useQueryClient } from 'react-query';
 import { Send } from '@mui/icons-material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import { AgregarAccionTranversal } from 'helpers/gets';
-import { useState } from 'react';
-import {ConfirmacionDialog} from './confirmacionDialog';
+import { guardarCierre } from 'helpers/gets';
 
 
-export const DialogComplementaTranversal = ({ abrirDialog, setAbrirDialog, setSnackMensaje,formik, datos,  setModalPrin }) => {
+export const DialogGuardaCierreTran = ({ abrirDialog, setAbrirDialog, setSnackMensaje,formik, datos,  setModalPrin }) => {
   const queryClient = useQueryClient();
   const preguntar =()=> {
     setAbrirDialog(!abrirDialog)
   }
 
-const [abrDialog, setAbrDialog] = useState('')
 
-    const {mutate: mutateInsertStock, isLoading:isLoadindMutateSaveStock} = useMutation(AgregarAccionTranversal,{
+
+    const {mutate: mutateInsertStock, isLoading:isLoadindMutateSaveStock} = useMutation(guardarCierre,{
       onSuccess:(res)=>{
-
-          if(res.data.result[0].affectedRows===1){
+ 
+          if(res.data.result.affectedRows===1){
               
               setSnackMensaje({                   
                   open:true,
-                  mensaje:'Agregado correctamente',
+                  mensaje:'Cierre registrado correctamente',
                   estado:'success'
               });
     
               queryClient.invalidateQueries('QueryIncidenteDet');
-              queryClient.invalidateQueries('QueryCst');
+              queryClient.invalidateQueries('QueryIncidente');
            //   socket.emit('eppStock')
            formik.resetForm();
           }else{
@@ -47,24 +45,12 @@ const [abrDialog, setAbrDialog] = useState('')
   const confirmaSalida =()=> {
 
     mutateInsertStock(datos); 
- //  setAbrirDialog(false);
- //    setModalPrin(false);
-     setAbrDialog(true)
-
+    setAbrirDialog(false);
+    setModalPrin(false);
   }
    
   return (
     <>
-
-<ConfirmacionDialog
-      open={abrDialog} 
-      setOpen={setAbrDialog}
-      setAbrirDialog={setAbrirDialog}
-      setModalPrin={setModalPrin}
-
-    
-    />
-
       <Dialog
         open={abrirDialog}
         onClose={setAbrirDialog}
@@ -72,11 +58,11 @@ const [abrDialog, setAbrDialog] = useState('')
         maxWidth="sm"
       >
         <DialogTitle sx={{fontSize: '18px'}}>
-        Complementar
+          Cierre de medida correctiva
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            ¿Confirme para complementar la acción correctiva?
+            ¿Está seguro de realizar el cierre de la medida correctiva?
           </DialogContentText>
         </DialogContent>
         <DialogActions>

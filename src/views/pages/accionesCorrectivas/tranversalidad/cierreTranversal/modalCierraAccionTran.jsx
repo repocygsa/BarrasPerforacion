@@ -2,7 +2,6 @@
 import { Save } from '@mui/icons-material';
 import { LoadingButton } from '@mui/lab';
 import { Button, DialogActions, DialogContent, FormControl, FormHelperText, Grid, TextField, Typography } from '@mui/material';
-import { margin } from '@mui/system';
 import { BootstrapDialog, BootstrapDialogTitle } from 'components/ModalStyle';
 import { UploadComponentMantencion } from 'components/upload/UploadComponentMantencion';
 import { useFormik } from 'formik';
@@ -10,13 +9,13 @@ import moment from 'moment';
 import { useState } from 'react';
 import { useQueryClient } from 'react-query';
 import * as yup from "yup";
-import { DialogEliminaTranversal } from './dialogEliminaTranversal';
+import { DialogGuardaCierreTran } from './dialogGuardaCierreTran';
 
 
 
 
 
-export const ModalEliminaTranversal = ({ abrirModal, setAbrirModal, row, setSnackMensaje }) => {
+export const ModalCierraAccionTran = ({ abrirModal, setAbrirModal, row, setSnackMensaje }) => {
     
     const fechaHora=moment().format('DD-MM-YYYY HH:mm')
     const queryClient = useQueryClient();
@@ -25,20 +24,16 @@ export const ModalEliminaTranversal = ({ abrirModal, setAbrirModal, row, setSnac
 
     const validaciones = yup.object().shape({
       
-        /* fil_tab: yup
+        fil_tab: yup
             .mixed()
             .required('Debe seleccionar un archivo')
-           .test('maxarchivos', 'Máximo 1 archivo', (values) => {
+          /*  .test('maxarchivos', 'Máximo 1 archivo', (values) => {
                 let respuesta = '';
                 if (values !== null) {
                     respuesta = values.length <= 1;
                 }
                 return respuesta;
             }) */
-
-            mant_obs: yup
-            .string()
-            .required('Observación requerida')
         ,
 
     }).required('Campo Requerido');
@@ -60,7 +55,7 @@ export const ModalEliminaTranversal = ({ abrirModal, setAbrirModal, row, setSnac
         const values ={
             id: row.id,
             mant_obs:datos.mant_obs,
-         
+            fil_tab: datos.fil_tab,
 
         }
         setData(values)
@@ -72,7 +67,7 @@ export const ModalEliminaTranversal = ({ abrirModal, setAbrirModal, row, setSnac
    
     return (
         <>
-          <DialogEliminaTranversal
+          <DialogGuardaCierreTran
       abrirDialog={abrirDialog} 
       setAbrirDialog={setAbrirDialog}
       setSnackMensaje={setSnackMensaje}
@@ -87,7 +82,7 @@ export const ModalEliminaTranversal = ({ abrirModal, setAbrirModal, row, setSnac
             fullWidth
         >
             <BootstrapDialogTitle id="customized-dialog-title">
-            Eliminar acción correctiva
+            Cargar evidencia de cierre 
             </BootstrapDialogTitle>
             <DialogContent dividers>
            {/*  <Accion usuario ={usuario} setModalPrin = {setAbrirModal} setSnackMensaje={setSnackMensaje} /> */} 
@@ -116,7 +111,7 @@ export const ModalEliminaTranversal = ({ abrirModal, setAbrirModal, row, setSnac
                         }}
                     />
                 </Grid>
-{/*
+
                 <Grid container spacing={1} rowSpacing={1} mt={1}>
                 <Grid item md={12} xs={12} align="center" style={{ boxShadow:'rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px'}} p={2}>
                     <FormControl fullWidth>
@@ -139,8 +134,6 @@ export const ModalEliminaTranversal = ({ abrirModal, setAbrirModal, row, setSnac
                     </FormControl>
                 </Grid>
             </Grid>
-*/}
-
 
 
             </Grid>
@@ -151,7 +144,7 @@ export const ModalEliminaTranversal = ({ abrirModal, setAbrirModal, row, setSnac
             <Grid container spacing={1} rowSpacing={1} mt={1} align="right">
             <Grid item md={12} xs={12} align="right">
             <DialogActions>
-            <Button color="error" variant="contained"style= {{textTransform: 'none' }} autoFocus onClick={()=>setAbrirModal(false)}>
+            <Button color="error" variant="contained"style= {{textTransform: 'none'}} autoFocus onClick={()=>setAbrirModal(false)}>
             Cerrar
             </Button>
             <LoadingButton
@@ -162,12 +155,12 @@ export const ModalEliminaTranversal = ({ abrirModal, setAbrirModal, row, setSnac
                     startIcon={<Save />}
                     variant="contained"
                 >
-                    Eliminar
+                    Guardar
                 </LoadingButton>
                 </DialogActions>
             </Grid>
             </Grid>
-            
+           
         </form>
 
         </>

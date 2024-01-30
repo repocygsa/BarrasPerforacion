@@ -12,7 +12,7 @@ import { useQuery, useQueryClient } from 'react-query';
 import { SocketContext } from 'context/SocketContext';
 import {TablaAccionesTran} from './tablaAccionesTran';
 
-export const ListaAccionesTran = ({id,permiso, usuario}) => {
+export const ListaAccionesTran = ({id,permiso, usuario, ctto, empre, idCab}) => {
 
     const [snackMensaje, setSnackMensaje] = useState('');
 
@@ -31,8 +31,8 @@ export const ListaAccionesTran = ({id,permiso, usuario}) => {
     const {
       data: DataIncidenteDet, 
       isLoading:isLoadingDataIncidenteDet
-    } = useQuery(['QueryIncidenteDet'], 
-      ()=>getIncidentesTran()
+    } = useQuery(['QueryIncidenteDet',idCab, ctto], 
+      ()=>getIncidentesTran(idCab, ctto)
     );
 
  
@@ -46,7 +46,7 @@ export const ListaAccionesTran = ({id,permiso, usuario}) => {
 
   <><SnackComponent snackMensaje={snackMensaje} setSnackMensaje={setSnackMensaje} /><Grid container spacing={2} rowSpacing={1} mt={1} justifyContent="center" alignItems="center">
         <Grid item md={12} xs={12}>
-          {isLoadingDataIncidenteDet ? '' : <TablaAccionesTran dataRegistroStock={DataIncidenteDet.data.result} setSnackMensaje={setSnackMensaje} usuario={usuario}/>}
+          {isLoadingDataIncidenteDet ? '' : <TablaAccionesTran dataRegistroStock={DataIncidenteDet.data.result} setSnackMensaje={setSnackMensaje} usuario={usuario} ctto ={ctto} empre={empre}/>}
         </Grid>
       </Grid></>
 

@@ -3,34 +3,34 @@ import { useMutation, useQueryClient } from 'react-query';
 import { Send } from '@mui/icons-material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import { AgregarAccionTranversal } from 'helpers/gets';
-import { useState } from 'react';
-import {ConfirmacionDialog} from './confirmacionDialog';
+import { getDescartaAcc, guardarCierre } from 'helpers/gets';
 
 
-export const DialogComplementaTranversal = ({ abrirDialog, setAbrirDialog, setSnackMensaje,formik, datos,  setModalPrin }) => {
+export const DialogDescartaAccion = ({ abrirDialog, setAbrirDialog, setSnackMensaje,formik, datos,  setModalPrin, ctto, usuario }) => {
+
   const queryClient = useQueryClient();
   const preguntar =()=> {
     setAbrirDialog(!abrirDialog)
   }
 
-const [abrDialog, setAbrDialog] = useState('')
 
-    const {mutate: mutateInsertStock, isLoading:isLoadindMutateSaveStock} = useMutation(AgregarAccionTranversal,{
+
+    const {mutate: mutateInsertStock, isLoading:isLoadindMutateSaveStock} = useMutation(getDescartaAcc,{
       onSuccess:(res)=>{
-
-          if(res.data.result[0].affectedRows===1){
+ 
+          if(res.data.result.affectedRows===1){
               
               setSnackMensaje({                   
                   open:true,
-                  mensaje:'Agregado correctamente',
+                  mensaje:'Acción correctiva descartada correctamente',
                   estado:'success'
               });
     
               queryClient.invalidateQueries('QueryIncidenteDet');
+              queryClient.invalidateQueries('QueryIncidente');
               queryClient.invalidateQueries('QueryCst');
            //   socket.emit('eppStock')
-           formik.resetForm();
+         //  formik.resetForm();
           }else{
     
               setSnackMensaje({
@@ -46,25 +46,18 @@ const [abrDialog, setAbrDialog] = useState('')
 
   const confirmaSalida =()=> {
 
-    mutateInsertStock(datos); 
- //  setAbrirDialog(false);
- //    setModalPrin(false);
-     setAbrDialog(true)
+const valores= {
+datos,
+ctto,
+usuario,
+}
+    mutateInsertStock(valores); 
+    setAbrirDialog(false);
 
   }
    
   return (
     <>
-
-<ConfirmacionDialog
-      open={abrDialog} 
-      setOpen={setAbrDialog}
-      setAbrirDialog={setAbrirDialog}
-      setModalPrin={setModalPrin}
-
-    
-    />
-
       <Dialog
         open={abrirDialog}
         onClose={setAbrirDialog}
@@ -72,11 +65,11 @@ const [abrDialog, setAbrDialog] = useState('')
         maxWidth="sm"
       >
         <DialogTitle sx={{fontSize: '18px'}}>
-        Complementar
+          Descartar acción correctiva
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            ¿Confirme para complementar la acción correctiva?
+            ¿Está seguro de descartar esta acción correctiva?
           </DialogContentText>
         </DialogContent>
         <DialogActions>

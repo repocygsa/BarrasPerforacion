@@ -100,8 +100,8 @@ const getIncidentesDet = (data) => {
     return getIncidentesDet;
 };
 
-const getIncidentesTran = () => {
-    const getIncidentesTran = llamadaApi.post('aprendizaje/getIncidentesTran');
+const getIncidentesTran = (idCab, ctto) => {
+    const getIncidentesTran = llamadaApi.post('aprendizaje/getIncidentesTran', {idCab, ctto});
     return getIncidentesTran;
 };
 
@@ -169,15 +169,23 @@ const getContratosCst = (data) => {
     return getContratosCst;
 };
 
+
+const getContratosCstGen = (data) => {
+    const getContratosCstGen = llamadaApi.post('aprendizaje/getContratosCstGen',{data});
+    return getContratosCstGen;
+};
+
 const getCtaCascos = (data) => {
 
     const getCtaCascos = llamadaApi.post('aprendizaje/getCtaCascos',{data});
     return getCtaCascos;
 };
 
+const getDescartaAcc = (data) => {
 
-
-
+    const getDescartaAcc = llamadaApi.post('aprendizaje/getDescartaAcc',{data});
+    return getDescartaAcc;
+};
 
 
 
@@ -408,7 +416,8 @@ export {
     getCorrectivaId,
     getIncidentesTran,
     getContratosCst,
-    getCtaCascos
-
+    getCtaCascos,
+    getDescartaAcc,
+    getContratosCstGen
 
 }

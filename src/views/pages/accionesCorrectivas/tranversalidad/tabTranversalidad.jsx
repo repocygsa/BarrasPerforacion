@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Tabs, Tab, Typography, Box } from '@mui/material';
+import { Tabs, Tab, Typography, Box, Grid } from '@mui/material';
 import { ListaAccionesTran } from './listaAccionesTran';
 import { ListaTranversal } from './listaTranversal';
 
@@ -31,18 +31,28 @@ const TabsTranversalidad = (usuario) => {
   };
 
   return (
-    <div>
-      <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" sx={{ backgroundColor: 'white' }}>
+    <Grid item md={12} xs={12}>
+              <Box sx={{ p: 3, backgroundColor: 'white', color: 'black' }}>
+              <ListaTranversal usuario={usuario} />
+        </Box>
+       {/*  <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" sx={{ backgroundColor: 'white' }}>
         <Tab label="Acciones correctivas" />
         <Tab label="Acciones por contrato" />
       </Tabs>
+   
       <TabPanel value={value} index={0}>
         <ListaAccionesTran usuario ={usuario}/>
       </TabPanel>
-      <TabPanel value={value} index={1}>
-        <ListaTranversal usuario={usuario} />
+      
+      <TabPanel value={value} index={0}>
+       
       </TabPanel>
-    </div>
+      */}
+
+
+    </Grid>
+
+    
   );
 };
 

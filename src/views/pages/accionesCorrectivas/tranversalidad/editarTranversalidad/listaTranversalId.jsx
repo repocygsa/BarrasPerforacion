@@ -6,9 +6,9 @@ import { useEffect, useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import * as yup from "yup";
 
-import { Save, Search } from '@mui/icons-material';
+import { Save, Search, Send } from '@mui/icons-material';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { Box, CircularProgress, FormControl, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { Box, Button, CircularProgress, FormControl, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, MenuItem, Select, TextField, DialogActions } from '@mui/material';
 import { getActividad, getActividad2, getActividad3, getActividad4, getArea, getCalIncidente, getContratos, getContratosCst, getContratosEmpresa, getEmpresa, getJerarquia, getMina, getNivel, getPersona, getRiesgoCritico, getTipoIncidente } from 'helpers/gets';
 
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -21,17 +21,22 @@ import { checkRut, prettifyRut } from 'react-rut-formatter';
 import { DialogGuardaAccion } from '../../dialogGuardaAccion';
 import { SnackComponent } from 'components/theme/SnackComponent';
 import { DialogComplementaTranversal } from './dialogComplementaTranversal';
+import PersonSearchIcon from '@mui/icons-material/PersonSearch';
+import { ModalBuscarCtaCascos } from '../../busquedaCuentaCascos/modalBuscarCtaCascos';
 
 
 
 
-
-export const ListaTranversalId = ({ id, row,user}) => {
-
+export const ListaTranversalId = ({ id, row, user, setAbrirModal,setSnackMensaje, ctto}) => {
 
   const medCorrectiva= row.inc_med_correctiva
-  const idIncidente= row.id
-  const idMedida = row.fk_id_incidente
+  const idIncidente= row.fk_id_incidente
+  const idMedida = row.id
+
+  const cttoArr = [];  // Declara un arreglo vacío
+
+  cttoArr[0] = ctto; 
+const userCrea = user
 
   const [abrirDialog, setAbrirDialog] = useState(false);
   const [submiteado, setSubmiteado] = useState(false);
@@ -41,16 +46,16 @@ export const ListaTranversalId = ({ id, row,user}) => {
   const [rutBuscar, setRutBuscar] = useState('');
   const [usuario, setUsuario] = useState('');
   const [trut, setTrut] = useState('')
-  const [snackMensaje, setSnackMensaje] = useState('');
+
   const [data, setData] = useState({})
-  
+  const [nom, setNom] = useState('')
+  const [rut, setRut] = useState('')
 
     useEffect(() => {
         setUsuario(user.usuario)
     }, []) 
  
 
-    console.log(usuario)
 
     const queryClient = useQueryClient();
 
@@ -64,8 +69,8 @@ export const ListaTranversalId = ({ id, row,user}) => {
     const {
       data: DataCst, 
       isLoading:isLoadingDataCst
-  } = useQuery(['QueryCst', usuario], 
-      ()=>getContratosCst(usuario)
+  } = useQuery(['QueryCst', user], 
+      ()=>getContratosCst(user)
   );
 
     const noIngreso = (e) => {
@@ -89,7 +94,7 @@ const BuscarRut = (rut) => {
     .date('Fecha invalida')
     .nullable('ingrese fecha')
     .required('Debe seleccionar una fecha')
-    .max(moment().endOf('day'), 'La fecha del incidente no puede ser posterior a la fecha actual')
+   // .max(moment().endOf('day'), 'La fecha del incidente no puede ser posterior a la fecha actual')
     ,
 
 
@@ -118,19 +123,28 @@ const BuscarRut = (rut) => {
             fec_cierre: null,
             nom_usu:'',
             fk_jerarquia:'',
-            contratos_cst:[],
+            contratos_cst:cttoArr,
+            tx_medidaCorr:medCorrectiva,
+            id_incidente: idIncidente,
+            id_medida: idMedida,
+            usuario:userCrea,
+            medidaCorrDesc:medCorrectiva,
+
+
+
 
         },
         validationSchema: validaciones,
         enableReinitialize: true,
         onSubmit: (datos) => {
           setData(datos)
+    
           setAbrirDialog(true)
            
           }
           
     });
-
+ 
     const {
         isLoading:isLoadingUsuario
     } = useQuery(['DatosPersona', rutBuscar], 
@@ -158,11 +172,9 @@ const BuscarRut = (rut) => {
                         mensaje:'Trabajador encontrado',
                         estado:'success'
                     });
-                    if(trut === '1'){
+   
                         formik.setFieldValue('nom_usu', usuario.data.result[0].Nombre);
-                    }else if(trut ==='2'){
-                        formik.setFieldValue('nom_usu_resp', usuario.data.result[0].Nombre);
-                    }
+                   
                    
                 
                     setBuscarDCC(false);
@@ -171,6 +183,14 @@ const BuscarRut = (rut) => {
             enabled: buscarDCC
         }
     );
+
+    const [abrirModalP, setAbrirModalP] = useState(false);
+
+    const actualizarRutResponsable = (rutTrab, nomTrab ) => {
+     // Actualiza el valor en el campo rut_responsable del formulario
+     formik.setFieldValue("rut_usu", prettifyRut(rutTrab))
+     BuscarRut(rutTrab)
+   };
 
     return (
         <>
@@ -183,13 +203,24 @@ const BuscarRut = (rut) => {
       submiteado={submiteado}
       setSubmiteado={setSubmiteado}
       usuario={usuario}
+      setModalPrin={setAbrirModal}
     
     />
-<SnackComponent snackMensaje={snackMensaje} setSnackMensaje={setSnackMensaje} />
+
+<ModalBuscarCtaCascos 
+      abrirModal={abrirModalP} 
+      setAbrirModal={setAbrirModalP}
+      setSnackMensaje={setSnackMensaje}
+      actualizarRutResponsable={actualizarRutResponsable}
+      setRut={setRut}
+      setNom={setNom}
+    />  
+
+
     
   <form onSubmit={ formik.handleSubmit }>
       <Grid container spacing={1} mt={1} rowSpacing={1}>
-        <Grid item md={3} xs={12}>
+        <Grid item md={2} xs={12}>
           <TextField
             name="rut_usu"
             label="Responsable"
@@ -198,7 +229,7 @@ const BuscarRut = (rut) => {
             autoComplete="off"
             value={formik.values.rut_usu}
             InputProps={{
-              endAdornment: (
+            /*  endAdornment: (
                 <InputAdornment position="end">
                   <IconButton
                     color="primary"
@@ -218,7 +249,29 @@ const BuscarRut = (rut) => {
                     <Search />
                   </IconButton>
                 </InputAdornment>
+              ), */
+
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    color="primary"
+                    aria-label="Buscar Rut"
+                    onClick={() => {
+                     /* if (formik.values.rut_usu.length > 0) {
+                        setActivaSnack(true);
+                        setTrut('1');
+                        BuscarRut(formik.values.rut_usu);
+                      } else {
+                          setAbrirModal(true)
+                      } */
+                      setAbrirModalP(true)
+                    }}
+                  >
+                     <PersonSearchIcon />
+                  </IconButton>
+                </InputAdornment>
               ),
+            
             }}
             onChange={formik.handleChange}
             error={formik.touched.rut_usu && Boolean(formik.errors.rut_usu)}
@@ -234,7 +287,7 @@ const BuscarRut = (rut) => {
         
       </Grid>
 
-      <Grid item md={3} xs={12}>
+      <Grid item md={4} xs={12}>
 
           <TextField
             fullWidth
@@ -293,20 +346,26 @@ const BuscarRut = (rut) => {
             </LocalizationProvider>
         </FormControl>
     </Grid>
-
-    <Grid item md={2} xs={12}>
+{/* 
+    <Grid item md={3} xs={12}>
                     <FormControl
                         fullWidth
                         size="small"
                         error={formik.touched.contratos_cst && Boolean(formik.errors.contratos_cst)}
+                        InputProps={{
+                          readOnly: true,
+                          disabled: true,
+                      }}
                     >
                         <InputLabel id="lbl_contratos_cst">Contratos cst</InputLabel>
                         <Select
+
                             multiple
                             name="contratos_cst"
                             label="Contratos cst"
                             labelId="lbl_contratos_cst"
                             value={formik.values.contratos_cst}
+                           
                             onBlur={(e) => {
                                 formik.handleBlur(e);
                             }}
@@ -321,7 +380,7 @@ const BuscarRut = (rut) => {
                             </Box>
                             :
                             DataCst.data.result && DataCst.data.result.map((cst) => (
-                            <MenuItem key={cst.id} value={cst.id} >
+                            <MenuItem key={cst.id} value={cst.fk_cst_ctto} >
                                 {cst.fk_cst_ctto}
                             </MenuItem>
                             ))
@@ -330,7 +389,7 @@ const BuscarRut = (rut) => {
                         <FormHelperText>{formik.touched.contratos_cst && formik.errors.contratos_cst}</FormHelperText>
                     </FormControl>
                 </Grid> 
-
+*/}
     <Grid item md={3} xs={12}>
         <FormControl
             fullWidth
@@ -374,7 +433,11 @@ const BuscarRut = (rut) => {
 <Grid item md={12} xs={12} align="right">
 
 
-    <LoadingButton
+<DialogActions style={{ justifyContent: 'flex-end' }}>
+<Button color="error" variant="contained"style= {{textTransform: 'none'}} autoFocus onClick={()=>setAbrirModal(false)}>
+                   Cerrar
+                </Button>
+                <LoadingButton
         type="submit" 
       //  loading={isLoadindMutateSaveInfraElectrica}
         loadingPosition="start"
@@ -384,8 +447,10 @@ const BuscarRut = (rut) => {
     >
         Guardar
     </LoadingButton>
+        </DialogActions>
 
 </Grid>
+
 </Grid>
 
 </form>

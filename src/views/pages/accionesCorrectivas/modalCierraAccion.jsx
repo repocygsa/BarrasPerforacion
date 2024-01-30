@@ -137,11 +137,12 @@ export const ModalCierraAccion = ({ abrirModal, setAbrirModal, row, setSnackMens
 
             </Grid>
 
-            <DialogActions>
+          
 
 
             <Grid container spacing={1} rowSpacing={1} mt={1} align="right">
             <Grid item md={12} xs={12} align="right">
+            <DialogActions>
             <Button color="error" variant="contained"style= {{textTransform: 'none'}} autoFocus onClick={()=>setAbrirModal(false)}>
             Cerrar
             </Button>
@@ -155,9 +156,10 @@ export const ModalCierraAccion = ({ abrirModal, setAbrirModal, row, setSnackMens
                 >
                     Guardar
                 </LoadingButton>
+                </DialogActions>
             </Grid>
             </Grid>
-            </DialogActions>
+            
         </form>
 
         </>

@@ -37,23 +37,13 @@ export const ListaTranversal = ({permiso, usuario}) => {
 
 
 
-    useEffect(()=>{
-      socket.on('resSocketReserva',()=>{
-        queryClient.invalidateQueries('QueryEppAll');
-      })
-
-      socket.on('resSocketStock', () => {
-        // Invalida la consulta 'queryTallaByEppId' para que se vuelva a ejecutar automáticamente
-        queryClient.invalidateQueries('QueryEppAll');
-  
-  
-      });
-
-    },[socket])
+    
 
     return (
 
-  <><SnackComponent snackMensaje={snackMensaje} setSnackMensaje={setSnackMensaje} /><Grid container spacing={2} rowSpacing={1} mt={1} justifyContent="center" alignItems="center">
+  <><SnackComponent snackMensaje={snackMensaje} setSnackMensaje={setSnackMensaje} />
+  
+  <Grid container spacing={2} rowSpacing={1} mt={1} justifyContent="center" alignItems="center">
         {/*
        <Grid item md={12} xs={12}>
        <FormAccionesFilter setFiltroStock={setFiltroStock} usuario={usuario} setSnackMensaje={setSnackMensaje}/>

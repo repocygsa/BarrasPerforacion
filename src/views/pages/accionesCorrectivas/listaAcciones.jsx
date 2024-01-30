@@ -67,7 +67,7 @@ export const ListaAcciones = ({permiso, usuario}) => {
     
 
     <Grid item md={12} xs={12}>
-      {isLoadingDataIncidente ? '' : <TablaAcciones dataRegistroStock={DataIncidente.data.result} setSnackMensaje={setSnackMensaje} />}
+      {isLoadingDataIncidente ? '' : <TablaAcciones dataRegistroStock={DataIncidente.data.result} setSnackMensaje={setSnackMensaje} usuario={usuario} />}
     </Grid>
   </Grid>
 </MainCard>

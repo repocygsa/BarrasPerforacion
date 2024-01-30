@@ -9,24 +9,39 @@ import { Box } from '@mui/system';
 import {BtnEditarTransversal} from './editarTranversalidad/btnEditarTransversal';
 
 import {BtnMostrarDetalleTran} from './editarTranversalidad/btnMostrarDetalleTran';
+import { BtnCancelAcc } from './cttosTranversal/btnCancelAcc';
 
 
 
 
 
-export const TablaAccionesTran = ({dataRegistroStock, setSnackMensaje, usuario }) => {
-   console.log(dataRegistroStock,'registros')
-  const CustomEstatusCell2 = ({ estatus, est  }) => {
-       
+export const TablaAccionesTran = ({dataRegistroStock, setSnackMensaje, usuario, ctto, empre }) => {
+
+  const CustomEstatusCell2 = ({ estatus, est , com }) => {
+    console.log(com, 'com')   
     let textColor = 'black'; // Color predeterminado
-    
-    if (est === 'sin complementar') {
+    if(est){
+    if(est === 3){
+      textColor ='red';
+      estatus='No Aplica'
+    }else if (est === 1) {
+        textColor ='blue';
+        estatus='Sin complementar'
+      
+      } else if (est === 2) {
+        textColor = 'green';
+        estatus=`Complementado`;
+        if(com===3){
+          textColor = 'green';
+          estatus=`Complementado`;
+        }
+      }else if(com===4){
+        textColor = 'red';
+        estatus=`Eliminado`;
+      }
+    }else{
       textColor ='blue';
       estatus='Sin complementar'
-    
-    } else if (est === 'complementado') {
-      textColor = 'green';
-      estatus=`Complementado`
     }
   
     return (
@@ -60,14 +75,16 @@ export const TablaAccionesTran = ({dataRegistroStock, setSnackMensaje, usuario }
         field:'accion',
         headerName:'Acciones',
         headerAlign: 'center',
-        minWidth: 100,
+        minWidth: 150,
         renderCell:(params)=> 
         <>
           {/* 
          <BtnEditar row={params.row}/> */} 
-         <BtnEditarTransversal row={params.row} usuario={usuario}/>
+        
+         <BtnEditarTransversal row={params.row} usuario={usuario} ctto={ctto} empre={empre} setSnackMensaje={setSnackMensaje}/>
+         <BtnCancelAcc row={params.row} setSnackMensaje={setSnackMensaje} ctto={ctto}/>
          <BtnMostrarDetalleTran row={params.row}/>
-            
+         
         </>,
     },
 
@@ -76,10 +93,11 @@ export const TablaAccionesTran = ({dataRegistroStock, setSnackMensaje, usuario }
         field:'estP',
         headerName:'Estado',
         align:'left',
-        minWidth: 160,
+        minWidth: 180,
         renderCell:(params)=> 
         <>
-            <CustomEstatusCell2 estatus='' est={params.row.estado_complemento} />
+            <CustomEstatusCell2 estatus='' est={params.row.estado_complemento}  com={params.row.cerradas}/>
+            
           { /* <BtnMostrarDetalle row={params.row} /> */ }  
             
         </>,
@@ -96,88 +114,18 @@ export const TablaAccionesTran = ({dataRegistroStock, setSnackMensaje, usuario }
       field:'medcorr',
       headerName:'Acción correctiva',
       align:'left',
-      minWidth: 300,
+      minWidth: 500,
       valueGetter:(params)=>params.row.inc_med_correctiva
   },
   {
     field:'resp',
     headerName:'Responsable',
     align:'left',
-    minWidth: 450,
+    minWidth: 250,
     valueGetter:(params)=>params.row.Nombre
 },
 
- /* {
-    field:'obs',
-    headerName:'Observación',
-    align:'left',
-    minWidth: 300,
-    valueGetter:(params)=>params.row.inc_obs?params.row.inc_obs:'Sin observación'
-},
-*/
-
-    
-        
-     
-   /*      {
-            field:'lider',
-            headerName:'Lider comisión',
-            align:'left',
-            minWidth: 250,
-            valueGetter:(params)=>params.row.lider
-        },
-       {
-          field:'incidente',
-          headerName:'Incidente',
-          align:'left',
-          minWidth: 200,
-          valueGetter:(params)=>params.row.inc_incidente
-      },
-*/
-
-       
-
-
-
-   
-/*
-{
-  field:'act2',
-  headerName:'Actividad 2',
-  align:'left',
-  minWidth: 100,
-  valueGetter:(params)=>params.row.actividad2
-},
-{
-  field:'act3',
-  headerName:'Actividad 3',
-  align:'left',
-  minWidth: 100,
-  valueGetter:(params)=>params.row.actividad3
-},
-{
-  field:'act4',
-  headerName:'Actividad 4',
-  align:'left',
-  minWidth: 100,
-  valueGetter:(params)=>params.row.actividad4
-},
-
-*/
-      /*
-      {
-        field:'accion',
-        headerName:'Acciones',
-        headerAlign: 'center',
-        minWidth: 100,
-        renderCell:(params)=> 
-        <>
-            <BtnMostrarDetalle row={params.row} />
-           
-            
-        </>,
-    },
-    */
+ 
      
        
        
