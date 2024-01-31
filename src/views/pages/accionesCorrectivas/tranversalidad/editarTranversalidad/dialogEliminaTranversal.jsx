@@ -26,6 +26,7 @@ export const DialogEliminaTranversal = ({ abrirDialog, setAbrirDialog, setSnackM
               });
     
               queryClient.invalidateQueries('QueryTranversalID');
+              queryClient.invalidateQueries('QueryIncidenteTranversal');
             
            //   socket.emit('eppStock')
            formik.resetForm();

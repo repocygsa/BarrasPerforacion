@@ -8,7 +8,7 @@ import { useState } from 'react';
 import {ConfirmacionDialog} from './confirmacionDialog';
 
 
-export const DialogComplementaTranversal = ({ abrirDialog, setAbrirDialog, setSnackMensaje,formik, datos,  setModalPrin }) => {
+export const DialogComplementaTranversal = ({ abrirDialog, setAbrirDialog, setSnackMensaje,formik, datos,  setModalPrin , usuario}) => {
   const queryClient = useQueryClient();
   const preguntar =()=> {
     setAbrirDialog(!abrirDialog)

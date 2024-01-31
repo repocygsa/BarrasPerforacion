@@ -82,7 +82,7 @@ export const TablaAccionesTran = ({dataRegistroStock, setSnackMensaje, usuario, 
          <BtnEditar row={params.row}/> */} 
         
          <BtnEditarTransversal row={params.row} usuario={usuario} ctto={ctto} empre={empre} setSnackMensaje={setSnackMensaje}/>
-         <BtnCancelAcc row={params.row} setSnackMensaje={setSnackMensaje} ctto={ctto}/>
+         <BtnCancelAcc row={params.row} setSnackMensaje={setSnackMensaje} ctto={ctto} usuario={usuario}/>
          <BtnMostrarDetalleTran row={params.row}/>
          
         </>,

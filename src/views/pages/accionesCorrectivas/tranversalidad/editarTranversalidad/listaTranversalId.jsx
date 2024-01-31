@@ -137,6 +137,7 @@ const BuscarRut = (rut) => {
         validationSchema: validaciones,
         enableReinitialize: true,
         onSubmit: (datos) => {
+          
           setData(datos)
     
           setAbrirDialog(true)
@@ -202,7 +203,7 @@ const BuscarRut = (rut) => {
       datos={data}
       submiteado={submiteado}
       setSubmiteado={setSubmiteado}
-      usuario={usuario}
+      usuario={user}
       setModalPrin={setAbrirModal}
     
     />

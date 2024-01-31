@@ -477,7 +477,11 @@ const BuscarRut = (rut) => {
          //   setAbrirDialog(true);
 
          
+if (valManual===0) {
+    setValManual(1)
+    formHijoRef.current.submitForm();
 
+} 
 
 if(formHijoRef.current.isValid ===true && valManual=== 1){
     setAbrirDialog(true);
@@ -487,11 +491,7 @@ if(formHijoRef.current.isValid ===true && valManual=== 1){
    // formHijoRef.current.submitForm()   
 }
 
-if (valManual===0) {
-    setValManual(1)
-    formHijoRef.current.submitForm();
 
-} 
 
             // Maneja el submit del formulario hijo
 

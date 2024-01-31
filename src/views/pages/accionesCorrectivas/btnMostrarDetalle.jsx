@@ -7,7 +7,7 @@ import { ModalVerRegistro } from './modalVerRegistro';
 // import { ModalMostrarDetalle } from './modalMostrarDetalle';
 
 
-export const BtnMostrarDetalle = ({row}) => {
+export const BtnMostrarDetalle = ({row, usuario}) => {
 
 
   const [abrirModal, setAbrirModal] = useState(false);
@@ -19,6 +19,7 @@ export const BtnMostrarDetalle = ({row}) => {
       abrirModal={abrirModal} 
       setAbrirModal={setAbrirModal}
       row={row}
+      usuario={usuario}
     />
    
  

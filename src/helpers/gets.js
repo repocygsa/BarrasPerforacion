@@ -335,12 +335,16 @@ const guardarCierre = async (data) => {
       }
   
       // eslint-disable-next-line camelcase
-      const { mant_obs, id } = data;
-  
+      const { mant_obs, id, usuario, idCab, varT } = data;
+ console.log(usuario, 'userssss')
       const datos = new FormData();
   
       datos.append('mant_obs', mant_obs);
       datos.append('id', id);
+      datos.append('usuario', usuario.usuario);
+      datos.append('idCab', idCab);
+      datos.append('usuario2', usuario);
+      datos.append('varT', varT);
   
       data.fil_tab.forEach((file) => {
        

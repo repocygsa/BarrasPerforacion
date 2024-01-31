@@ -27,6 +27,7 @@ export const DialogGuardaCierreTran = ({ abrirDialog, setAbrirDialog, setSnackMe
     
               queryClient.invalidateQueries('QueryIncidenteDet');
               queryClient.invalidateQueries('QueryIncidente');
+              queryClient.invalidateQueries('QueryIncidenteTranversal');
            //   socket.emit('eppStock')
            formik.resetForm();
           }else{

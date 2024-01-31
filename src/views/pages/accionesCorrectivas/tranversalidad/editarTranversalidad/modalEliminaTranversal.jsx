@@ -16,7 +16,7 @@ import { DialogEliminaTranversal } from './dialogEliminaTranversal';
 
 
 
-export const ModalEliminaTranversal = ({ abrirModal, setAbrirModal, row, setSnackMensaje }) => {
+export const ModalEliminaTranversal = ({ abrirModal, setAbrirModal, row, setSnackMensaje, usuario }) => {
     
     const fechaHora=moment().format('DD-MM-YYYY HH:mm')
     const queryClient = useQueryClient();
@@ -60,7 +60,7 @@ export const ModalEliminaTranversal = ({ abrirModal, setAbrirModal, row, setSnac
         const values ={
             id: row.id,
             mant_obs:datos.mant_obs,
-         
+         usuario,
 
         }
         setData(values)

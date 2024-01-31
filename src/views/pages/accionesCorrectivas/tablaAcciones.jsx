@@ -63,7 +63,7 @@ export const TablaAcciones = ({dataRegistroStock, setSnackMensaje, usuario}) => 
         minWidth: 100,
         renderCell:(params)=> 
         <>
-          <BtnMostrarDetalle row={params.row} />
+          <BtnMostrarDetalle row={params.row} usuario={usuario}/>
           <BtnVerCttosTranversal row={params.row} usuario={usuario} />
         {/*  
           

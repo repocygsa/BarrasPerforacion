@@ -4,7 +4,7 @@ import IconButton from '@mui/material/IconButton';
 import { memo, useState } from 'react';
 import { ModalCierraAccion } from './modalCierraAccion';
 
-export const BtnCestado = ({row, setSnackMensaje}) => {
+export const BtnCestado = ({row, setSnackMensaje, usuario}) => {
 
 
   const [abrirModal, setAbrirModal] = useState(false);
@@ -17,7 +17,7 @@ export const BtnCestado = ({row, setSnackMensaje}) => {
       setAbrirModal={setAbrirModal}
       row={row}
       setSnackMensaje={setSnackMensaje}
-
+usuario= {usuario}
     />
    
  

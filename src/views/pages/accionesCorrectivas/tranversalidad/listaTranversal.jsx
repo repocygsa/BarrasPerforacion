@@ -29,7 +29,7 @@ export const ListaTranversal = ({permiso, usuario}) => {
     const {
       data: DataTranversal, 
       isLoading:isLoadingDataTranversal
-    } = useQuery(['QueryIncidente'], 
+    } = useQuery(['QueryIncidenteTranversal'], 
       ()=>getTranversal()
     );
 

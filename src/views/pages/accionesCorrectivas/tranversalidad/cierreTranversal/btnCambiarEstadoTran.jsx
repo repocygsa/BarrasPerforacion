@@ -5,7 +5,7 @@ import { memo, useState } from 'react';
 import { ModalCierraAccionTran } from './modalCierraAccionTran';
 
 
-export const BtnCestadoTran = ({row, setSnackMensaje}) => {
+export const BtnCestadoTran = ({row, setSnackMensaje, usuario}) => {
 
 
   const [abrirModal, setAbrirModal] = useState(false);
@@ -18,6 +18,7 @@ export const BtnCestadoTran = ({row, setSnackMensaje}) => {
       setAbrirModal={setAbrirModal}
       row={row}
       setSnackMensaje={setSnackMensaje}
+      usuario={usuario}
 
     />
    

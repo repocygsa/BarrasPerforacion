@@ -12,7 +12,7 @@ import {BtnVerArch} from './btnVerArch';
 
 
 
-export const TablaAccionesDet = ({dataRegistroStock, setSnackMensaje }) => {
+export const TablaAccionesDet = ({dataRegistroStock, setSnackMensaje, usuario }) => {
    
     const CustomEstatusCell2 = ({ estatus, est, diferencia }) => {
        
@@ -68,7 +68,7 @@ export const TablaAccionesDet = ({dataRegistroStock, setSnackMensaje }) => {
           {/* <BtnMostrarDetalle row={params.row} />
          <BtnEditar row={params.row}/> */} 
          
-          <BtnCestado row={params.row} setSnackMensaje={setSnackMensaje}/>
+          <BtnCestado row={params.row} setSnackMensaje={setSnackMensaje} usuario={usuario}/>
           <BtnVerArch  row={params.row} setSnackMensaje={setSnackMensaje}/>
             
         </>,

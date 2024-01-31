@@ -15,13 +15,14 @@ import { DialogGuardaCierreTran } from './dialogGuardaCierreTran';
 
 
 
-export const ModalCierraAccionTran = ({ abrirModal, setAbrirModal, row, setSnackMensaje }) => {
-    
+export const ModalCierraAccionTran = ({ abrirModal, setAbrirModal, row, setSnackMensaje, usuario }) => {
+ 
     const fechaHora=moment().format('DD-MM-YYYY HH:mm')
     const queryClient = useQueryClient();
     const [abrirDialog, setAbrirDialog] = useState(false);
     const [data, setData]=useState({})
-
+const user = usuario
+const idCab= row.fk_id_incidente
     const validaciones = yup.object().shape({
       
         fil_tab: yup
@@ -56,7 +57,9 @@ export const ModalCierraAccionTran = ({ abrirModal, setAbrirModal, row, setSnack
             id: row.id,
             mant_obs:datos.mant_obs,
             fil_tab: datos.fil_tab,
-
+usuario:user,
+idCab,
+varT:2,
         }
         setData(values)
        setAbrirDialog(true)

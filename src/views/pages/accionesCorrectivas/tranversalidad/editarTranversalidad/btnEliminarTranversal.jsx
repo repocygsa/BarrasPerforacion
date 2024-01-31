@@ -6,7 +6,7 @@ import { ModalEliminaTranversal } from './modalEliminaTranversal';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 
-export const BtnEliminarTranversal = ({row, setSnackMensaje}) => {
+export const BtnEliminarTranversal = ({row, setSnackMensaje, usuario}) => {
 
 
   const [abrirModal, setAbrirModal] = useState(false);
@@ -19,7 +19,7 @@ export const BtnEliminarTranversal = ({row, setSnackMensaje}) => {
       setAbrirModal={setAbrirModal}
       row={row}
       setSnackMensaje={setSnackMensaje}
-
+usuario={usuario}
     />
    
  

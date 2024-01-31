@@ -13,7 +13,7 @@ import { BtnMostrarDetalleTran } from './editarTranversalidad/btnMostrarDetalleT
 
 
 
-export const TablaTranversal = ({dataRegistroStock, setSnackMensaje }) => {
+export const TablaTranversal = ({dataRegistroStock, setSnackMensaje, user }) => {
    
     const CustomEstatusCell3 = ({ estatus, est  }) => {
        
@@ -124,9 +124,9 @@ export const TablaTranversal = ({dataRegistroStock, setSnackMensaje }) => {
             renderCell:(params)=> 
             <>
     { /* <BtnMostrarDetalle row={params.row} /> */ }  
-    <BtnEliminarTranversal row={params.row} setSnackMensaje={setSnackMensaje}/>
+    <BtnEliminarTranversal row={params.row} setSnackMensaje={setSnackMensaje} usuario={user}/>
     <BtnMostrarDetalleTran row={params.row}/>
-    <BtnCestadoTran row={params.row} setSnackMensaje={setSnackMensaje} />
+    <BtnCestadoTran row={params.row} setSnackMensaje={setSnackMensaje} usuario={user} />
     <BtnVerArch  row={params.row} setSnackMensaje={setSnackMensaje}/>
     
             {/*  <BtnEditar row={params.row}/> */} 

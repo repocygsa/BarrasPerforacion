@@ -15,7 +15,7 @@ import { getIncidentesArch, getIncidentesArchDet } from 'helpers/gets';
 
 
 
-export const ModalVerRegistro = ({ abrirModal, setAbrirModal, row }) => {
+export const ModalVerRegistro = ({ abrirModal, setAbrirModal, row, usuario }) => {
 
     function createData(
         name,
@@ -228,7 +228,7 @@ const ajustarRuta = (rutaCompleta) => {
                             </TableBody>
                         </Table>
                         </TableContainer>
-                        <ListaAccionesDet id={row.id}/>
+                        <ListaAccionesDet id={row.id} usuario={usuario}/>
                     </CardContent>
                     </Card>
                     </Grid>
