@@ -18,7 +18,7 @@ import { BtnCancelAcc } from './cttosTranversal/btnCancelAcc';
 export const TablaAccionesTran = ({dataRegistroStock, setSnackMensaje, usuario, ctto, empre }) => {
 
   const CustomEstatusCell2 = ({ estatus, est , com }) => {
-    console.log(com, 'com')   
+     
     let textColor = 'black'; // Color predeterminado
     if(est){
     if(est === 3){

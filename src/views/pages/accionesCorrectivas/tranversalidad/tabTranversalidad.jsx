@@ -23,7 +23,7 @@ const TabPanel = (props) => {
   );
 };
 
-const TabsTranversalidad = (usuario) => {
+const TabsTranversalidad = ({usuario, estado}) => {
   const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
@@ -33,7 +33,7 @@ const TabsTranversalidad = (usuario) => {
   return (
     <Grid item md={12} xs={12}>
               <Box sx={{ p: 3, backgroundColor: 'white', color: 'black' }}>
-              <ListaTranversal usuario={usuario} />
+              <ListaTranversal usuario={usuario} estado = {estado} />
         </Box>
        {/*  <Tabs value={value} onChange={handleChange} aria-label="simple tabs example" sx={{ backgroundColor: 'white' }}>
         <Tab label="Acciones correctivas" />

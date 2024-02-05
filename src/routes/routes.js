@@ -41,7 +41,7 @@ const Routes =({data})=>{
                     },
                     {
                         path: '/tranversal',
-                        element: perUsu===1 || perUsu ===2 ?<TabsTranversalidad usuario={rut} /> : <Navigate to='/web/accionesCorrectivas' />
+                        element: perUsu===1 || perUsu ===2 ?<TabsTranversalidad usuario={rut} estado='0' /> : <Navigate to='/web/accionesCorrectivas' />
                     },
                     {
                         path: '/consultaTranversal',

@@ -380,6 +380,18 @@ const getIncidentesArch = (data) => {
     return getIncidentesArch;
 };
 
+
+const getIncidentesCount = (data) => {
+    const getIncidentesCount = llamadaApi.post('aprendizaje/getIncidentesCount',{data});
+    return getIncidentesCount;
+};
+
+
+const getIncidentesCountSC = (data) => {
+    const getIncidentesCountSC = llamadaApi.post('aprendizaje/getIncidentesCountSC',{data});
+    return getIncidentesCountSC;
+};
+
 export {
 
     getTalla,
@@ -422,6 +434,8 @@ export {
     getContratosCst,
     getCtaCascos,
     getDescartaAcc,
-    getContratosCstGen
+    getContratosCstGen,
+    getIncidentesCount,
+    getIncidentesCountSC
 
 }

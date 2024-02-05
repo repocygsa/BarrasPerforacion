@@ -9,7 +9,7 @@ import { TablaTranversal } from './tablaTranversal';
 import { SocketContext } from 'context/SocketContext';
 
 
-export const ListaTranversal = ({permiso, usuario}) => {
+export const ListaTranversal = ({permiso, usuario, estado}) => {
 
     const [snackMensaje, setSnackMensaje] = useState('');
 
@@ -29,8 +29,8 @@ export const ListaTranversal = ({permiso, usuario}) => {
     const {
       data: DataTranversal, 
       isLoading:isLoadingDataTranversal
-    } = useQuery(['QueryIncidenteTranversal'], 
-      ()=>getTranversal()
+    } = useQuery(['QueryIncidenteTranversal',estado], 
+      ()=>getTranversal(estado)
     );
 
  
