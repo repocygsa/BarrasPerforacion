@@ -42,7 +42,7 @@ export const ListaTranversal = ({permiso, usuario, estado}) => {
     return (
 
   <><SnackComponent snackMensaje={snackMensaje} setSnackMensaje={setSnackMensaje} />
-  
+  <MainCard title="Acciones por contrato ">
   <Grid container spacing={2} rowSpacing={1} mt={1} justifyContent="center" alignItems="center">
         {/*
        <Grid item md={12} xs={12}>
@@ -55,7 +55,9 @@ export const ListaTranversal = ({permiso, usuario, estado}) => {
         <Grid item md={12} xs={12}>
           {isLoadingDataTranversal ? '' : <TablaTranversal dataRegistroStock={DataTranversal.data.result} setSnackMensaje={setSnackMensaje} user={usuario} />}
         </Grid>
-      </Grid></>
+      </Grid>
+      </MainCard>
+      </>
 
     )
 

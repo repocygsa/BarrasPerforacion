@@ -30,7 +30,7 @@ export const BtnVerCttosTranversal = ({row, usuario}) => {
       direction="column"
       alignItems="center"
       justifyContent="center"
-      style={{ minHeight: '100vh' }}
+      style={{ minHeight: '8vh' }}
     >
 
           <Grid item>

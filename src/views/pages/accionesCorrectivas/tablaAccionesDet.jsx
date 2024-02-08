@@ -1,7 +1,8 @@
-import { Grid, Typography } from '@mui/material';
-import { DataGrid, esES } from '@mui/x-data-grid';
+import { Grid, Link, Typography } from '@mui/material';
+import { DataGrid, esES} from '@mui/x-data-grid';
+
 import moment from 'moment';
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import BtnCambiarEstado, { BtnCestado } from './btnCambiarEstado';
 import {BtnEditar} from './btnEditar';
 
@@ -12,8 +13,40 @@ import {BtnVerArch} from './btnVerArch';
 
 
 
+
 export const TablaAccionesDet = ({dataRegistroStock, setSnackMensaje, usuario }) => {
+  
    
+  const [showFullContent, setShowFullContent] = useState(false);
+  const [maxCharacters, setMaxCharacters] = useState(40);
+
+  const handleVerMasClick = () => {
+    setShowFullContent(!showFullContent);
+  };
+
+  const CustomMedCorrCell = ({ medCorrectiva }) => {
+    const [expanded, setExpanded] = useState(false);
+
+    return (
+      <div>
+        {expanded ? medCorrectiva : medCorrectiva.slice(0, 45)}&nbsp;
+        {medCorrectiva.length > 45 && (
+          // eslint-disable-next-line jsx-a11y/anchor-is-valid
+          <Link
+            type="button"
+            component="button"
+            sx={{ fontSize: 'inherit' }}
+            onClick={() => setExpanded(!expanded)}
+          >
+            {expanded ? 'Ver menos' : 'Ver más'}
+          </Link>
+        )}
+      </div>
+    );
+  };
+
+
+
     const CustomEstatusCell2 = ({ estatus, est, diferencia }) => {
        
         let textColor = 'black'; // Color predeterminado
@@ -38,23 +71,7 @@ export const TablaAccionesDet = ({dataRegistroStock, setSnackMensaje, usuario })
         );
       };
 
-      const CustomEstatusCell = ({ estatus, porcentaje }) => (
-        <Box position="relative" display="inline-flex">
-        <CircularProgress size={30} variant="determinate" value={porcentaje} />
-        <Box
-          top={0}
-          left={0}
-          bottom={0}
-          right={0}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          position="absolute"
-        >
-          <Typography variant="caption" component="div" color="textSecondary">{`${Math.round(porcentaje)}%`}</Typography>
-        </Box>
-      </Box>
-        );
+     
 
 
     const columnasDatosStock=[  
@@ -99,8 +116,8 @@ export const TablaAccionesDet = ({dataRegistroStock, setSnackMensaje, usuario })
       field:'medcorr',
       headerName:'Acción correctiva',
       align:'left',
-      minWidth: 300,
-      valueGetter:(params)=>params.row.inc_med_correctiva
+      minWidth: 350,
+      renderCell: (params) => <CustomMedCorrCell medCorrectiva={params.row.inc_med_correctiva} />,
   },
   {
     field:'resp',
@@ -119,68 +136,7 @@ export const TablaAccionesDet = ({dataRegistroStock, setSnackMensaje, usuario })
 },
 
 
-    
-        
-     
-   /*      {
-            field:'lider',
-            headerName:'Lider comisión',
-            align:'left',
-            minWidth: 250,
-            valueGetter:(params)=>params.row.lider
-        },
-       {
-          field:'incidente',
-          headerName:'Incidente',
-          align:'left',
-          minWidth: 200,
-          valueGetter:(params)=>params.row.inc_incidente
-      },
-*/
-
-       
-
-
-
-   
-/*
-{
-  field:'act2',
-  headerName:'Actividad 2',
-  align:'left',
-  minWidth: 100,
-  valueGetter:(params)=>params.row.actividad2
-},
-{
-  field:'act3',
-  headerName:'Actividad 3',
-  align:'left',
-  minWidth: 100,
-  valueGetter:(params)=>params.row.actividad3
-},
-{
-  field:'act4',
-  headerName:'Actividad 4',
-  align:'left',
-  minWidth: 100,
-  valueGetter:(params)=>params.row.actividad4
-},
-
-*/
-      /*
-      {
-        field:'accion',
-        headerName:'Acciones',
-        headerAlign: 'center',
-        minWidth: 100,
-        renderCell:(params)=> 
-        <>
-            <BtnMostrarDetalle row={params.row} />
-           
-            
-        </>,
-    },
-    */
+  
      
        
        
@@ -203,8 +159,11 @@ export const TablaAccionesDet = ({dataRegistroStock, setSnackMensaje, usuario })
                     getRowId={(row) => row.id}
                     columns={columnasDatosStock} 
                     rows={dataRegistroStock} 
-                    pageSize={25}
-                    rowsPerPageOptions={[25]}
+            
+                    getEstimatedRowHeight={() => 100}
+                    getRowHeight={() => 'auto'}
+                   
+                   
                 />
                 </>
                 }

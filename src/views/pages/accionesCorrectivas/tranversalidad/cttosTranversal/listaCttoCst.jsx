@@ -11,6 +11,8 @@ import {TablaCttoCst} from './tablaCttoCst';
 export const ListaCttoCst = ({permiso, usuario, row}) => {
 
     const [snackMensaje, setSnackMensaje] = useState('');
+
+    
 const idCab = row.id
 
 const data ={

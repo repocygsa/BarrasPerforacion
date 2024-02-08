@@ -1,9 +1,9 @@
-import { Grid, Typography } from '@mui/material';
+import { Grid, Link, Typography } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Box } from '@mui/system';
 import { DataGrid, esES } from '@mui/x-data-grid';
 import moment from 'moment';
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import { BtnMostrarDetalle } from './btnMostrarDetalle';
 import { BtnVerCttosTranversal } from './tranversalidad/cttosTranversal/btnVerCttosTranversal';
 
@@ -11,6 +11,34 @@ import { BtnVerCttosTranversal } from './tranversalidad/cttosTranversal/btnVerCt
 
 
 export const TablaAcciones = ({dataRegistroStock, setSnackMensaje, usuario}) => {
+
+  const [showFullContent, setShowFullContent] = useState(false);
+  const [maxCharacters, setMaxCharacters] = useState(40);
+
+  const handleVerMasClick = () => {
+    setShowFullContent(!showFullContent);
+  };
+
+  const CustomMedCorrCell = ({ medCorrectiva }) => {
+    const [expanded, setExpanded] = useState(false);
+
+    return (
+      <div>
+        {expanded ? medCorrectiva : medCorrectiva.slice(0, 45)}&nbsp;
+        {medCorrectiva.length > 45 && (
+          // eslint-disable-next-line jsx-a11y/anchor-is-valid
+          <Link
+            type="button"
+            component="button"
+            sx={{ fontSize: 'inherit' }}
+            onClick={() => setExpanded(!expanded)}
+          >
+            {expanded ? 'Ver menos' : 'Ver más'}
+          </Link>
+        )}
+      </div>
+    );
+  };
    
     const CustomEstatusCell2 = ({ estatus, est, diferencia }) => {
        
@@ -161,8 +189,9 @@ export const TablaAcciones = ({dataRegistroStock, setSnackMensaje, usuario}) => 
           field:'incidente',
           headerName:'Incidente',
           align:'left',
-          minWidth: 200,
-          valueGetter:(params)=>params.row.inc_incidente
+          minWidth: 300,
+        
+          renderCell: (params) => <CustomMedCorrCell medCorrectiva={params.row.inc_incidente} />,
       },
 
       {
@@ -239,6 +268,8 @@ export const TablaAcciones = ({dataRegistroStock, setSnackMensaje, usuario}) => 
                     rows={dataRegistroStock} 
                     pageSize={25}
                     rowsPerPageOptions={[25]}
+                    getEstimatedRowHeight={() => 100}
+                    getRowHeight={() => 'auto'}
                 />
                 </>
                 }

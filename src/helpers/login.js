@@ -6,7 +6,16 @@ import { llamadaApi, llamadaApi2 } from "api/reqApi";
 } 
 */
 
+const getSessionUsu = async()=>{ 
 
+    const protocol = window.location.protocol;
+    const hostname = window.location.hostname;
+
+    const getSessionUsu = await llamadaApi2.post(`${protocol}//${hostname}/web/includes/Globales/funciones/getSession.php`,{getSessionUsu:'1'})   
+    return getSessionUsu;
+}
+
+/*
 const getSessionUsu = async()=>{
 
     const userAgent = navigator.userAgent;      
@@ -16,11 +25,11 @@ const getSessionUsu = async()=>{
     }          
     return {data}; ;
 }
-
+*/
 
 // Va a buscar si tiene permisos para administrar ya que todos los usuarios de la appsgom pueden pedir epp
 const getPermisoSessionAprendizaje = ()=>getSessionUsu().then(async(res)=>{   
-    const getPermisoSessionAprendizaje = await llamadaApi.post('/aprendizaje/getPermisoSessionAprendizaje',{res})       
+    const getPermisoSessionAprendizaje = await llamadaApi.post('aprendizaje/getPermisoSessionAprendizaje',{res})       
     return getPermisoSessionAprendizaje;
 })
 

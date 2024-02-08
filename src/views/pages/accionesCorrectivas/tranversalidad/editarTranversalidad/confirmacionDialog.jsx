@@ -7,6 +7,9 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
+
+
+
 export const ConfirmacionDialog = ({ abrirDialog, setAbrirDialog, setModalPrin, open, setOpen }) => {
   const queryClient = useQueryClient();
   const preguntar =()=> {
@@ -20,12 +23,11 @@ export const ConfirmacionDialog = ({ abrirDialog, setAbrirDialog, setModalPrin, 
    
 
   const confirmaSalida =()=> {
-
-  
     setOpen(false);
-     setModalPrin(false);
+    setModalPrin(false);
 
-     navigate(`${config.basename}/tranversal`)
+   
+    navigate(`${config.basename}/tranversal`);
   }
    const btntext ='Ir'
   return (
@@ -39,7 +41,7 @@ export const ConfirmacionDialog = ({ abrirDialog, setAbrirDialog, setModalPrin, 
         maxWidth="xs"
       >
         <DialogTitle sx={{fontSize: '18px'}}>
-        Complementar
+        Ir a acciones por contrato
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
@@ -48,7 +50,7 @@ export const ConfirmacionDialog = ({ abrirDialog, setAbrirDialog, setModalPrin, 
         </DialogContent>
         <DialogActions>
           <Button color="error" variant="contained" style= {{textTransform: 'none'}}onClick={()=>preguntar()} autoFocus>
-            Cancelar
+            Quedarme aqui
           </Button>
           <LoadingButton
           

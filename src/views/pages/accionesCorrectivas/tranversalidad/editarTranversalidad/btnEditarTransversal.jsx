@@ -30,7 +30,7 @@ export const BtnEditarTransversal = ({row, usuario, ctto, empre, setSnackMensaje
       direction="column"
       alignItems="center"
       justifyContent="center"
-      style={{ minHeight: '100vh' }}
+    
     >
       <Grid item>
       {row.estado_complemento ===2?

@@ -16,7 +16,7 @@ import { BtnTranversalSelec } from './btnTranversalSelec';
 
 
 export const TablaCttoCst = ({dataRegistroStock, setSnackMensaje, user, idCab }) => {
-   console.log(dataRegistroStock, 'ssss')
+
     const CustomEstatusCell3 = ({ estatus, est  }) => {
        
         let textColor = 'black'; // Color predeterminado

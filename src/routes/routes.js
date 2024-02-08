@@ -12,8 +12,20 @@ import TabsTranversalidad from 'views/pages/accionesCorrectivas/tranversalidad/t
 import PermisoModal from 'components/theme/SPermiso';
 import { ListaCttoCstGen } from 'views/pages/accionesCorrectivas/tranversalidad/consultaTranversal/listaCttoCstGen';
 
-const Routes =({data})=>{
+import { useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
+
+const Routes =({data})=>{
+    const location = useLocation();
+    const [activeRoute, setActiveRoute] = useState(location.pathname);
+  
+    useEffect(() => {
+      setActiveRoute(location.pathname);
+    }, [location.pathname]);
+
+    console.log(activeRoute,'ruta activa')
+  
     if(data.permiso.length > 0){
 
         const { rut, ctto } = data.datosSesion;
@@ -41,7 +53,7 @@ const Routes =({data})=>{
                     },
                     {
                         path: '/tranversal',
-                        element: perUsu===1 || perUsu ===2 ?<TabsTranversalidad usuario={rut} estado='0' /> : <Navigate to='/web/accionesCorrectivas' />
+                        element: perUsu===1 || perUsu ===2 ?<TabsTranversalidad usuario={rut}  /> : <Navigate to='/web/accionesCorrectivas' />
                     },
                     {
                         path: '/consultaTranversal',
@@ -72,6 +84,7 @@ const Routes =({data})=>{
 
             },
         ] 
+        
     )
 }
 

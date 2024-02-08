@@ -30,7 +30,7 @@ export const BtnMostrarDetalle = ({row, usuario}) => {
       direction="column"
       alignItems="center"
       justifyContent="center"
-      style={{ minHeight: '100vh' }}
+      
     >
       <Grid item>
       <Tooltip title="Mostrar detalle" arrow>

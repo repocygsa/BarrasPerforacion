@@ -1,7 +1,7 @@
-import { Grid, Typography } from '@mui/material';
+import { Grid, Link, Typography } from '@mui/material';
 import { DataGrid, esES } from '@mui/x-data-grid';
 import moment from 'moment';
-import { memo } from 'react';
+import { memo, useState } from 'react';
 
 
 import CircularProgress from '@mui/material/CircularProgress';
@@ -15,7 +15,37 @@ import { BtnCancelAcc } from './cttosTranversal/btnCancelAcc';
 
 
 
+
 export const TablaAccionesTran = ({dataRegistroStock, setSnackMensaje, usuario, ctto, empre }) => {
+
+
+  const [showFullContent, setShowFullContent] = useState(false);
+  const [maxCharacters, setMaxCharacters] = useState(40);
+
+  const handleVerMasClick = () => {
+    setShowFullContent(!showFullContent);
+  };
+
+  const CustomMedCorrCell = ({ medCorrectiva }) => {
+    const [expanded, setExpanded] = useState(false);
+
+    return (
+      <div>
+        {expanded ? medCorrectiva : medCorrectiva.slice(0, 80)}&nbsp;
+        {medCorrectiva.length > 80 && (
+          // eslint-disable-next-line jsx-a11y/anchor-is-valid
+          <Link
+            type="button"
+            component="button"
+            sx={{ fontSize: 'inherit' }}
+            onClick={() => setExpanded(!expanded)}
+          >
+            {expanded ? 'Ver menos' : 'Ver más'}
+          </Link>
+        )}
+      </div>
+    );
+  };
 
   const CustomEstatusCell2 = ({ estatus, est , com }) => {
      
@@ -115,15 +145,9 @@ export const TablaAccionesTran = ({dataRegistroStock, setSnackMensaje, usuario, 
       headerName:'Acción correctiva',
       align:'left',
       minWidth: 500,
-      valueGetter:(params)=>params.row.inc_med_correctiva
+      renderCell: (params) => <CustomMedCorrCell medCorrectiva={params.row.inc_med_correctiva} />,
   },
-  {
-    field:'resp',
-    headerName:'Responsable',
-    align:'left',
-    minWidth: 250,
-    valueGetter:(params)=>params.row.Nombre
-},
+
 
  
      
@@ -150,6 +174,8 @@ export const TablaAccionesTran = ({dataRegistroStock, setSnackMensaje, usuario, 
                     rows={dataRegistroStock} 
                     pageSize={25}
                     rowsPerPageOptions={[25]}
+                    getEstimatedRowHeight={() => 100}
+                    getRowHeight={() => 'auto'}
                 />
                 </>
                 }

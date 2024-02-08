@@ -29,7 +29,7 @@ export const BtnVerArch = ({row, setSnackMensaje}) => {
     direction="column"
     alignItems="center"
     justifyContent="center"
-    style={{ minHeight: '100vh' }}
+  
   >
 
 

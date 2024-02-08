@@ -10,6 +10,7 @@ import DialogContent from '@mui/material/DialogContent';
 import Button from '@mui/material/Button';
 import TabsTranversalidad from 'views/pages/accionesCorrectivas/tranversalidad/tabTranversalidad';
 import { ListaCttoCstGen } from 'views/pages/accionesCorrectivas/tranversalidad/consultaTranversal/listaCttoCstGen';
+import { DialogActions } from '@mui/material';
 
 const CardCounter = ({
   color,
@@ -117,9 +118,12 @@ const CardCounter = ({
           <Typography variant="body1" gutterBottom>
             {dialogMessage}
           </Typography>
-          <Button onClick={handleDialogClose} color="primary">
-            Cerrar
-          </Button>
+
+          <DialogActions>
+                <Button color="error" variant="contained"style= {{textTransform: 'none'}} autoFocus onClick={handleDialogClose}>
+                   Cerrar
+                </Button>
+            </DialogActions>
         </DialogContent>
       </Dialog>
     </>

@@ -32,6 +32,7 @@ export const ListaTranversalId = ({ id, row, user, setAbrirModal,setSnackMensaje
   const medCorrectiva= row.inc_med_correctiva
   const idIncidente= row.fk_id_incidente
   const idMedida = row.id
+  const jer =row.fk_jerarquia
 
   const cttoArr = [];  // Declara un arreglo vacío
 
@@ -122,7 +123,7 @@ const BuscarRut = (rut) => {
             rut_usu: '',
             fec_cierre: null,
             nom_usu:'',
-            fk_jerarquia:'',
+            fk_jerarquia:jer,
             contratos_cst:cttoArr,
             tx_medidaCorr:medCorrectiva,
             id_incidente: idIncidente,
@@ -409,6 +410,7 @@ const BuscarRut = (rut) => {
                 onChange={(e) => {
                     formik.setFieldValue('fk_jerarquia', e.target.value);
                 }}
+                disabled
             >
             {
             isLoadingDataJer ?

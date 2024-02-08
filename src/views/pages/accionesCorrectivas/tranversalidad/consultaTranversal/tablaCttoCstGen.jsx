@@ -1,7 +1,7 @@
-import { Grid, Tooltip, Typography } from '@mui/material';
+import { Grid, Link, Tooltip, Typography } from '@mui/material';
 import { DataGrid, esES } from '@mui/x-data-grid';
 import moment from 'moment';
-import { memo } from 'react';
+import { memo, useState } from 'react';
 
 import CircularProgress from '@mui/material/CircularProgress';
 import { Box } from '@mui/system';
@@ -18,7 +18,36 @@ import { RamenDiningOutlined } from '@mui/icons-material';
 
 
 export const TablaCttoCstGen = ({dataRegistroStock, setSnackMensaje, user, idCab }) => {
-   console.log(dataRegistroStock, 'ssss')
+
+  const [showFullContent, setShowFullContent] = useState(false);
+  const [maxCharacters, setMaxCharacters] = useState(40);
+
+  const handleVerMasClick = () => {
+    setShowFullContent(!showFullContent);
+  };
+
+  const CustomMedCorrCell = ({ medCorrectiva }) => {
+    const [expanded, setExpanded] = useState(false);
+
+    return (
+      <div>
+        {expanded ? medCorrectiva : medCorrectiva.slice(0, 45)}&nbsp;
+        {medCorrectiva.length > 45 && (
+          // eslint-disable-next-line jsx-a11y/anchor-is-valid
+          <Link
+            type="button"
+            component="button"
+            sx={{ fontSize: 'inherit' }}
+            onClick={() => setExpanded(!expanded)}
+          >
+            {expanded ? 'Ver menos' : 'Ver más'}
+          </Link>
+        )}
+      </div>
+    );
+  };
+
+
     const CustomEstatusCell3 = ({ estatus, est  }) => {
        
         let textColor = 'black'; // Color predeterminado
@@ -108,7 +137,7 @@ export const TablaCttoCstGen = ({dataRegistroStock, setSnackMensaje, user, idCab
           headerName:'Incidente',
           align:'left',
           minWidth: 370,
-          valueGetter:(params)=>params.row.inc_incidente
+          renderCell: (params) => <CustomMedCorrCell medCorrectiva={params.row.inc_incidente} />,
       },
      /*   {
           field:'nom',
@@ -210,7 +239,8 @@ export const TablaCttoCstGen = ({dataRegistroStock, setSnackMensaje, user, idCab
                     rows={dataRegistroStock} 
                     pageSize={25}
                     rowsPerPageOptions={[25]}
-                   
+                    getEstimatedRowHeight={() => 100}
+                    getRowHeight={() => 'auto'} 
                 />
                 </>
                 }

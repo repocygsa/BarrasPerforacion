@@ -1,7 +1,7 @@
-import { Grid, Typography } from '@mui/material';
+import { Grid, Typography, Link } from '@mui/material';
 import { DataGrid, esES } from '@mui/x-data-grid';
 import moment from 'moment';
-import { memo } from 'react';
+import { memo, useState } from 'react';
 
 import CircularProgress from '@mui/material/CircularProgress';
 import { Box } from '@mui/system';
@@ -13,7 +13,37 @@ import { BtnMostrarDetalleTran } from './editarTranversalidad/btnMostrarDetalleT
 
 
 
+
 export const TablaTranversal = ({dataRegistroStock, setSnackMensaje, user }) => {
+
+
+     
+  const [showFullContent, setShowFullContent] = useState(false);
+  const [maxCharacters, setMaxCharacters] = useState(40);
+
+  const handleVerMasClick = () => {
+    setShowFullContent(!showFullContent);
+  };
+  const CustomMedCorrCell = ({ medCorrectiva }) => {
+    const [expanded, setExpanded] = useState(false);
+
+    return (
+      <div>
+        {expanded ? medCorrectiva : medCorrectiva.slice(0, 50)}&nbsp;
+        {medCorrectiva.length > 50 && (
+          // eslint-disable-next-line jsx-a11y/anchor-is-valid
+          <Link
+            type="button"
+            component="button"
+            sx={{ fontSize: 'inherit' }}
+            onClick={() => setExpanded(!expanded)}
+          >
+            {expanded ? 'Ver menos' : 'Ver más'}
+          </Link>
+        )}
+      </div>
+    );
+  };
    
     const CustomEstatusCell3 = ({ estatus, est  }) => {
        
@@ -123,19 +153,15 @@ export const TablaTranversal = ({dataRegistroStock, setSnackMensaje, user }) => 
             minWidth: 180,
             renderCell:(params)=> 
             <>
-    { /* <BtnMostrarDetalle row={params.row} /> */ }  
-    <BtnEliminarTranversal row={params.row} setSnackMensaje={setSnackMensaje} usuario={user}/>
-    <BtnMostrarDetalleTran row={params.row}/>
-    <BtnCestadoTran row={params.row} setSnackMensaje={setSnackMensaje} usuario={user} />
-    <BtnVerArch  row={params.row} setSnackMensaje={setSnackMensaje}/>
-    
-            {/*  <BtnEditar row={params.row}/> */} 
-           {/*
-            <BtnCestado row={params.row} setSnackMensaje={setSnackMensaje}/>
-           */}  
-                
+  
+              <BtnEliminarTranversal row={params.row} setSnackMensaje={setSnackMensaje} usuario={user}/>
+              <BtnMostrarDetalleTran row={params.row}/>
+              <BtnCestadoTran row={params.row} setSnackMensaje={setSnackMensaje} usuario={user} />
+              <BtnVerArch  row={params.row} setSnackMensaje={setSnackMensaje}/>
+            
+     
             </>,
-        },
+          },
     
           {
             field:'estado',
@@ -143,21 +169,21 @@ export const TablaTranversal = ({dataRegistroStock, setSnackMensaje, user }) => 
             align:'left',
             minWidth: 180,
             renderCell:(params)=> <CustomEstatusCell2 estatus='' est={params.row.inc_det_estado} diferencia={params.row.dias_diferencia}/>
-        }, 
-        {
-          field:'fec_cierr',
-          headerName:'Fecha de cierre',
-          align:'left',
-          minWidth: 150,
-          valueGetter:(params)=>moment(params.row.inc_fec_cierre).format('DD-MM-YYYY')
-      },
-        {
-          field:'emp',
-          headerName:'Empresa',
-          align:'left',
-          minWidth: 100,
-          valueGetter:(params)=>params.row.nom_empre
-      },
+          }, 
+          {
+            field:'fec_cierr',
+            headerName:'Fecha de cierre',
+            align:'left',
+            minWidth: 150,
+            valueGetter:(params)=>moment(params.row.inc_fec_cierre).format('DD-MM-YYYY')
+          },
+          {
+            field:'emp',
+            headerName:'Empresa',
+            align:'left',
+            minWidth: 100,
+            valueGetter:(params)=>params.row.nom_empre
+          },
     
       {
         field:'ctto',
@@ -165,7 +191,7 @@ export const TablaTranversal = ({dataRegistroStock, setSnackMensaje, user }) => 
         align:'left',
         minWidth: 150,
         valueGetter:(params)=>params.row.fk_ctto
-    },
+      },
     
     {
       field:'jer',
@@ -183,19 +209,7 @@ export const TablaTranversal = ({dataRegistroStock, setSnackMensaje, user }) => 
     flex:'1',
  //   valueGetter:(params)=>params.row.inc_med_correctiva
  renderCell:(params)=>  <>
-<Grid
-  container
-  style={{
-    alignItems: 'center',
-    whiteSpace: 'normal',
-    wordWrap: 'break-word',
-    fontSize: '13px', // Tamaño de la letra más pequeño
-    lineHeight: '1.5', // Altura de la fila más alta
-    margin: '8px', // Margen alrededor del contenido
-  }}
->
-  {params.row.inc_med_correctiva}
-</Grid>
+<CustomMedCorrCell medCorrectiva={params.row.inc_med_correctiva} />
  </>,
 },
 
@@ -245,6 +259,9 @@ export const TablaTranversal = ({dataRegistroStock, setSnackMensaje, user }) => 
                     rows={dataRegistroStock} 
                     pageSize={25}
                     rowsPerPageOptions={[25]}
+                    getEstimatedRowHeight={() => 100}
+                    getRowHeight={() => 'auto'}
+                    
                    
                 />
                 </>

@@ -49,7 +49,7 @@ const menuAdmin = {
 
                 {
                     id: 'report',
-                    title: 'Reporte tranversalidad',
+                    title: 'Reporte transversalidad',
                     type: 'item',
                     url: '/consultaTranversal',
                     breadcrumbs: false,

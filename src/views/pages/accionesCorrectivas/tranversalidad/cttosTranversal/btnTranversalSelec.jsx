@@ -30,8 +30,7 @@ export const BtnTranversalSelec = ({row, usuario, ctto, idCab}) => {
       spacing={0}
       direction="column"
       alignItems="center"
-      justifyContent="center"
-      style={{ minHeight: '100vh' }}
+      justifyCon
     >
 
           <Grid item>
