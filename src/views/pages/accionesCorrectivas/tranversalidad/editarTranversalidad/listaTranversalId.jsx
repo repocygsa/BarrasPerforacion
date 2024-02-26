@@ -398,10 +398,10 @@ const BuscarRut = (rut) => {
             size="small"
             error={formik.touched.fk_jerarquia && Boolean(formik.errors.fk_jerarquia)}
         >
-            <InputLabel id="lbl_emp_fk_jerarquia">Jerarquia</InputLabel>
+            <InputLabel id="lbl_emp_fk_jerarquia">Jerarquía</InputLabel>
             <Select
                 name="fk_jerarquia"
-                label="Jerarquia"
+                label="Jerarquía"
                 labelId="lbl_emp_fk_jerarquia"
                 value={formik.values.fk_jerarquia}
                 onBlur={(e) => {

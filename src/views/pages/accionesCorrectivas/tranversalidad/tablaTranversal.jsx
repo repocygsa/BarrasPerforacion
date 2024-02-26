@@ -14,7 +14,7 @@ import { BtnMostrarDetalleTran } from './editarTranversalidad/btnMostrarDetalleT
 
 
 
-export const TablaTranversal = ({dataRegistroStock, setSnackMensaje, user }) => {
+export const TablaTranversal = ({dataRegistroStock, setSnackMensaje, user, tipo }) => {
 
 
      
@@ -31,6 +31,26 @@ export const TablaTranversal = ({dataRegistroStock, setSnackMensaje, user }) => 
       <div>
         {expanded ? medCorrectiva : medCorrectiva.slice(0, 50)}&nbsp;
         {medCorrectiva.length > 50 && (
+          // eslint-disable-next-line jsx-a11y/anchor-is-valid
+          <Link
+            type="button"
+            component="button"
+            sx={{ fontSize: 'inherit' }}
+            onClick={() => setExpanded(!expanded)}
+          >
+            {expanded ? 'Ver menos' : 'Ver más'}
+          </Link>
+        )}
+      </div>
+    );
+  };
+  const CustomMedCorrCellCorr = ({ medCorrectiva }) => {
+    const [expanded, setExpanded] = useState(false);
+
+    return (
+      <div>
+        {expanded ? medCorrectiva : medCorrectiva.slice(0, 500)}&nbsp;
+        {medCorrectiva.length > 500 && (
           // eslint-disable-next-line jsx-a11y/anchor-is-valid
           <Link
             type="button"
@@ -182,7 +202,7 @@ export const TablaTranversal = ({dataRegistroStock, setSnackMensaje, user }) => 
             headerName:'Empresa',
             align:'left',
             minWidth: 100,
-            valueGetter:(params)=>params.row.nom_empre
+            valueGetter:(params)=>params.row.nom_empre?params.row.nom_empre:params.row.nomEmpreCab
           },
     
       {
@@ -190,12 +210,12 @@ export const TablaTranversal = ({dataRegistroStock, setSnackMensaje, user }) => 
         headerName:'Contrato',
         align:'left',
         minWidth: 150,
-        valueGetter:(params)=>params.row.fk_ctto
+        valueGetter:(params)=>params.row.fk_ctto?params.row.fk_ctto:params.row.cttoCab
       },
     
     {
       field:'jer',
-      headerName:'Jerarquia',
+      headerName:'Jerarquía',
       align:'left',
       minWidth: 150,
       valueGetter:(params)=>params.row.jerarquia
@@ -232,14 +252,66 @@ export const TablaTranversal = ({dataRegistroStock, setSnackMensaje, user }) => 
           minWidth: 400,
           valueGetter:(params)=>params.row.inc_obs?`${moment(params.row.inc_fec_cierre).format('DD-MM-YYYY HH:mm')}: ${ params.row.inc_obs}`:'sin-cierre'
       },
-    
-    
- 
      
-       
        
     ];
 
+
+    const columnasDatosStockCorr=[  
+      
+      {
+        field:'fec_cierr',
+        headerName:'Fecha de cierre',
+        align:'left',
+        minWidth: 150,
+        valueGetter:(params)=>moment(params.row.inc_fec_cierre).format('DD-MM-YYYY')
+      },
+      {
+        field:'emp',
+        headerName:'Empresa',
+        align:'left',
+        minWidth: 100,
+        valueGetter:(params)=>params.row.nom_empre?params.row.nom_empre:params.row.nomEmpreCab
+      },
+
+  {
+    field:'ctto',
+    headerName:'Contrato',
+    align:'left',
+    minWidth: 150,
+    valueGetter:(params)=>params.row.fk_ctto?params.row.fk_ctto:params.row.cttoCab
+  },
+
+    {
+      field:'jer',
+      headerName:'Jerarquia',
+      align:'left',
+      minWidth: 150,
+      valueGetter:(params)=>params.row.jerarquia
+    },
+
+    {
+    field:'medCorr',
+    headerName:'Acción correctiva',
+    align:'left',
+    minWidth: 400,
+    flex:'1',
+    //   valueGetter:(params)=>params.row.inc_med_correctiva
+    renderCell:(params)=>  <>
+    <CustomMedCorrCellCorr medCorrectiva={params.row.inc_med_correctiva} />
+    </>,
+    },
+
+    {
+      field:'resp',
+      headerName:'Responsable',
+      align:'left',
+      minWidth: 300,
+      valueGetter:(params)=>params.row.Nombre
+    },
+   
+
+];
     return (
 
         <Grid container spacing={1} mt={1} rowSpacing={1}>
@@ -255,10 +327,12 @@ export const TablaTranversal = ({dataRegistroStock, setSnackMensaje, user }) => 
                     autoHeight
                     localeText={esES.components.MuiDataGrid.defaultProps.localeText}
                     getRowId={(row) => row.id}
-                    columns={columnasDatosStock} 
+                    columns={tipo==='1'?columnasDatosStockCorr:columnasDatosStock} 
                     rows={dataRegistroStock} 
-                    pageSize={25}
-                    rowsPerPageOptions={[25]}
+                    pagination={false}
+                    pageSize={dataRegistroStock.length} // Set pageSize to total number of rows
+                    rowsPerPageOptions={[dataRegistroStock.length]} // Set rowsPerPageOptions to an array with the same value
+              
                     getEstimatedRowHeight={() => 100}
                     getRowHeight={() => 'auto'}
                     

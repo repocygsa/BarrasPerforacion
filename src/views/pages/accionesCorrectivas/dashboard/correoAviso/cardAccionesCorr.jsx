@@ -10,7 +10,8 @@ import DialogContent from '@mui/material/DialogContent';
 import Button from '@mui/material/Button';
 import TabsTranversalidad from 'views/pages/accionesCorrectivas/tranversalidad/tabTranversalidad';
 import { ListaCttoCstGen } from 'views/pages/accionesCorrectivas/tranversalidad/consultaTranversal/listaCttoCstGen';
-import { DialogActions, DialogTitle } from '@mui/material';
+import { DialogActions } from '@mui/material';
+import { ListaAccionesTranCorr } from './listaAccionesTranCorr';
 
 const CardCounter = ({
   color,
@@ -48,14 +49,14 @@ const CardCounter = ({
           boxShadow: isHovered ? '0 4px 8px rgba(10, 10, 10, 0.9)' : 'none',
           transition: 'box-shadow 0.3s ease-in-out'
         }}
-        onClick={handleDialogOpen}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+      //  onClick={handleDialogOpen}
+      //  onMouseEnter={() => setIsHovered(true)}
+      //  onMouseLeave={() => setIsHovered(false)}
       >
         <CardContent>
           {showAdditionalSectionsF && (
             <>
-              <Typography variant="h4" component="div" style={{ color: 'white', textAlign: 'center' }}>
+              <Typography variant="h3" component="div" style={{ color: 'white', textAlign: 'center' }}>
                 Fuera de plazo
               </Typography>
               <Typography variant="h1" component="div" style={{ color: 'white', textAlign: 'center' }}>
@@ -65,7 +66,7 @@ const CardCounter = ({
           )}
           {showAdditionalSectionsP && (
             <>
-              <Typography variant="h4" component="div" style={{ color: 'white', textAlign: 'center' }}>
+              <Typography variant="h3" component="div" style={{ color: 'white', textAlign: 'center' }}>
                 En proceso
               </Typography>
               <Typography variant="h1" component="div" style={{ color: 'white', textAlign: 'center' }}>
@@ -75,8 +76,8 @@ const CardCounter = ({
           )}
           {showAdditionalSectionsC && (
             <>
-              <Typography variant="h4" component="div" style={{ color: 'white', textAlign: 'center' }}>
-                Cerradas
+              <Typography variant="h3" component="div" style={{ color: 'white', textAlign: 'center' }}>
+                Sin complementar
               </Typography>
               <Typography variant="h1" component="div" style={{ color: 'white', textAlign: 'center' }}>
                 {countC}
@@ -86,7 +87,7 @@ const CardCounter = ({
           {showAdditionalSections && (
             <div style={{ display: 'flex', justifyContent: 'space-around' }}>
               <div>
-                <Typography variant="h4" component="div" style={{ color: 'white' }}>
+                <Typography variant="h3" component="div" style={{ color: 'white' }}>
                   Complementadas
                 </Typography>
                 <Typography variant="h1" component="div" style={{ color: 'white', textAlign: 'center' }}>
@@ -94,7 +95,7 @@ const CardCounter = ({
                 </Typography>
               </div>
               <div>
-                <Typography variant="h4" component="div" style={{ color: 'white' }}>
+                <Typography variant="h3" component="div" style={{ color: 'white' }}>
                   Sin complementar
                 </Typography>
                 <Typography variant="h1" component="div" style={{ color: 'white', textAlign: 'center' }}>
@@ -102,7 +103,7 @@ const CardCounter = ({
                 </Typography>
               </div>
               <div>
-                <Typography variant="h4" component="div" style={{ color: 'white' }}>
+                <Typography variant="h3" component="div" style={{ color: 'white' }}>
                   No aplica
                 </Typography>
                 <Typography variant="h1" component="div" style={{ color: 'white', textAlign: 'center' }}>
@@ -114,7 +115,6 @@ const CardCounter = ({
         </CardContent>
       </Card>
       <Dialog open={openDialog} onClose={handleDialogClose} maxWidth="xl" fullWidth>
-        <DialogTitle><Typography variant="h4">Acciones por contrato</Typography></DialogTitle>
         <DialogContent>
           <Typography variant="body1" gutterBottom>
             {dialogMessage}
@@ -131,9 +131,11 @@ const CardCounter = ({
   );
 };
 
-export const CardAcciones = ({usuario, countF, countP, countC, countNoAplica, countComplementadas, countSinComp }) => (
+export const CardAccionesCorr = ({ usuario, countF, countP, countC, countNoAplica, countComplementadas, countSinComp }) => (
   <Grid container spacing={3} style={{ height: '100%' }}>
-    <Grid item xs={12} sm={6} md={4.5}>
+
+    {/*
+        <Grid item xs={12} sm={12} md={12}>
       <CardCounter
         color="#2196F3"
         showAdditionalSections
@@ -142,31 +144,44 @@ export const CardAcciones = ({usuario, countF, countP, countC, countNoAplica, co
         countSinComp={countSinComp}
         dialogMessage={<ListaCttoCstGen usuario={usuario} />} // Pasar el mensaje de diálogo como JSX
       />
+     
     </Grid>
-    <Grid item xs={12} sm={6} md={2.5}>
+     <ListaCttoCstGen usuario='15.106.378-0' />
+    */}
+   
+    <Grid item xs={12} sm={4} md={4}>
       <CardCounter
         color="#f44336"
         showAdditionalSectionsF
         countF={countF}
-        dialogMessage={<TabsTranversalidad usuario={usuario} estado='2' tipo='3' />}
+      //  dialogMessage={<TabsTranversalidad usuario={usuario} estado='2' tipo='1' />}
       />
+      
     </Grid>
-    <Grid item xs={12} sm={6} md={2.5}>
+    
+    <Grid item xs={12} sm={4} md={4}>
       <CardCounter
         color="#FF9800"
         showAdditionalSectionsP
         countP={countP}
-        dialogMessage={<TabsTranversalidad usuario={usuario} estado='1' tipo='3' />}
+     //   dialogMessage={<TabsTranversalidad usuario={usuario} estado='1' tipo='1' />}
       />
-      
     </Grid>
-    <Grid item xs={12} sm={6} md={2.5}>
+    
+    <Grid item xs={12} sm={4} md={4}>
       <CardCounter
-        color="#4CAF50"
+        color='#277EF5'
         showAdditionalSectionsC
         countC={countC}
-        dialogMessage={<TabsTranversalidad usuario={usuario} estado='3' tipo='1'/>}
+      //  dialogMessage={<TabsTranversalidad usuario={usuario} estado='3' tipo='1' />}
       />
     </Grid>
+<br/>
+   
+    <TabsTranversalidad usuario={usuario} estado='2' tipo='1' titulo='Fuera de plazo' />
+    <TabsTranversalidad usuario={usuario} estado='1' tipo='1' titulo='En proceso' />
+    <ListaAccionesTranCorr/>
+
+
   </Grid>
 );

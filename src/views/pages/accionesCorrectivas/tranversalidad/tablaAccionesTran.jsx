@@ -135,7 +135,7 @@ export const TablaAccionesTran = ({dataRegistroStock, setSnackMensaje, usuario, 
 
     {
       field:'fCierr',
-      headerName:'Cierre',
+      headerName:'Fecha de cierre',
       align:'left',
       minWidth: 150,
       valueGetter:(params)=>moment(params.row.inc_det_fecha_cierre).format('DD-MM-YYYY')

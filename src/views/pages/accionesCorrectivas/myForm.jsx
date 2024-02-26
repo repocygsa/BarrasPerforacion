@@ -316,7 +316,7 @@ const [ind, setInd]=useState(0)
                     <FormControl fullWidth>
                         <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={esLocale}>
                             <DatePicker
-                                label="Fecha Cierre"
+                                label="Fecha de cierre"
                                 name={`items[${index}].fec_cierre`}
                                 value={values.items[index].fec_cierre}
                                 autoComplete="off"

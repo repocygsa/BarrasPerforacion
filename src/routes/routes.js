@@ -14,6 +14,8 @@ import { ListaCttoCstGen } from 'views/pages/accionesCorrectivas/tranversalidad/
 
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { CorreoDetalleAcciones } from 'views/pages/accionesCorrectivas/dashboard/correoAviso/correoDetalleAcciones';
+
 
 
 const Routes =({data})=>{
@@ -24,7 +26,7 @@ const Routes =({data})=>{
       setActiveRoute(location.pathname);
     }, [location.pathname]);
 
-    console.log(activeRoute,'ruta activa')
+//    console.log(activeRoute,'ruta activa')
   
     if(data.permiso.length > 0){
 
@@ -53,12 +55,17 @@ const Routes =({data})=>{
                     },
                     {
                         path: '/tranversal',
-                        element: perUsu===1 || perUsu ===2 ?<TabsTranversalidad usuario={rut}  /> : <Navigate to='/web/accionesCorrectivas' />
+                        element: perUsu===1 || perUsu ===2 ?<TabsTranversalidad usuario={rut} tipo='3' estado='0' titulo='Estatus acciones correctivas' /> : <Navigate to='/web/accionesCorrectivas' />
                     },
                     {
                         path: '/consultaTranversal',
                         element: perUsu ===1 ?<ListaCttoCstGen usuario={rut} /> : <Navigate to='/web/accionesCorrectivas' />
                     },
+                    {
+                        path: '/CorreoDetalleAcciones',
+                        element: <CorreoDetalleAcciones/>
+                    },
+
                     {
                         path: '*',
                         element: <MensajeSinPermiso/>,  
@@ -78,6 +85,12 @@ const Routes =({data})=>{
                 element: <ReporteCorreo/>,  
 
             },
+            {
+                path: '/CorreoDetalleAcciones',
+                element: <CorreoDetalleAcciones/>,  
+
+            },
+            
             {
                 path: '*',
                 element: <MensajeSinPermiso/>,  

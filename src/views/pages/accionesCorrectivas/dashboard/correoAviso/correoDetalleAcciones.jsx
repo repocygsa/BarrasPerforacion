@@ -2,20 +2,19 @@
 /* eslint-disable array-callback-return */
 import { Grid } from '@mui/material';
 import { SnackComponent } from 'components/theme/SnackComponent';
-import { getEppAll, getIncidentes, getIncidentesCount, getIncidentesCountSC } from 'helpers/gets';
+import { getIncidentes, getIncidentesCount, getIncidentesCountSC } from 'helpers/gets';
 import { useContext, useEffect, useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 import MainCard from 'ui-component/cards/MainCard';
 
-import { TablaAcciones } from './tablaAcciones';
 
 
 import { SocketContext } from 'context/SocketContext';
-import { FormAccionesFilter } from './formAccionesFilter';
-import {CardAcciones} from './dashboard/card/cardAcciones';
+import { CardAccionesCorr } from './cardAccionesCorr';
 
 
-export const ListaAcciones = ({permiso, usuario}) => {
+
+export const CorreoDetalleAcciones = ({permiso, usuario}) => {
 
     const [snackMensaje, setSnackMensaje] = useState('');
     
@@ -77,20 +76,14 @@ sinCom=DataIncidenteCountSC.data.result[0].suma_total_resultados
 
     },[socket])
 
+console.log(sinCom)
     return (
-<MainCard title="Listado de registros">
+<MainCard>
   <SnackComponent snackMensaje={snackMensaje} setSnackMensaje={setSnackMensaje} />
 
   <Grid container spacing={2} rowSpacing={1} mt={1} justifyContent="center" alignItems="center">
-{isLoadingDataIncidenteCount?'':<CardAcciones usuario={usuario}  countF={ DataIncidenteCount.data.result[0].atrasado} countP={DataIncidenteCount.data.result[0].proceso} countC={DataIncidenteCount.data.result[0].cerrado} countNoAplica={DataIncidenteCount.data.result[0].noAplica} countComplementadas={DataIncidenteCount.data.result[0].complementado} countSinComp={sinCom} />}
-    <Grid item md={12} xs={12}>
-      <FormAccionesFilter setFiltroStock={setFiltroStock} usuario={usuario} setSnackMensaje={setSnackMensaje}/>
-    </Grid>
-    
+{isLoadingDataIncidenteCount?'':<CardAccionesCorr usuario={usuario}  countF={ DataIncidenteCount.data.result[0].atrasado} countP={DataIncidenteCount.data.result[0].proceso} countC={sinCom} countNoAplica={DataIncidenteCount.data.result[0].noAplica} countComplementadas={DataIncidenteCount.data.result[0].complementado} countSinComp={sinCom} />}
 
-    <Grid item md={12} xs={12}>
-      {isLoadingDataIncidente ? '' : <TablaAcciones dataRegistroStock={DataIncidente.data.result} setSnackMensaje={setSnackMensaje} usuario={usuario} />}
-    </Grid>
   </Grid>
 </MainCard>
     )

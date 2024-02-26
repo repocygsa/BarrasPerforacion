@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from 'react-query';
 import { Send } from '@mui/icons-material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import { guardarIncidente } from 'helpers/gets';
+import { enviarCorreoAprendizaje, guardarIncidente } from 'helpers/gets';
 
 
 export const DialogGuardaAccion = ({ abrirDialog, setAbrirDialog, setSnackMensaje,formik, datos, submiteado, setSubmiteado, setModalPrin, usuario, formHijoRef }) => {
@@ -15,6 +15,22 @@ export const DialogGuardaAccion = ({ abrirDialog, setAbrirDialog, setSnackMensaj
   }
 
 
+
+
+  const {mutate: mutateEnviaCorreo, isLoading:isLoadindMutateCorreo} = useMutation(enviarCorreoAprendizaje,{
+    onSuccess:(res)=>{
+console.log(res)
+        if(res.result.affectedRows===1){
+            
+           console.log('envio correo ok')
+        }else{
+  
+          console.log('error correo')
+  
+        }
+    }
+
+});  
 
     const {mutate: mutateInsertStock, isLoading:isLoadindMutateSaveStock} = useMutation(guardarIncidente,{
       onSuccess:(res)=>{
@@ -33,8 +49,13 @@ export const DialogGuardaAccion = ({ abrirDialog, setAbrirDialog, setSnackMensaj
         
            if (formHijoRef.current) {
                formHijoRef.current.resetForm();
-             
+               
              }
+             setTimeout(() => {
+              mutateEnviaCorreo()
+              
+            }, "20000"); 
+          
           }else{
     
               setSnackMensaje({

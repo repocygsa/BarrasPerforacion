@@ -51,7 +51,7 @@ export const TablaAccionesArchDet = ({dataRegistroStock, setSnackMensaje }) => {
 
     {
       field:'fCierr',
-      headerName:'Cierre',
+      headerName:'Fecha de cierre',
       align:'left',
       minWidth: 150,
       valueGetter:(params)=>moment(params.row.inc_arch_det_fecha).format('DD-MM-YYYY')

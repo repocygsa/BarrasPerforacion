@@ -10,7 +10,7 @@ import { SocketContext } from 'context/SocketContext';
 import {TablaReporteTranversal} from './consultaTranversal/tablaReporteTranversal';
 
 
-export const ListaTranversal = ({permiso, usuario, estado, tipo}) => {
+export const ListaTranversalGen = ({permiso, usuario, estado, tipo}) => {
 
     const [snackMensaje, setSnackMensaje] = useState('');
 
@@ -54,9 +54,9 @@ export const ListaTranversal = ({permiso, usuario, estado, tipo}) => {
 
 
         <Grid item md={12} xs={12}>
-          {/* isLoadingDataTranversal ? '' : <TablaTranversal dataRegistroStock={DataTranversal.data.result} setSnackMensaje={setSnackMensaje} user={usuario} tipo={tipo} /> */ 
+          { isLoadingDataTranversal ? '' : <TablaTranversal dataRegistroStock={DataTranversal.data.result} setSnackMensaje={setSnackMensaje} user={usuario} tipo={tipo} estado={estado} /> 
           
-          isLoadingDataTranversal ? '' : <TablaReporteTranversal rows={DataTranversal.data.result}  estado={estado}/> 
+         /* isLoadingDataTranversal ? '' : <TablaReporteTranversal rows={DataTranversal.data.result}  estado={estado}/> */
           
           }
         </Grid>

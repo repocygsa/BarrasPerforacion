@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 
-import { llamadaApi } from "api/reqApi";
+import { llamadaApi, llamadaApiAprendizaje } from "api/reqApi";
+
 
 
 
@@ -103,6 +104,11 @@ const getIncidentesDet = (data) => {
 const getIncidentesTran = (idCab, ctto) => {
     const getIncidentesTran = llamadaApi.post('aprendizaje/getIncidentesTran', {idCab, ctto});
     return getIncidentesTran;
+};
+
+const getIncidentesTranCorr = () => {
+    const getIncidentesTranCorr = llamadaApi.post('aprendizaje/getIncidentesTranCorr');
+    return getIncidentesTranCorr;
 };
 
 const getEmpresa = () => {
@@ -371,6 +377,7 @@ const guardarCierre = async (data) => {
 };
 
 const getTranversal = (data) => {
+
     const getTranversal = llamadaApi.post('aprendizaje/getTranversal',{data});
     return getTranversal;
 };
@@ -390,6 +397,11 @@ const getIncidentesCount = (data) => {
 const getIncidentesCountSC = (data) => {
     const getIncidentesCountSC = llamadaApi.post('aprendizaje/getIncidentesCountSC',{data});
     return getIncidentesCountSC;
+};
+
+const enviarCorreoAprendizaje = () => {
+    const enviarCorreoAprendizaje = llamadaApiAprendizaje.post('/docker/backendDocker/enviarCorreoAprendizaje');
+    return enviarCorreoAprendizaje;
 };
 
 export {
@@ -436,6 +448,8 @@ export {
     getDescartaAcc,
     getContratosCstGen,
     getIncidentesCount,
-    getIncidentesCountSC
+    getIncidentesCountSC,
+    enviarCorreoAprendizaje,
+    getIncidentesTranCorr
 
 }

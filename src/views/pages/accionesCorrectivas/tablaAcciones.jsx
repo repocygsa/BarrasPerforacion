@@ -86,7 +86,7 @@ export const TablaAcciones = ({dataRegistroStock, setSnackMensaje, usuario}) => 
     const columnasDatosStock=[  
       {
         field:'accion',
-        headerName:'Acciones',
+        headerName:'Opciones',
         headerAlign: 'center',
         minWidth: 100,
         renderCell:(params)=> 
