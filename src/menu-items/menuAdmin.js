@@ -14,7 +14,7 @@ const menuAdmin = {
     children: [
         {
             id: 'epp',
-            title: 'Acciones correctivas',
+            title: 'Barras de perforación',
             type: 'collapse',
             icon: PendingActionsIcon,
             breadcrumbs: false,
@@ -23,38 +23,14 @@ const menuAdmin = {
               
                 {
                     id: 'accCorr',
-                    title: 'Registro de acciones',
+                    title: 'Registro de barras de perforación',
                     type: 'item',
-                    url: '/accCorrectivas',
+                    url: '/registro',
                     breadcrumbs: false,
                     icon: InventoryIcon,
                 },         
                 
-                {
-                    id: 'accCorr2',
-                    title: 'Listado de registros',
-                    type: 'item',
-                    url: '/registro',
-                    breadcrumbs: false,
-                    icon: FactCheckIcon,
-                },   
-                {
-                    id: 'accCorr3',
-                    title: 'Acciones por contrato',
-                    type: 'item',
-                    url: '/tranversal',
-                    breadcrumbs: false,
-                    icon: AltRouteIcon,
-                },   
-
-                {
-                    id: 'report',
-                    title: 'Reporte transversalidad',
-                    type: 'item',
-                    url: '/consultaTranversal',
-                    breadcrumbs: false,
-                    icon: SummarizeIcon,
-                },   
+             
                  
             ]
         },

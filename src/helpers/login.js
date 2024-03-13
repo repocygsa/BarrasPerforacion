@@ -13,8 +13,8 @@ const getSessionUsu = async()=>{
 
     const getSessionUsu = await llamadaApi2.post(`${protocol}//${hostname}/web/includes/Globales/funciones/getSession.php`,{getSessionUsu:'1'})   
     return getSessionUsu;
-} */
-
+} 
+*/
 
 const getSessionUsu = async()=>{
 
@@ -23,17 +23,17 @@ const getSessionUsu = async()=>{
     if (userAgent.includes('Firefox')) {
         data = {rut:'15.106.378-0',empresa:'78.318.570-9',ctto:'4600021050'}
     }          
-    return {data}; ;
+    return {data}; 
 }
 
 
 // Va a buscar si tiene permisos para administrar ya que todos los usuarios de la appsgom pueden pedir epp
-const getPermisoSessionAprendizaje = ()=>getSessionUsu().then(async(res)=>{   
-    const getPermisoSessionAprendizaje = await llamadaApi.post('aprendizaje/getPermisoSessionAprendizaje',{res})       
-    return getPermisoSessionAprendizaje;
+const getPermisoSessionBDP = ()=>getSessionUsu().then(async(res)=>{   
+    const getPermisoSessionBDP = await llamadaApi.post('bdp/getPermisoSessionBDP',{res})       
+    return getPermisoSessionBDP;
 })
 
 export{ 
     getSessionUsu,
-    getPermisoSessionAprendizaje
+    getPermisoSessionBDP
 }

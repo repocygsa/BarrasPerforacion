@@ -13,7 +13,7 @@ import themes from 'themes';
 
 import NavigationScroll from 'layout/NavigationScroll';
 import { useQuery } from 'react-query';
-import { getPermisoSessionAprendizaje } from 'helpers/login';
+import { getPermisoSessionBDP } from 'helpers/login';
 
 // import { io } from 'socket.io-client';
 // import { useEffect, useState } from 'react';
@@ -24,7 +24,7 @@ import { getPermisoSessionAprendizaje } from 'helpers/login';
 const App = () => {
 
     const customization = useSelector((state) => state.customization);
-    const {data, isLoading} = useQuery('getPermisoSessionAprendizaje',()=>getPermisoSessionAprendizaje());
+    const {data, isLoading} = useQuery('getPermisoSessionBDP',()=>getPermisoSessionBDP());
  
     return (
         <StyledEngineProvider injectFirst>

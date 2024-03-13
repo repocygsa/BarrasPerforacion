@@ -1,35 +1,44 @@
+/* eslint-disable no-unused-vars */
 import { useMutation, useQueryClient } from 'react-query';
 
 import { Send } from '@mui/icons-material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import { eliminarAccionTranversal, guardarCierre } from 'helpers/gets';
+import {guardarBdp } from 'helpers/gets';
 
 
-export const DialogEliminaTranversal = ({ abrirDialog, setAbrirDialog, setSnackMensaje,formik, datos,  setModalPrin }) => {
+export const DialogGuardaBDP = ({ abrirDialog, setAbrirDialog, setSnackMensaje,formik, datos }) => {
   const queryClient = useQueryClient();
   const preguntar =()=> {
     setAbrirDialog(!abrirDialog)
+  
   }
 
 
 
-    const {mutate: mutateInsertStock, isLoading:isLoadindMutateSaveStock} = useMutation(eliminarAccionTranversal,{
+
+  
+
+    const {mutate: mutateInsertStock, isLoading:isLoadindMutateSaveStock} = useMutation(guardarBdp,{
       onSuccess:(res)=>{
- 
-          if(res.data.result.affectedRows===1){
+console.log(res, 'respuesta')
+          if(res.result.affectedRows===1){
               
               setSnackMensaje({                   
                   open:true,
-                  mensaje:'Eliminado correctamente',
+                  mensaje:'Datos registrados correctamente',
                   estado:'success'
               });
-    
-              queryClient.invalidateQueries('QueryTranversalID');
-              queryClient.invalidateQueries('QueryIncidenteTranversal');
             
+              queryClient.invalidateQueries('QueryIncidente');
            //   socket.emit('eppStock')
-           formik.resetForm();
+            formik.resetForm();
+        
+      
+            
+              
+    
+          
           }else{
     
               setSnackMensaje({
@@ -44,10 +53,10 @@ export const DialogEliminaTranversal = ({ abrirDialog, setAbrirDialog, setSnackM
   });
 
   const confirmaSalida =()=> {
-
     mutateInsertStock(datos); 
     setAbrirDialog(false);
-    setModalPrin(false);
+
+   // setModalPrin(false);
   }
    
   return (
@@ -59,11 +68,11 @@ export const DialogEliminaTranversal = ({ abrirDialog, setAbrirDialog, setSnackM
         maxWidth="sm"
       >
         <DialogTitle sx={{fontSize: '18px'}}>
-        Confirmar eliminación
+          Registro de barra de perforación
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            ¿Está seguro de eliminar la medida correctiva?
+            ¿Está seguro de registrar la barra de perforación?
           </DialogContentText>
         </DialogContent>
         <DialogActions>

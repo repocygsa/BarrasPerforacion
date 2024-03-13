@@ -7,20 +7,20 @@ import MainCard from 'ui-component/cards/MainCard';
 
 
 
-import { FormAccionesArray } from './formAccionesArray';
+import { FormBarrasPerforacion } from './formBarrasPerforacion';
 
-export const FormularioRegistroAcciones = ({permiso, usuario}) => {
+export const FormularioRegistroBDP = ({permiso, usuario}) => {
 
     const [snackMensaje, setSnackMensaje] = useState('');
 
     return (
-<MainCard title="Registro de aprendizaje">
+<MainCard title="Registro de barras de perforación">
   <SnackComponent snackMensaje={snackMensaje} setSnackMensaje={setSnackMensaje} />
 
   <Grid container spacing={2} rowSpacing={1} mt={1} justifyContent="center" alignItems="center">
     
     <Grid item md={12} xs={12}>
-      <FormAccionesArray setSnackMensaje={setSnackMensaje} user={usuario}/>
+      <FormBarrasPerforacion setSnackMensaje={setSnackMensaje} user={usuario}/>
     </Grid>
     
   </Grid>
