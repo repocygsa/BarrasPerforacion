@@ -4,16 +4,13 @@ import { Grid } from '@mui/material';
 import { SnackComponent } from 'components/theme/SnackComponent';
 import { useState } from 'react';
 import MainCard from 'ui-component/cards/MainCard';
-
-
-
 import { FormBarrasPerforacion } from './formBarrasPerforacion';
 
 export const FormularioRegistroBDP = ({permiso, usuario}) => {
 
     const [snackMensaje, setSnackMensaje] = useState('');
 
-    return (
+return (
 <MainCard title="Registro de barras de perforación">
   <SnackComponent snackMensaje={snackMensaje} setSnackMensaje={setSnackMensaje} />
 
@@ -25,7 +22,7 @@ export const FormularioRegistroBDP = ({permiso, usuario}) => {
     
   </Grid>
 </MainCard>
-    )
+)
 
 }
 

@@ -4,13 +4,9 @@ import MensajeSinPermiso from 'components/theme/MensajeSinPermiso';
 import MainLayout from 'layout/MainLayout';
 import { Navigate } from 'react-router';
 import { Inicio } from 'views/inicio/Inicio';
-
-
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { FormularioRegistroBDP } from 'views/pages/BDP/formularios/formularioRegistroBDP';
-
-
 
 const Routes =({data})=>{
     const location = useLocation();

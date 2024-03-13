@@ -2,11 +2,6 @@
 
 import { llamadaApi, llamadaApiAprendizaje } from "api/reqApi";
 
-
-
-
-
-
 /*
 const getMina = () => {
     const getMina = llamadaApi.post('aprendizaje/getMina');
@@ -22,7 +17,6 @@ const getNivel = () => {
     const getNivel = llamadaApi.post('aprendizaje/getNivel');
     return getNivel;
 }; */
-
 
 
 const getEmpresa = () => {
