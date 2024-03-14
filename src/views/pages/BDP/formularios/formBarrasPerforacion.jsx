@@ -54,10 +54,14 @@ const validaciones = yup.object().shape({
     ,
     bdp_tipo_acero: yup
         .string()
+        .trim()
+        .matches(/^\S.{2,}$/, 'El tipo de acero debe tener al menos 3 caracteres y no contener espacios')
         .required('Ingrese un tipo de acero')
     ,
-    bdp_marca: yup
+     bdp_marca: yup
         .string()
+        .trim()
+        .matches(/^\S.{2,}$/, 'La marca debe tener al menos 3 caracteres y no contener espacios')
         .required('Ingrese una marca')
     ,
        
@@ -75,7 +79,6 @@ const formik = useFormik({
     validationSchema: validaciones,
     enableReinitialize: true,
     onSubmit: (datos) => {
-        console.log(datos)
         setData(datos)
         setAbrirDialog(true)
     }       

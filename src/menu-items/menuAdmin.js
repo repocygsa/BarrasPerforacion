@@ -5,6 +5,8 @@ import FactCheckIcon from '@mui/icons-material/FactCheck';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import SummarizeIcon from '@mui/icons-material/Summarize';
+import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturing';
+import ListAltIcon from '@mui/icons-material/ListAlt';
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
 
 const menuAdmin = {
@@ -16,7 +18,7 @@ const menuAdmin = {
             id: 'epp',
             title: 'Barras de perforación',
             type: 'collapse',
-            icon: PendingActionsIcon,
+            icon: PrecisionManufacturingIcon,
             breadcrumbs: false,
             children: [
 
@@ -28,6 +30,14 @@ const menuAdmin = {
                     url: '/registro',
                     breadcrumbs: false,
                     icon: InventoryIcon,
+                },      
+                {
+                    id: 'accCorr',
+                    title: 'Listado de registros',
+                    type: 'item',
+                    url: '/listado',
+                    breadcrumbs: false,
+                    icon: ListAltIcon,
                 },         
                 
              

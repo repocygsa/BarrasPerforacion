@@ -7,6 +7,7 @@ import { Inicio } from 'views/inicio/Inicio';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { FormularioRegistroBDP } from 'views/pages/BDP/formularios/formularioRegistroBDP';
+import { ListaBarrasPerforacion } from 'views/pages/BDP/listados/listadoBarrasPerforacion';
 
 const Routes =({data})=>{
     const location = useLocation();
@@ -36,7 +37,13 @@ const Routes =({data})=>{
                    
                     {
                         path: '/registro',
-                        element: perUsu===1 || perUsu ===2 ?<FormularioRegistroBDP permiso={perUsu} usuario={rut} /> : <Navigate to='/web/accionesCorrectivas' />
+                        element: perUsu===1 || perUsu ===2 ?<FormularioRegistroBDP permiso={perUsu} usuario={rut} /> : <Navigate to='/web/barrasPerforacion' />
+                    
+                    },
+
+                    {
+                        path: '/listado',
+                        element: perUsu===1 || perUsu ===2 ?<ListaBarrasPerforacion permiso={perUsu} usuario={rut} /> : <Navigate to='/web/barrasPerforacion' />
                     
                     },
                    

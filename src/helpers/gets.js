@@ -34,13 +34,17 @@ const guardarBdp = async (datos) => {
     return guardarBdp;
 };
 
-
+const getBDP = async () => {
+    const getBDP = await llamadaApi.post('bdp/getBDP');
+    return getBDP;
+};
 
 
 export {
     getEmpresa,
     getContratos,
-    guardarBdp
+    guardarBdp,
+    getBDP
    
 
 }
