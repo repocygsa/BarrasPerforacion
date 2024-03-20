@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 
-import { llamadaApi, llamadaApiAprendizaje } from "api/reqApi";
+import { llamadaApi } from "api/reqApi";
 
 /*
 const getMina = () => {
@@ -39,12 +39,30 @@ const getBDP = async () => {
     return getBDP;
 };
 
+const getCausal = async () => {
+    const getCausal = await llamadaApi.post('bdp/getCausal');
+    return getCausal;
+};
+
+const getCtaCascos = (data) => {
+    const getCtaCascos = llamadaApi.post('bdp/getCtaCascos',{data});
+    return getCtaCascos;
+};
+
+
+const updBarra = (data) => {
+    const updBarra = llamadaApi.post('bdp/updBarra',{data});
+    return updBarra;
+};
 
 export {
     getEmpresa,
     getContratos,
     guardarBdp,
-    getBDP
-   
+    getBDP,
+    getCausal,
+    getCtaCascos,
+    updBarra
 
-}
+
+};

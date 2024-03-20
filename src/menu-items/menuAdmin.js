@@ -24,7 +24,7 @@ const menuAdmin = {
 
               
                 {
-                    id: 'accCorr',
+                    id: 'accCorr1',
                     title: 'Registro de barras de perforación',
                     type: 'item',
                     url: '/registro',

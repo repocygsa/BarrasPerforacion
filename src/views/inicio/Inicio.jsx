@@ -11,7 +11,7 @@ export const Inicio = ({permiso}) =>{
       if(permiso===3){
          navigate(`${config.basename}/registro`)
       }else if(permiso===1){
-         navigate(`${config.basename}/accCorrectivas`)
+         navigate(`${config.basename}/registro`)
       }
 
     }, [navigate, permiso])

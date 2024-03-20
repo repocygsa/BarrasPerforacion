@@ -13,8 +13,8 @@ const getSessionUsu = async()=>{
 
     const getSessionUsu = await llamadaApi2.post(`${protocol}//${hostname}/web/includes/Globales/funciones/getSession.php`,{getSessionUsu:'1'})   
     return getSessionUsu;
-} 
-*/
+} */
+
 
 const getSessionUsu = async()=>{
 
