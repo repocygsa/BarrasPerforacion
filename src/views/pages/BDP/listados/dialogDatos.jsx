@@ -39,7 +39,7 @@ export const DialogDatos = ({ abrirDialogDat, setAbrirDialogDat,datos }) => {
                   <TableCell>{datos.bdp_causal}</TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell sx={{ fontWeight: 'bold' }}>Observacion del Retiro</TableCell>
+                  <TableCell sx={{ fontWeight: 'bold' }}>Observación del Retiro</TableCell>
                   <TableCell>{datos.bdp_obs}</TableCell>
                 </TableRow>
                 <TableRow>

@@ -13,7 +13,7 @@ import { useQuery, useQueryClient } from 'react-query';
 export const FormFilter = ({setFiltroStock, usuario, setSnackMensaje, permiso, contrato}) => {
 
     const queryClient = useQueryClient();
-    const [asignacionResponsable, setAsignacionResponsable] = useState(false);
+
     const [empFil, setEmpFil] = useState('');
 
     const contratoAdd = permiso ===2?contrato:'';
@@ -48,7 +48,7 @@ const formik = useFormik({
    
     emp_inf:'',
     ctt_inf:contratoAdd,
-    asignacionResponsable:false,
+    asignacionResponsable:'',
 
   },
 
@@ -59,18 +59,13 @@ const formik = useFormik({
     const fil ={
       emp_inf:row.emp_inf,
       ctt_inf:row.ctt_inf,
-      asignacionResponsable
+      asignacionResponsable:row.asignacionResponsable
     }
     setFiltroStock(fil)
-  
+  console.log(fil)
   }
 });
 
-
-
-const handleCheckboxChange = (event) => {
-  setAsignacionResponsable(event.target.checked);
-};
 
     return (
       
@@ -162,16 +157,30 @@ const handleCheckboxChange = (event) => {
   )}
       
           <Grid item md={3} xs={12}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={asignacionResponsable}
-                onChange={handleCheckboxChange}
-                color="primary"
-              />
-            }
-            label="Asignación de Responsable"
-          />
+          <FormControl
+                        fullWidth
+                        size="small"
+                        error={formik.touched.asignacionResponsable && Boolean(formik.errors.asignacionResponsable)}
+                    >
+                        <InputLabel id="lbl_asig">Asignación</InputLabel>
+                        <Select
+                            name="asignacionResponsable"
+                            label="Asignación"
+                            labelId="lbl_asig"
+                            value={formik.values.asignacionResponsable}
+                            onBlur={(e) => {
+                                formik.handleBlur(e);
+                            }}
+                            onChange={(e) => {
+                                formik.setFieldValue('asignacionResponsable', e.target.value);
+                            }}
+                        >
+                            <MenuItem value={0}>Todos</MenuItem>
+                            <MenuItem value={1}>Con asignación</MenuItem>
+                            <MenuItem value={2}>Sin asignación</MenuItem>
+                        </Select>
+                        <FormHelperText>{formik.touched.asignacionResponsable && formik.errors.asignacionResponsable}</FormHelperText>
+                    </FormControl>
           </Grid>
 
   <Grid item md={0.8} xs={12}>
@@ -182,7 +191,7 @@ const handleCheckboxChange = (event) => {
       style={{ textTransform: 'none', margin: '1px' }}
       startIcon={<SearchIcon />}
       variant="contained"
-/>
+>Buscar</LoadingButton>
 </Tooltip>
   </Grid>
  {/**

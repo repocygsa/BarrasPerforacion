@@ -15,7 +15,7 @@ export const FormBarrasPerforacion = ({ setSnackMensaje, user, permiso, contrato
 
 const [abrirDialog, setAbrirDialog] = useState(false);
 const [empreDesc, setEmpreDesc] = useState('');
-const [empFil, setEmpFil] = useState('');
+const [empFil, setEmpFil] = useState(permiso===2?empresa:'');
 const [usuario, setUsuario] = useState('');
 const [userCrea, setUserCrea] = useState(user);    
 const [data, setData] = useState({});
@@ -99,19 +99,22 @@ return (
    
     <form onSubmit={ formik.handleSubmit }>
     <Grid container spacing={1} mt={1} rowSpacing={1}>
-    {permiso===1 && (
+ 
     <Grid item md={3} xs={12}>
         <FormControl
             fullWidth
             size="small"
             error={formik.touched.emp_inf && Boolean(formik.errors.emp_inf)}
+            disabled={permiso===2}
         >
-            <InputLabel id="lbl_emp_inf">Empresa</InputLabel>
+            <InputLabel id="lbl_emp_inf" >Empresa</InputLabel>
+            
             <Select
                 name="emp_inf"
                 label="Empresa"
                 labelId="lbl_emp_inf"
                 value={formik.values.emp_inf}
+
                 onBlur={(e) => {
                     formik.handleBlur(e);
                 }}
@@ -146,13 +149,14 @@ return (
             <FormHelperText>{formik.touched.emp_inf && formik.errors.emp_inf}</FormHelperText>
         </FormControl>
     </Grid> 
-    )}
-    {permiso===1 && (
+    
+  
     <Grid item md={3} xs={12}>
         <FormControl
             fullWidth
             size="small"
             error={formik.touched.ctt_inf && Boolean(formik.errors.ctt_inf)}
+            disabled={permiso===2}
         >
             <InputLabel id="lbl_ctt_inf">Contrato</InputLabel>
             <Select
@@ -183,7 +187,7 @@ return (
             <FormHelperText>{formik.touched.ctt_inf && formik.errors.ctt_inf}</FormHelperText>
         </FormControl>
     </Grid> 
-)}
+
     <Grid item md={3} xs={12}>
         <TextField
             fullWidth

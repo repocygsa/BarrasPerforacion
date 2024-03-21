@@ -5,7 +5,7 @@ import { llamadaApi, llamadaApi2 } from "api/reqApi";
     return getSessionUsu;
 } 
 */
-/*
+
 const getSessionUsu = async()=>{ 
 
     const protocol = window.location.protocol;
@@ -13,19 +13,19 @@ const getSessionUsu = async()=>{
 
     const getSessionUsu = await llamadaApi2.post(`${protocol}//${hostname}/web/includes/Globales/funciones/getSession.php`,{getSessionUsu:'1'})   
     return getSessionUsu;
-} */
+} 
 
-
+/*
 const getSessionUsu = async()=>{
 
     const userAgent = navigator.userAgent;      
     let data ={}
     if (userAgent.includes('Firefox')) {
-        data = {rut:'15.106.378-0',empresa:'78.318.570-9',ctto:'4600016485'}
+        data = {rut:'17.526.007-2',empresa:'78.318.570-9',ctto:'4600021050'}
     }          
     return {data}; 
 }
-
+*/
 
 // Va a buscar si tiene permisos para administrar ya que todos los usuarios de la appsgom pueden pedir epp
 const getPermisoSessionBDP = ()=>getSessionUsu().then(async(res)=>{   
