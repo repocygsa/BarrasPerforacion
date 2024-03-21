@@ -6,7 +6,7 @@ import { useState } from 'react';
 import MainCard from 'ui-component/cards/MainCard';
 import { FormBarrasPerforacion } from './formBarrasPerforacion';
 
-export const FormularioRegistroBDP = ({permiso, usuario}) => {
+export const FormularioRegistroBDP = ({permiso, usuario, ctto, empresa}) => {
 
     const [snackMensaje, setSnackMensaje] = useState('');
 
@@ -17,7 +17,7 @@ return (
   <Grid container spacing={2} rowSpacing={1} mt={1} justifyContent="center" alignItems="center">
     
     <Grid item md={12} xs={12}>
-      <FormBarrasPerforacion setSnackMensaje={setSnackMensaje} user={usuario}/>
+      <FormBarrasPerforacion setSnackMensaje={setSnackMensaje} user={usuario} permiso={permiso} contrato={ctto} empresa={empresa}/>
     </Grid>
     
   </Grid>

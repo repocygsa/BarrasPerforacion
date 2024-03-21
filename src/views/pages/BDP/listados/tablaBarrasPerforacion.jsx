@@ -5,13 +5,17 @@ import { memo, useState } from 'react';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { FormResponsable } from './formResponsable';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
+import {DialogDatos} from './dialogDatos';
+
 
 export const TablaBarrasPerforacion = ({dataRegistroBDP, setSnackMensaje, usuario, ctto}) => {
 
   const [showFullContent, setShowFullContent] = useState(false);
   const [maxCharacters, setMaxCharacters] = useState(40);
   const [abrirModal, setAbrirModal] = useState(false);
+  const [abrirDialogDat, setAbrirDialogDat] = useState(false);
   const [dataId, setDataId] =useState('');
+  const [dataRow, setDataRow] =useState('');
   const handleVerMasClick = () => {
     setShowFullContent(!showFullContent);
   };
@@ -73,7 +77,10 @@ export const TablaBarrasPerforacion = ({dataRegistroBDP, setSnackMensaje, usuari
                 <Grid item>
                 <Tooltip title="Barra de perforación ya está asignada al usuario del jumbo" arrow>
                     <IconButton aria-label="boton respaldo"  >
-                 <HowToRegIcon fontSize="medium" color="info"/>
+                 <HowToRegIcon fontSize="medium" color="info" onClick={()=>{
+                        setAbrirDialogDat(true)
+                       setDataRow(params.row)
+                    }}  />
                     </IconButton>
                 </Tooltip>
                 </Grid>
@@ -139,7 +146,7 @@ export const TablaBarrasPerforacion = ({dataRegistroBDP, setSnackMensaje, usuari
             valueGetter:(params)=>moment(params.row.bdp_fecha_hora).format('DD-MM-YYYY HH:mm')
         },
 
-        {
+      /*  {
             field:'causa',
             headerName:'Causal del retiro',
             align:'left',
@@ -169,7 +176,7 @@ export const TablaBarrasPerforacion = ({dataRegistroBDP, setSnackMensaje, usuari
             align:'left',
             minWidth: 180,
             valueGetter:(params)=>params.row.bdp_fec_hora_ret?moment(params.row.bdp_fec_hora_ret).format('DD-MM-YYYY HH:mm'):''
-        },
+        }, */
 
 
         
@@ -182,6 +189,13 @@ export const TablaBarrasPerforacion = ({dataRegistroBDP, setSnackMensaje, usuari
             setAbrirDialog={setAbrirModal}
             setSnackMensaje={setSnackMensaje}
             datos={dataId}
+            usuario={usuario} />
+
+        <DialogDatos
+            abrirDialogDat={abrirDialogDat}
+            setAbrirDialogDat={setAbrirDialogDat}
+            setSnackMensaje={setSnackMensaje}
+            datos={dataRow}
             usuario={usuario} />
             
             <Grid container spacing={1} mt={1} rowSpacing={1}>

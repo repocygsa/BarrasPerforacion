@@ -34,8 +34,8 @@ const guardarBdp = async (datos) => {
     return guardarBdp;
 };
 
-const getBDP = async () => {
-    const getBDP = await llamadaApi.post('bdp/getBDP');
+const getBDP = async (data) => {
+    const getBDP = await llamadaApi.post('bdp/getBDP',{data});
     return getBDP;
 };
 

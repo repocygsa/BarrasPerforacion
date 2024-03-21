@@ -10,7 +10,7 @@ import { Box, CircularProgress, FormControl, FormHelperText, Grid, InputLabel, M
 import { getContratos, getEmpresa } from 'helpers/gets';
 import { DialogGuardaBDP } from './dialogGuardaBDP';
 
-export const FormBarrasPerforacion = ({ setSnackMensaje, user}) => {
+export const FormBarrasPerforacion = ({ setSnackMensaje, user, permiso, contrato, empresa}) => {
 
 
 const [abrirDialog, setAbrirDialog] = useState(false);
@@ -41,7 +41,10 @@ const {
     ()=>getContratos(empFil)
 );
     
-    
+const contratoAdd= permiso===2?contrato:''
+const empresaAdd= permiso===2?empresa:''
+
+console.log(contratoAdd, empresaAdd, 'asas')
 
 const validaciones = yup.object().shape({
     emp_inf: yup
@@ -70,8 +73,8 @@ const validaciones = yup.object().shape({
 
 const formik = useFormik({
     initialValues: { 
-        emp_inf: '',
-        ctt_inf: '',  
+        emp_inf: empresaAdd,
+        ctt_inf: contratoAdd,  
         bdp_user:userCrea,
         bdp_tipo_acero:'',
         bdp_marca:'',
@@ -98,6 +101,7 @@ return (
    
     <form onSubmit={ formik.handleSubmit }>
     <Grid container spacing={1} mt={1} rowSpacing={1}>
+    {permiso===1 && (
     <Grid item md={3} xs={12}>
         <FormControl
             fullWidth
@@ -144,6 +148,8 @@ return (
             <FormHelperText>{formik.touched.emp_inf && formik.errors.emp_inf}</FormHelperText>
         </FormControl>
     </Grid> 
+    )}
+    {permiso===1 && (
     <Grid item md={3} xs={12}>
         <FormControl
             fullWidth
@@ -179,7 +185,7 @@ return (
             <FormHelperText>{formik.touched.ctt_inf && formik.errors.ctt_inf}</FormHelperText>
         </FormControl>
     </Grid> 
-
+)}
     <Grid item md={3} xs={12}>
         <TextField
             fullWidth

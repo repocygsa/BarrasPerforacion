@@ -21,8 +21,10 @@ const Routes =({data})=>{
   
     if(data.permiso.length > 0){
 
-        const { rut, ctto } = data.datosSesion;
+        const { rut, ctto, empresa} = data.datosSesion;
         const perUsu =  data.permiso[0].fk_perfil
+
+        console.log(data, 'data session')
 
         return (
             [{
@@ -37,13 +39,13 @@ const Routes =({data})=>{
                    
                     {
                         path: '/registro',
-                        element: perUsu===1 || perUsu ===2 ?<FormularioRegistroBDP permiso={perUsu} usuario={rut} /> : <Navigate to='/web/barrasPerforacion' />
+                        element: perUsu===1 || perUsu ===2 ?<FormularioRegistroBDP permiso={perUsu} usuario={rut} ctto={ctto} empresa={empresa}/> : <Navigate to='/web/barrasPerforacion' />
                     
                     },
 
                     {
                         path: '/listado',
-                        element: perUsu===1 || perUsu ===2 ?<ListaBarrasPerforacion permiso={perUsu} usuario={rut} /> : <Navigate to='/web/barrasPerforacion' />
+                        element: perUsu===1 || perUsu ===2 ?<ListaBarrasPerforacion permiso={perUsu} usuario={rut} ctto={ctto} /> : <Navigate to='/web/barrasPerforacion' />
                     
                     },
                    

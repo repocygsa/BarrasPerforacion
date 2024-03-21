@@ -186,7 +186,7 @@ return (
     />
     </Grid>
 
-    <Grid item md={3} xs={12}>
+    <Grid item md={5} xs={12}>
   
     <TextField
       fullWidth
@@ -208,7 +208,7 @@ return (
     />
 </Grid>
 
-    <Grid item md={3} xs={12}>
+    <Grid item md={4} xs={12}>
         <FormControl
             fullWidth
             size="small"
@@ -244,11 +244,13 @@ return (
         </FormControl>
     </Grid> 
 
-    <Grid item md={3} xs={12}>
+    <Grid item md={12} xs={12}>
         <TextField
             fullWidth
             size="small"
             autoComplete="off"
+            multiline
+            rows={2}
             name="bdp_obs"
             label="Observación"
             value={formik.values.bdp_obs}

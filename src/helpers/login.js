@@ -21,7 +21,7 @@ const getSessionUsu = async()=>{
     const userAgent = navigator.userAgent;      
     let data ={}
     if (userAgent.includes('Firefox')) {
-        data = {rut:'15.106.378-0',empresa:'78.318.570-9',ctto:'4600021050'}
+        data = {rut:'15.106.378-0',empresa:'78.318.570-9',ctto:'4600016485'}
     }          
     return {data}; 
 }

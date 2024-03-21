@@ -7,6 +7,8 @@ import FactCheckIcon from '@mui/icons-material/FactCheck';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import PendingActionsIcon from '@mui/icons-material/PendingActions';
 import SummarizeIcon from '@mui/icons-material/Summarize';
+import PrecisionManufacturingIcon from '@mui/icons-material/PrecisionManufacturing';
+import ListAltIcon from '@mui/icons-material/ListAlt';
 
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
 
@@ -16,39 +18,33 @@ const menuGestion = {
     type: 'GESTION',
     children: [
         {
-            id: 'gestor',
-            title: 'Acciones correctivas',
+            id: 'epp',
+            title: 'Barras de perforación',
             type: 'collapse',
-            icon: Shield,
+            icon: PrecisionManufacturingIcon,
             breadcrumbs: false,
             children: [
+
+              
                 {
-                    id: 'accCorr',
-                    title: 'Registro de acciones',
-                    type: 'item',
-                    url: '/accCorrectivas',
-                    breadcrumbs: false,
-                    icon: InventoryIcon,
-                },         
-                
-                {
-                    id: 'accCorr2',
-                    title: 'Listado de registros',
+                    id: 'accCorr1',
+                    title: 'Registro de barras de perforación',
                     type: 'item',
                     url: '/registro',
                     breadcrumbs: false,
-                    icon: FactCheckIcon,
-                },   
+                    icon: InventoryIcon,
+                },      
                 {
-                    id: 'accCorr3',
-                    title: 'Acciones por contrato',
+                    id: 'accCorr',
+                    title: 'Listado de registros',
                     type: 'item',
-                    url: '/tranversal',
+                    url: '/listado',
                     breadcrumbs: false,
-                    icon: AltRouteIcon,
-                },   
-
-
+                    icon: ListAltIcon,
+                },         
+                
+             
+                 
             ]
         },
     ]
