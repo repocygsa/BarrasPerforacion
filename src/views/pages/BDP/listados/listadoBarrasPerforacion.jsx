@@ -16,7 +16,6 @@ export const ListaBarrasPerforacion = ({permiso, usuario, ctto}) => {
     const [snackMensaje, setSnackMensaje] = useState('');
  //   const [filtros, setFiltros] = useState('');
     const queryClient = useQueryClient();
-console.log(permiso, ctto,'permisos')
 const fil ={
   ctt_inf:permiso===2?ctto:'',
 }

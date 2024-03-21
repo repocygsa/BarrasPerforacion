@@ -96,7 +96,6 @@ const formik = useFormik({
     validationSchema: validaciones,
     enableReinitialize: true,
     onSubmit: (datos) => {
-        console.log(datos)
         setData(datos)
         setAbrirDialogAct(true)
     }       
@@ -104,7 +103,6 @@ const formik = useFormik({
 
 const actualizarRutResponsable = (rutTrab, nomTrab ) => {
     // Actualiza el valor en el campo rut_responsable del formulario
-    console.log(nomTrab,'nombre nbom')
     formik.setFieldValue("rut_usu", prettifyRut(rutTrab))
     formik.setFieldValue("nom_usu", nomTrab)
     BuscarRut(rutTrab)

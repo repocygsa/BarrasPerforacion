@@ -7,7 +7,6 @@ import { useQueryClient } from 'react-query';
 
 export const DialogDatos = ({ abrirDialogDat, setAbrirDialogDat,datos }) => {
 
-    console.log(datos, 'datos')
   const queryClient = useQueryClient();
   const preguntar =()=> {
     setAbrirDialogDat(!abrirDialogDat)

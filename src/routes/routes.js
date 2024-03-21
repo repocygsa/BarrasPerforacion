@@ -24,8 +24,6 @@ const Routes =({data})=>{
         const { rut, ctto, empresa} = data.datosSesion;
         const perUsu =  data.permiso[0].fk_perfil
 
-        console.log(data, 'data session')
-
         return (
             [{
                 path: '/',

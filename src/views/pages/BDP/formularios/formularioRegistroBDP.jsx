@@ -15,11 +15,9 @@ return (
   <SnackComponent snackMensaje={snackMensaje} setSnackMensaje={setSnackMensaje} />
 
   <Grid container spacing={2} rowSpacing={1} mt={1} justifyContent="center" alignItems="center">
-    
     <Grid item md={12} xs={12}>
       <FormBarrasPerforacion setSnackMensaje={setSnackMensaje} user={usuario} permiso={permiso} contrato={ctto} empresa={empresa}/>
     </Grid>
-    
   </Grid>
 </MainCard>
 )

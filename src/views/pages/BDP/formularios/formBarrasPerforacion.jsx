@@ -44,8 +44,6 @@ const {
 const contratoAdd= permiso===2?contrato:''
 const empresaAdd= permiso===2?empresa:''
 
-console.log(contratoAdd, empresaAdd, 'asas')
-
 const validaciones = yup.object().shape({
     emp_inf: yup
         .string()

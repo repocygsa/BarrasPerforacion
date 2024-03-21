@@ -38,12 +38,10 @@ export const FormFilter = ({setFiltroStock, usuario, setSnackMensaje, permiso, c
     // .required('Debe ingresar una empresa')
 ,
 
-     
-     
+        
   }).required('Campo Requerido');
 
   
-
 const formik = useFormik({
 
   initialValues: {
@@ -72,7 +70,6 @@ const formik = useFormik({
 
 const handleCheckboxChange = (event) => {
   setAsignacionResponsable(event.target.checked);
-  console.log(event.target.checked,'evento')
 };
 
     return (

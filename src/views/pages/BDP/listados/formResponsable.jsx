@@ -8,7 +8,6 @@ import { FormResponsableBDP } from './formResponsableBDP';
 
 export const FormResponsable = ({ abrirDialog, setAbrirDialog, setSnackMensaje,formik, datos }) => {
   const queryClient = useQueryClient();
-  console.log(datos,'dasdad')
    
   return (
     <>
