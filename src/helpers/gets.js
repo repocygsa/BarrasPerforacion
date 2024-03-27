@@ -44,7 +44,9 @@ const getCausal = async () => {
     return getCausal;
 };
 
+
 const getCtaCascos = (data) => {
+
     const getCtaCascos = llamadaApi.post('bdp/getCtaCascos',{data});
     return getCtaCascos;
 };

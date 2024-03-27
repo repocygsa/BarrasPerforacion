@@ -8,7 +8,7 @@ import HowToRegIcon from '@mui/icons-material/HowToReg';
 import {DialogDatos} from './dialogDatos';
 
 
-export const TablaBarrasPerforacion = ({dataRegistroBDP, setSnackMensaje, usuario, ctto}) => {
+export const TablaBarrasPerforacion = ({dataRegistroBDP, setSnackMensaje, usuario, ctto, empresa, permiso}) => {
 
   const [showFullContent, setShowFullContent] = useState(false);
   const [maxCharacters, setMaxCharacters] = useState(40);
@@ -189,15 +189,19 @@ export const TablaBarrasPerforacion = ({dataRegistroBDP, setSnackMensaje, usuari
             setAbrirDialog={setAbrirModal}
             setSnackMensaje={setSnackMensaje}
             datos={dataId}
-            usuario={usuario} />
+            usuario={usuario} 
+            empresa={empresa}
+            permiso={permiso}
+            />
 
         <DialogDatos
             abrirDialogDat={abrirDialogDat}
             setAbrirDialogDat={setAbrirDialogDat}
             setSnackMensaje={setSnackMensaje}
             datos={dataRow}
-            usuario={usuario} />
-            
+            usuario={usuario} 
+
+            />
             <Grid container spacing={1} mt={1} rowSpacing={1}>
                 <Grid item md={12} xs={12}>
                     {dataRegistroBDP.length === 0 ?

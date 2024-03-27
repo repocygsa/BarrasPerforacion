@@ -6,7 +6,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogContentText, Dialog
 import {guardarBdp } from 'helpers/gets';
 import { FormResponsableBDP } from './formResponsableBDP';
 
-export const FormResponsable = ({ abrirDialog, setAbrirDialog, setSnackMensaje,formik, datos }) => {
+export const FormResponsable = ({ abrirDialog, setAbrirDialog, setSnackMensaje,formik, datos, empresa, permiso }) => {
   const queryClient = useQueryClient();
    
   return (
@@ -21,7 +21,7 @@ export const FormResponsable = ({ abrirDialog, setAbrirDialog, setSnackMensaje,f
          Asignación de barra de perforación
         </DialogTitle>
         <DialogContent>
-        <FormResponsableBDP setAbrirDialog={setAbrirDialog} setSnackMensaje={setSnackMensaje} id={datos}/>
+        <FormResponsableBDP setAbrirDialog={setAbrirDialog} setSnackMensaje={setSnackMensaje} id={datos} empresa={empresa} permiso={permiso}/>
         </DialogContent>      
        
       </Dialog>

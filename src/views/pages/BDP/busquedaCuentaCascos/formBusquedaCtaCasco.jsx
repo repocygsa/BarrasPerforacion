@@ -18,11 +18,9 @@ const validationSchema = yup.object({
   contrato: yup.string(),
 });
 
-const FormBusquedaCtaCascos = ({setSnackMensaje, setRut, setNom, setAbrirModal, actualizarRutResponsable}) => {
+const FormBusquedaCtaCascos = ({setSnackMensaje, setRut, setNom, setAbrirModal, actualizarRutResponsable, empresa, permiso}) => {
     const [buscarDCC, setBuscarDCC] = useState(false);
     const [rutBuscar, setRutBuscar] = useState('');
-
-
 
 
   const formik = useFormik({
@@ -40,15 +38,8 @@ const FormBusquedaCtaCascos = ({setSnackMensaje, setRut, setNom, setAbrirModal, 
   });
 
 
-
-
-
-  
-
-
-
 const filtroInicial = {
-    emp_inf:'0',
+    emp_inf:permiso===1?'0':empresa,
     ctt_inf: 'Todo',
     pos_inf:'',
 }

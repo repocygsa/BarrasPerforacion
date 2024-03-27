@@ -62,7 +62,7 @@ const formik = useFormik({
       asignacionResponsable:row.asignacionResponsable
     }
     setFiltroStock(fil)
-  console.log(fil)
+
   }
 });
 

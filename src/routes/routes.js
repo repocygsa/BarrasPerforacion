@@ -43,7 +43,7 @@ const Routes =({data})=>{
 
                     {
                         path: '/listado',
-                        element: perUsu===1 || perUsu ===2 ?<ListaBarrasPerforacion permiso={perUsu} usuario={rut} ctto={ctto} /> : <Navigate to='/web/barrasPerforacion' />
+                        element: perUsu===1 || perUsu ===2 ?<ListaBarrasPerforacion permiso={perUsu} usuario={rut} ctto={ctto} empresa={empresa} /> : <Navigate to='/web/barrasPerforacion' />
                     
                     },
                    

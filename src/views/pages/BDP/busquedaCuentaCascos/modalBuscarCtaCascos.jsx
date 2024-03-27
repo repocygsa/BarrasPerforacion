@@ -6,7 +6,7 @@ import FormBusquedaCtaCascos from './formBusquedaCtaCasco';
 
 
 
-export const ModalBuscarCtaCascos = ({ abrirModal, setAbrirModal, setRut, setNom, setSnackMensaje, actualizarRutResponsable}) => {
+export const ModalBuscarCtaCascos = ({ abrirModal, setAbrirModal, setRut, setNom, setSnackMensaje, actualizarRutResponsable, empresa, permiso}) => {
 
     function createData(
         name,
@@ -33,7 +33,7 @@ export const ModalBuscarCtaCascos = ({ abrirModal, setAbrirModal, setRut, setNom
 
                     <Grid item xs={12}>
 
-                     <FormBusquedaCtaCascos setSnackMensaje={setSnackMensaje} setRut={setRut} setNom={setNom} setAbrirModal={setAbrirModal} actualizarRutResponsable={actualizarRutResponsable}/>
+                     <FormBusquedaCtaCascos setSnackMensaje={setSnackMensaje} setRut={setRut} setNom={setNom} setAbrirModal={setAbrirModal} actualizarRutResponsable={actualizarRutResponsable} empresa={empresa} permiso={permiso}/>
 
                     </Grid>
 

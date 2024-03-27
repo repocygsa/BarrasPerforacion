@@ -13,7 +13,7 @@ import * as yup from "yup";
 import { ModalBuscarCtaCascos } from '../busquedaCuentaCascos/modalBuscarCtaCascos';
 import { DialogActualiza } from './dialogActualiza';
 
-export const FormResponsableBDP = ({ setSnackMensaje, user, setAbrirDialog, id}) => {
+export const FormResponsableBDP = ({ setSnackMensaje, user, setAbrirDialog, id, empresa, permiso}) => {
 
 
 const [abrirDialogAct, setAbrirDialogAct] = useState('');
@@ -125,6 +125,8 @@ return (
       actualizarRutResponsable={actualizarRutResponsable}
       setRut={setRut}
       setNom={setNom}
+      empresa={empresa}
+      permiso={permiso}
     />  
 
 <DialogActualiza
