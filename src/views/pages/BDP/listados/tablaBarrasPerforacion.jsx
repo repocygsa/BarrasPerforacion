@@ -6,6 +6,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import { FormResponsable } from './formResponsable';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import {DialogDatos} from './dialogDatos';
+import { BtnCreaDocumento } from '../informe/btnCreaDocumento';
 
 
 export const TablaBarrasPerforacion = ({dataRegistroBDP, setSnackMensaje, usuario, ctto, empresa, permiso}) => {
@@ -88,8 +89,12 @@ export const TablaBarrasPerforacion = ({dataRegistroBDP, setSnackMensaje, usuari
 
 
                 </Grid>
+                <BtnCreaDocumento id={params.row.bdp_cod_identificador} contrato={params.row.fk_ctto} empresa={params.row.rut_empre}/>
            </>,
         },
+
+
+        
         {
             field:'codIden',
             headerName:'Código identificador',
