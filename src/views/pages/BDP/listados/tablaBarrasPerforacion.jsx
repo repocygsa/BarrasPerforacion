@@ -78,7 +78,7 @@ export const TablaBarrasPerforacion = ({dataRegistroBDP, setSnackMensaje, usuari
                 <Grid item>
                 <Tooltip title="Barra de perforación ya está asignada al usuario del jumbo" arrow>
                     <IconButton aria-label="boton respaldo"  >
-                 <HowToRegIcon fontSize="medium" color="info" onClick={()=>{
+                 <HowToRegIcon fontSize="medium" color="success" onClick={()=>{
                         setAbrirDialogDat(true)
                        setDataRow(params.row)
                     }}  />
